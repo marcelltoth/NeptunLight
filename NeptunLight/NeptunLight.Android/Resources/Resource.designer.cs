@@ -26,6 +26,7 @@ namespace NeptunLight.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::Splat.Resource.String.library_name = global::NeptunLight.Droid.Resource.String.library_name;
 		}
 		
 		public partial class Attribute
@@ -60,8 +61,17 @@ namespace NeptunLight.Droid
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f050002
+			public const int LoginButton = 2131034114;
+			
 			// aapt resource value: 0x7f050000
-			public const int myButton = 2131034112;
+			public const int LoginField = 2131034112;
+			
+			// aapt resource value: 0x7f050001
+			public const int PasswordField = 2131034113;
+			
+			// aapt resource value: 0x7f050003
+			public const int fragmentHolder = 2131034115;
 			
 			static Id()
 			{
@@ -77,7 +87,10 @@ namespace NeptunLight.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int Login = 2130903040;
+			
+			// aapt resource value: 0x7f030001
+			public const int Main = 2130903041;
 			
 			static Layout()
 			{
@@ -92,11 +105,14 @@ namespace NeptunLight.Droid
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f040002
+			public const int app_name = 2130968578;
+			
 			// aapt resource value: 0x7f040001
-			public const int app_name = 2130968577;
+			public const int hello = 2130968577;
 			
 			// aapt resource value: 0x7f040000
-			public const int hello = 2130968576;
+			public const int library_name = 2130968576;
 			
 			static String()
 			{
