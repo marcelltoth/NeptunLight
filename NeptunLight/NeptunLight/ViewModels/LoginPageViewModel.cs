@@ -23,13 +23,15 @@ namespace NeptunLight.ViewModels
             Login = ReactiveCommand.CreateFromTask(async ct => {
                                                        neptunInterfaceFactory.Username = LoginCode;
                                                        neptunInterfaceFactory.Password = Password;
+                                                       neptunInterfaceFactory.BaseUri = SelectedInstitute.RootUrl;
                                                        INeptunInterface neptunInterface = neptunInterfaceFactory.Build();
                                                        await neptunInterface.LoginAsync();
                                                        return menuVmFactory(neptunInterface); },
                                                    this.WhenAny(
                                                        x => x.LoginCode,
                                                        x => x.Password,
-                                                       (loginCode, password) => !string.IsNullOrEmpty(loginCode.Value) && !string.IsNullOrEmpty(password.Value)));
+                                                       x => x.SelectedInstitute,
+                                                       (loginCode, password, inst) => !string.IsNullOrEmpty(loginCode.Value) && !string.IsNullOrEmpty(password.Value) && inst != null));
         }
 
         public string LoginCode
@@ -42,6 +44,14 @@ namespace NeptunLight.ViewModels
         {
             get => _password;
             set => this.RaiseAndSetIfChanged(ref _password, value);
+        }
+
+        private Institute _selectedInstitute;
+
+        public Institute SelectedInstitute
+        {
+            get => _selectedInstitute;
+            set => this.RaiseAndSetIfChanged(ref _selectedInstitute, value);
         }
 
         public IReadOnlyList<Institute> AvaialbleInstitutes

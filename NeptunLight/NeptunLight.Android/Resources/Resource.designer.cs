@@ -26,6 +26,7 @@ namespace NeptunLight.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::ModernHttpClient.Resource.String.library_name = global::NeptunLight.Droid.Resource.String.library_name;
 			global::Splat.Resource.String.library_name = global::NeptunLight.Droid.Resource.String.library_name;
 		}
 		
@@ -61,17 +62,20 @@ namespace NeptunLight.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050002
-			public const int LoginButton = 2131034114;
-			
 			// aapt resource value: 0x7f050000
-			public const int LoginField = 2131034112;
-			
-			// aapt resource value: 0x7f050001
-			public const int PasswordField = 2131034113;
+			public const int InstituteSelector = 2131034112;
 			
 			// aapt resource value: 0x7f050003
-			public const int fragmentHolder = 2131034115;
+			public const int LoginButton = 2131034115;
+			
+			// aapt resource value: 0x7f050001
+			public const int LoginField = 2131034113;
+			
+			// aapt resource value: 0x7f050002
+			public const int PasswordField = 2131034114;
+			
+			// aapt resource value: 0x7f050004
+			public const int fragmentHolder = 2131034116;
 			
 			static Id()
 			{
