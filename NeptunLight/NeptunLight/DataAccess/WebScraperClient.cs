@@ -62,6 +62,15 @@ namespace NeptunLight.DataAccess
             }
         }
 
+        public async Task<Stream> GetRawStreamAsnyc(string url)
+        {
+            HttpResponseMessage response = await HttpClient.GetAsync(url);
+            if (!response.IsSuccessStatusCode)
+                throw new NetworkException();
+
+            return await response.Content.ReadAsStreamAsync();
+        }
+
         public async Task<IDocument> GetDocumentAsnyc(string url)
         {
             using (HttpResponseMessage response = await HttpClient.GetAsync(url))

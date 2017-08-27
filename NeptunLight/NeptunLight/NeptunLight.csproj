@@ -64,6 +64,12 @@
     <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AngleSharp.0.9.9\lib\portable-windows8+net45+windowsphone8+wpa+monoandroid+monotouch\AngleSharp.dll</HintPath>
     </Reference>
+    <Reference Include="CGenT.Sprache, Version=1.0.0.0, Culture=neutral, PublicKeyToken=21cab3f7ca4a6a0f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CGenT.Sprache.Release.1.0.0.1\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\CGenT.Sprache.dll</HintPath>
+    </Reference>
+    <Reference Include="iCal.PCL, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\iCal.PCL.1.0.6\lib\portable40-net40+sl5+win8+wp8+wpa81\iCal.PCL.dll</HintPath>
+    </Reference>
     <Reference Include="ModernHttpClient, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\modernhttpclient.2.4.2\lib\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.dll</HintPath>
     </Reference>
@@ -102,8 +108,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">

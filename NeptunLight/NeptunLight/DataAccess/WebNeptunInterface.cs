@@ -2,12 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AngleSharp.Dom;
 using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
+using iCal.PCL.DataModel;
+using iCal.PCL.Serialization;
 using NeptunLight.Models;
 using NeptunLight.Services;
 using Newtonsoft.Json.Linq;
@@ -124,7 +127,19 @@ namespace NeptunLight.DataAccess
 
         public async Task<IReadOnlyCollection<CalendarEvent>> RefreshCalendarAsnyc()
         {
-            throw new NotImplementedException();
+            await LoginAsync();
+            IDocument exportPage = await _client.GetDocumentAsnyc("main.aspx?ctrl=0104");
+            string majorId = exportPage.GetElementById("calexport_cmbTraining").Children[0].GetAttribute("value");
+            await _client.PostJsonObjectAsnyc("main.aspx/GetICS", $"{{\"ID\":\"1_1_0_1_0_0_1\",\"fromDate\":\"{DateTime.Today.AddYears(-1):yyyy.MM.dd}\",\"toDate\":\"{DateTime.Today.AddYears(1):yyyy.MM.dd}\",\"trainingId\":\"{majorId}\"}}");
+            string ics = await _client.GetRawAsnyc($"CommonControls/SaveFileDialog.aspx?id=1_1_0_1_0_0_1&Func=exportcalendar&from={DateTime.Today.AddYears(-1):yyyy.MM.dd}&to={DateTime.Today.AddYears(1):yyyy.MM.dd}&trainingid={majorId}");
+            IEnumerable<iCalVEvent> events = iCalSerializer.Deserialize(ics.Split('\n').Select(line => line.TrimEnd('\r'))).Cast<iCalVEvent>();
+            return events.Select(ice =>
+            {
+                string[] summaryParts = ice.Summary.Split(new[] {" - "}, StringSplitOptions.None);
+                string title = summaryParts[0].Substring(summaryParts[0].IndexOf('(')).Trim();
+                string details = summaryParts[0].Replace(title, "").Trim();
+                return new CalendarEvent(ice.DTStart, ice.DTEnd, ice.Location, summaryParts.Last(), title, summaryParts[1], details, summaryParts.Length > 3 ? summaryParts[2] : null);
+            }).ToList();
         }
 
         public async Task<IReadOnlyDictionary<Semester, IReadOnlyCollection<Subject>>> RefreshSubjectsAsnyc()

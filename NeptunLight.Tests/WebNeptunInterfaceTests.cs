@@ -53,7 +53,6 @@ namespace NeptunLight.Tests
         [Fact]
         public async void Subjects_AtLeastTwoSemesters()
         {
-
             INeptunInterface client = CreateInterface();
             IReadOnlyDictionary<Semester, IReadOnlyCollection<Subject>> subjectData = await client.RefreshSubjectsAsnyc();
             Assert.InRange(subjectData.Count(kvp => kvp.Value.Any()), 2, Int32.MaxValue);
@@ -62,10 +61,17 @@ namespace NeptunLight.Tests
         [Fact]
         public async void Exams_AtLeastTwoSemesters()
         {
-
             INeptunInterface client = CreateInterface();
             IReadOnlyDictionary<Semester, IReadOnlyCollection<Exam>> examData = await client.RefreshExamsAsnyc();
             Assert.InRange(examData.Count(kvp => kvp.Value.Any()), 2, Int32.MaxValue);
+        }
+
+        [Fact]
+        public async void Calendar_HasEvents()
+        {
+            INeptunInterface client = CreateInterface();
+            IReadOnlyCollection<CalendarEvent> events = await client.RefreshCalendarAsnyc();
+            Assert.InRange(events.Count, 40, Int32.MaxValue);
         }
     }
 }
