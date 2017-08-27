@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using NeptunLight.DataAccess;
+using NeptunLight.Models;
 using Xunit;
 
 namespace NeptunLight.Tests
@@ -44,6 +48,15 @@ namespace NeptunLight.Tests
             INeptunInterface client = CreateInterface();
             var messages = await client.RefreshMessagesAsnyc();
             Assert.InRange(messages.Count, 201, Int32.MaxValue);
+        }
+
+        [Fact]
+        public async void Subjects_AtLeastTwoSemesters()
+        {
+
+            INeptunInterface client = CreateInterface();
+            IReadOnlyDictionary<Semester, IReadOnlyCollection<Subject>> subjectData = await client.RefreshSubjectsAsnyc();
+            Assert.InRange(subjectData.Count(kvp => kvp.Value.Any()), 2, Int32.MaxValue);
         }
     }
 }

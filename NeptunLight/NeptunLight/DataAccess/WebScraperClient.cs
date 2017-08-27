@@ -58,7 +58,7 @@ namespace NeptunLight.DataAccess
                 if (!response.IsSuccessStatusCode)
                     throw new NetworkException();
 
-                return await ReadResponse(response);
+                return await ReadResponseAsync(response);
             }
         }
 
@@ -69,10 +69,30 @@ namespace NeptunLight.DataAccess
                 if (!response.IsSuccessStatusCode)
                     throw new NetworkException();
 
-                using (Stream content = await response.Content.ReadAsStreamAsync())
+                HtmlParser parser = new HtmlParser();
+                return await parser.ParseAsync(await ReadResponseAsync(response));
+            }
+        }
+
+        public async Task<IDocument> PostFormAsnyc(string url, IDocument form, ICollection<KeyValuePair<string, string>> overrides, bool keepOriginalHeaders = true)
+        {
+            IEnumerable<KeyValuePair<string, string>> paramCollection = overrides;
+            if (keepOriginalHeaders)
+                paramCollection = form.GetPostbackData()
+                                      .Where(kvp => overrides.All(overrideKvp => overrideKvp.Key != kvp.Key))
+                                      .Concat(overrides);
+            using (HttpContent postContent = new FormUrlEncodedContent(paramCollection))
+            {
+                postContent.Headers.TryAddWithoutValidation("X-Requested-With", "XMLHttpRequest");
+                postContent.Headers.TryAddWithoutValidation("X-MicrosoftAjax", "Delta=true");
+                postContent.Headers.TryAddWithoutValidation("Accept", "*/*");
+                using (HttpResponseMessage response = await HttpClient.PostAsync(url, postContent))
                 {
+                    if (!response.IsSuccessStatusCode)
+                        throw new NetworkException();
+
                     HtmlParser parser = new HtmlParser();
-                    return await parser.ParseAsync(content);
+                    return await parser.ParseAsync(await ReadResponseAsync(response));
                 }
             }
         }
@@ -89,19 +109,19 @@ namespace NeptunLight.DataAccess
                     if (!response.IsSuccessStatusCode)
                         throw new NetworkException();
 
-                    return await ReadResponse(response);
+                    return await ReadResponseAsync(response);
                 }
             }
         }
 
-        private static async Task<string> ReadResponse(HttpResponseMessage response)
+        private static async Task<string> ReadResponseAsync(HttpResponseMessage response)
         {
             Stream stream = await response.Content.ReadAsStreamAsync();
             try
             {
-                using (var decompress = new System.IO.Compression.GZipStream(stream, CompressionMode.Decompress))
+                using (GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress))
                 {
-                    using (var reader = new StreamReader(decompress))
+                    using (StreamReader reader = new StreamReader(decompress))
                     {
                         return reader.ReadToEnd();
                     }
@@ -120,7 +140,7 @@ namespace NeptunLight.DataAccess
                 if (!response.IsSuccessStatusCode)
                     throw new NetworkException();
 
-                return JObject.Parse(await response.Content.ReadAsStringAsync());
+                return JObject.Parse(await ReadResponseAsync(response));
             }
         }
 
@@ -131,7 +151,7 @@ namespace NeptunLight.DataAccess
                 if (!response.IsSuccessStatusCode)
                     throw new NetworkException();
 
-                return JObject.Parse(await response.Content.ReadAsStringAsync());
+                return JObject.Parse(await ReadResponseAsync(response));
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -74,16 +75,17 @@ namespace NeptunLight.DataAccess
                 }
 
                 // load the mail itself
-                string popupContent = await _client.PostFormRawAsnyc(
-                    "main.aspx",
+                await Task.Delay(50);
+                IDocument popupDocument = await _client.PostFormAsnyc(
+                    "main.aspx?ismenuclick=true&ctrl=inbox",
                     inboxPage,
                     new[]
                     {
                         new KeyValuePair<string, string>("__EVENTTARGET", "upFunction$c_messages$upMain$upGrid$gridMessages"),
                         new KeyValuePair<string, string>("__EVENTARGUMENT", $"commandname=Subject;commandsource=select;id={mailHeader.TrId};level=1"),
-                    });
-
-                IDocument popupDocument = await parser.ParseAsync(popupContent);
+                    },
+                    false);
+                
                 string content = popupDocument.GetElementById("Readmessage1_lblMessage").InnerHtml;
                 ret = new Mail(mailHeader, content);
 
@@ -112,7 +114,7 @@ namespace NeptunLight.DataAccess
                     long trid = Int64.Parse(row.Id.Substring(4));
                     result.Add(new MailHeader(receiveTime, sender, title) {TrId = trid});
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     // skip unparsable stuff
                 }
@@ -125,12 +127,66 @@ namespace NeptunLight.DataAccess
             throw new NotImplementedException();
         }
 
-        public async Task<IReadOnlyDictionary<Semester, Subject>> RefreshSubjectsAsnyc()
+        public async Task<IReadOnlyDictionary<Semester, IReadOnlyCollection<Subject>>> RefreshSubjectsAsnyc()
         {
-            throw new NotImplementedException();
+            await LoginAsync();
+            Dictionary<Semester, IReadOnlyCollection<Subject>> result = new Dictionary<Semester, IReadOnlyCollection<Subject>>();
+
+            IDocument subjectsPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=0304");
+            IEnumerable<IElement> semesterOptions = subjectsPage.GetElementById("cmb_cmb").Children.Where(opt => opt.GetAttribute("value") != "-1");
+            foreach (IElement option in semesterOptions)
+            {
+                await Task.Delay(200);
+                Semester semester = Semester.Parse(option.TextContent);
+                List<Subject> subjectList = new List<Subject>();
+
+                // load subcject data in semester
+                subjectsPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=0304");
+                await Task.Delay(100);
+                IDocument semesterSubjectData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0304", subjectsPage, new[]{new KeyValuePair<string, string>("upFilter$cmb$m_cmb", option.GetAttribute("value"))});
+                IHtmlTableElement subjectDataTable = (IHtmlTableElement)semesterSubjectData.GetElementById("h_addedsubjects_gridAddedSubjects_bodytable");
+
+                // load course data
+
+                await Task.Delay(200);
+                IDocument coursesPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=0302");
+                await Task.Delay(100);
+                IElement optionToSelect = coursesPage.GetElementById("cmb_cmb").Children.FirstOrDefault(e => e.TextContent == semester.Name);
+                if (optionToSelect == null)
+                {
+                    continue;
+                }
+                IDocument semesterCourseData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0302", coursesPage, new[] { new KeyValuePair<string, string>("upFilter$cmb$m_cmb", optionToSelect.GetAttribute("value")) });
+                IHtmlTableElement courseDataTable = (IHtmlTableElement)semesterCourseData.GetElementById("h_actual_courses_gridCourses_bodytable");
+
+                foreach (IHtmlTableRowElement dataRow in subjectDataTable.Bodies[0].Rows)
+                {
+                    string subjectCode = dataRow.Cells[1].TextContent;
+                    string subjectName = dataRow.Cells[2].TextContent;
+                    int creditCount = Int32.Parse(dataRow.Cells[3].TextContent);
+                    int attemptCount = Int32.Parse(dataRow.Cells[4].TextContent);
+                    IEnumerable<Course> courses = courseDataTable.Bodies[0].Rows.Where(r => r.Cells[1].TextContent == subjectCode).Select(r =>
+                    {
+                        string courseCode = r.Cells[2].TextContent;
+                        string courseType = r.Cells[3].TextContent;
+                        int periodCount;
+                        if (!Int32.TryParse(r.Cells[4].TextContent, out periodCount))
+                            periodCount = 1;
+                        string scheduleInfo = r.Cells[5].TextContent;
+                        IEnumerable<string> instructors = r.Cells[6].TextContent.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim());
+                        return new Course(courseCode, courseType, periodCount, scheduleInfo, instructors);
+                    });
+
+                    subjectList.Add(new Subject(subjectCode, subjectName, creditCount, attemptCount, courses));
+                }
+
+                result.Add(semester, subjectList);
+            }
+
+            return result;
         }
 
-        public async Task<IReadOnlyDictionary<Semester, Exam>> RefreshExamsAsnyc()
+        public async Task<IReadOnlyDictionary<Semester, IReadOnlyCollection<Subject>>> RefreshExamsAsnyc()
         {
             throw new NotImplementedException();
         }

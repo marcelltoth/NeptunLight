@@ -31,5 +31,13 @@ namespace NeptunLight.Tests
             Semester a = new Semester(2017, 2);
             Assert.Equal("2017/18/2", a.Name);
         }
+
+        [Fact]
+        public void Parse_Correct()
+        {
+            Semester s = Semester.Parse("2017/18/2");
+            Assert.Equal(2017, s.PrimaryYear);
+            Assert.Equal(2, s.SemesterNumber);
+        }
     }
 }

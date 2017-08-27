@@ -99,7 +99,7 @@ namespace NeptunLight.Models
             if (!result.Success)
                 throw new FormatException("Unable to parse semester.");
 
-            return new Semester(Convert.ToInt32(result.Groups[0].Value), Convert.ToInt32(result.Groups[1].Value));
+            return new Semester(Convert.ToInt32(result.Groups[1].Value), Convert.ToInt32(result.Groups[2].Value));
         }
     }
 }
