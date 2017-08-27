@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using NeptunLight.Models;
@@ -47,7 +48,32 @@ namespace NeptunLight.DataAccess
             }
         }
 
-        public Task<NeptunData> RefreshDataAsnyc(IProgress<string> progress = null)
+        public async Task<IReadOnlyCollection<MailHeader>> RefreshMessagesAsnyc()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IReadOnlyCollection<CalendarEvent>> RefreshCalendarAsnyc()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IReadOnlyDictionary<Semester, Subject>> RefreshSubjectsAsnyc()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IReadOnlyDictionary<Semester, Exam>> RefreshExamsAsnyc()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IReadOnlyCollection<SemesterData>> RefreshSemestersAsnyc()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IReadOnlyCollection<SemesterData>> RefreshPeriodsAsnyc()
         {
             throw new NotImplementedException();
         }

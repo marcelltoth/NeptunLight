@@ -31,8 +31,17 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Models\CalendarEvent.cs" />
+    <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\Exam.cs" />
+    <Compile Include="Models\Mail.cs" />
+    <Compile Include="Models\MailHeader.cs" />
     <Compile Include="Models\NetworkException.cs" />
     <Compile Include="DataAccess\WebScraperClient.cs" />
+    <Compile Include="Models\Period.cs" />
+    <Compile Include="Models\Semester.cs" />
+    <Compile Include="Models\SemesterData.cs" />
+    <Compile Include="Models\Subject.cs" />
     <Compile Include="Services\IDataStorage.cs" />
     <Compile Include="DataAccess\IInstituteDataProvider.cs" />
     <Compile Include="DataAccess\INeptunInterface.cs" />
