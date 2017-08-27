@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -57,7 +58,7 @@ namespace NeptunLight.DataAccess
                 if (!response.IsSuccessStatusCode)
                     throw new NetworkException();
 
-                return await response.Content.ReadAsStringAsync();
+                return await ReadResponse(response);
             }
         }
 
@@ -95,11 +96,21 @@ namespace NeptunLight.DataAccess
 
         private static async Task<string> ReadResponse(HttpResponseMessage response)
         {
-            if (response.Headers.TransferEncoding.Any(tchv => tchv.Value == "gzip"))
+            Stream stream = await response.Content.ReadAsStreamAsync();
+            try
             {
-                //using(var decompress = new System.IO.Compression.)
+                using (var decompress = new System.IO.Compression.GZipStream(stream, CompressionMode.Decompress))
+                {
+                    using (var reader = new StreamReader(decompress))
+                    {
+                        return reader.ReadToEnd();
+                    }
+                }
             }
-            return await response.Content.ReadAsStringAsync();
+            catch (InvalidDataException)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
         }
 
         public async Task<JObject> GetJsonObjectAsnyc(string url)

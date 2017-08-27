@@ -84,7 +84,7 @@ namespace NeptunLight.DataAccess
                     });
 
                 IDocument popupDocument = await parser.ParseAsync(popupContent);
-                string content = popupDocument.GetElementsByClassName("readmessage_editor")[0].InnerHtml;
+                string content = popupDocument.GetElementById("Readmessage1_lblMessage").InnerHtml;
                 ret = new Mail(mailHeader, content);
 
                 if (contentCache != null)
@@ -106,7 +106,7 @@ namespace NeptunLight.DataAccess
             {
                 try
                 {
-                    DateTime receiveTime = DateTime.ParseExact(row.Cells[7].TextContent, "yyyy.MM.dd. HH:mm:dd", DateTimeFormatInfo.InvariantInfo);
+                    DateTime receiveTime = DateTime.ParseExact(row.Cells[7].TextContent, "yyyy.MM.dd. HH:mm:ss", DateTimeFormatInfo.InvariantInfo);
                     string sender = row.Cells[4].TextContent;
                     string title = row.Cells[6].TextContent;
                     long trid = Int64.Parse(row.Id.Substring(4));
