@@ -12,7 +12,7 @@ namespace NeptunLight.DataAccess
         Task<IReadOnlyCollection<Mail>> RefreshMessagesAsnyc(IMailContentCache contentCache = null);
         Task<IReadOnlyCollection<CalendarEvent>> RefreshCalendarAsnyc();
         Task<IReadOnlyDictionary<Semester, IReadOnlyCollection<Subject>>> RefreshSubjectsAsnyc();
-        Task<IReadOnlyDictionary<Semester, IReadOnlyCollection<Subject>>> RefreshExamsAsnyc();
+        Task<IReadOnlyDictionary<Semester, IReadOnlyCollection<Exam>>> RefreshExamsAsnyc();
         Task<IReadOnlyCollection<SemesterData>> RefreshSemestersAsnyc();
         Task<IReadOnlyCollection<SemesterData>> RefreshPeriodsAsnyc();
     }

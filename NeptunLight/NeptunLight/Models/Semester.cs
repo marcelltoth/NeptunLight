@@ -86,6 +86,21 @@ namespace NeptunLight.Models
 
         public int UniqueId => PrimaryYear * 10 + SemesterNumber;
 
+        public bool IsFarFuture
+        {
+            get
+            {
+                if (SemesterNumber == 1)
+                {
+                    return DateTime.Now.Year < PrimaryYear || DateTime.Now.Year == PrimaryYear && DateTime.Now.Month < 4;
+                }
+                else
+                {
+                    return DateTime.Now.Year < PrimaryYear || DateTime.Now.Year == PrimaryYear && DateTime.Now.Month < 10;
+                }
+            }
+        }
+
         public override string ToString()
         {
             return Name;

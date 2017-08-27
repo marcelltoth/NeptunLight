@@ -58,5 +58,14 @@ namespace NeptunLight.Tests
             IReadOnlyDictionary<Semester, IReadOnlyCollection<Subject>> subjectData = await client.RefreshSubjectsAsnyc();
             Assert.InRange(subjectData.Count(kvp => kvp.Value.Any()), 2, Int32.MaxValue);
         }
+
+        [Fact]
+        public async void Exams_AtLeastTwoSemesters()
+        {
+
+            INeptunInterface client = CreateInterface();
+            IReadOnlyDictionary<Semester, IReadOnlyCollection<Exam>> examData = await client.RefreshExamsAsnyc();
+            Assert.InRange(examData.Count(kvp => kvp.Value.Any()), 2, Int32.MaxValue);
+        }
     }
 }
