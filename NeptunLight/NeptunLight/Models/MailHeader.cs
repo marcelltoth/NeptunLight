@@ -14,5 +14,7 @@ namespace NeptunLight.Models
         public DateTime ReceivedTime { get; }
         public string Sender { get; }
         public string Subject { get; }
+
+        internal long TrId { set; get; }
     }
 }

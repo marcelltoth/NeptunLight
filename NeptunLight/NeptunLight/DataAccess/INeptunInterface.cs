@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using NeptunLight.Models;
+using NeptunLight.Services;
 
 namespace NeptunLight.DataAccess
 {
@@ -8,7 +9,7 @@ namespace NeptunLight.DataAccess
     {
         Task LoginAsync();
 
-        Task<IReadOnlyCollection<MailHeader>> RefreshMessagesAsnyc();
+        Task<IReadOnlyCollection<Mail>> RefreshMessagesAsnyc(IMailContentCache contentCache = null);
         Task<IReadOnlyCollection<CalendarEvent>> RefreshCalendarAsnyc();
         Task<IReadOnlyDictionary<Semester, Subject>> RefreshSubjectsAsnyc();
         Task<IReadOnlyDictionary<Semester, Exam>> RefreshExamsAsnyc();

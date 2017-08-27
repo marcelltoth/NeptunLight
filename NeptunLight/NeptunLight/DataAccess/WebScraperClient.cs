@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -7,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AngleSharp.Dom;
 using AngleSharp.Parser.Html;
+using NeptunLight.Helpers;
 using NeptunLight.Models;
 using Newtonsoft.Json.Linq;
 
@@ -47,6 +50,16 @@ namespace NeptunLight.DataAccess
             }
         }
 
+        public async Task<string> GetRawAsnyc(string url)
+        {
+            using (HttpResponseMessage response = await HttpClient.GetAsync(url))
+            {
+                if (!response.IsSuccessStatusCode)
+                    throw new NetworkException();
+
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
 
         public async Task<IDocument> GetDocumentAsnyc(string url)
         {
@@ -61,6 +74,32 @@ namespace NeptunLight.DataAccess
                     return await parser.ParseAsync(content);
                 }
             }
+        }
+
+        public async Task<string> PostFormRawAsnyc(string url, IDocument form, IEnumerable<KeyValuePair<string, string>> overrides)
+        {
+            IEnumerable<KeyValuePair<string, string>> paramCollection = form.GetPostbackData()
+                                                                            .Where(kvp => overrides.All(overrideKvp => overrideKvp.Key != kvp.Key))
+                                                                            .Concat(overrides);
+            using (HttpContent postContent = new FormUrlEncodedContent(paramCollection))
+            {
+                using (HttpResponseMessage response = await HttpClient.PostAsync(url, postContent))
+                {
+                    if (!response.IsSuccessStatusCode)
+                        throw new NetworkException();
+
+                    return await ReadResponse(response);
+                }
+            }
+        }
+
+        private static async Task<string> ReadResponse(HttpResponseMessage response)
+        {
+            if (response.Headers.TransferEncoding.Any(tchv => tchv.Value == "gzip"))
+            {
+                //using(var decompress = new System.IO.Compression.)
+            }
+            return await response.Content.ReadAsStringAsync();
         }
 
         public async Task<JObject> GetJsonObjectAsnyc(string url)
