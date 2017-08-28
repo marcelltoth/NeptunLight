@@ -12,6 +12,7 @@ using Android.Views;
 using Android.Widget;
 using Autofac;
 using NeptunLight.DataAccess;
+using NeptunLight.Droid.Services;
 using NeptunLight.Models;
 using NeptunLight.Services;
 using NeptunLight.ViewModels;

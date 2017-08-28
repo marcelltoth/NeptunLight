@@ -1,12 +1,15 @@
 ﻿using System.Threading.Tasks;
 using NeptunLight.Models;
+using ReactiveUI;
 
 namespace NeptunLight.Services
 {
-    public interface IDataStorage
+    public interface IDataStorage : IReactiveObject
     {
-        Task<NeptunData> LoadDataAsync();
+        NeptunData CurrentData { get; }
 
-        Task SaveDataAsync(NeptunData data);
+        Task LoadDataAsync(bool forceReload = false);
+
+        Task SaveDataAsync();
     }
 }
