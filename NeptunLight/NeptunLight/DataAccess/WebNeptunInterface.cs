@@ -51,7 +51,7 @@ namespace NeptunLight.DataAccess
             }
         }
 
-        public async Task<IReadOnlyCollection<Mail>> RefreshMessagesAsnyc(IMailContentCache contentCache = null)
+        public async Task<IReadOnlyCollection<Mail>> RefreshMessagesAsnyc(IMailContentCache contentCache = null, IProgress<MessageLoadingProgress> progress = null)
         {
             await LoginAsync();
             IDocument inboxPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=inbox");
@@ -61,13 +61,23 @@ namespace NeptunLight.DataAccess
             IHtmlTableElement messageHeaderTable = (IHtmlTableElement)rawMessagesDocument.GetElementById("c_messages_gridMessages_bodytable");
 
             List<Mail> result = new List<Mail>();
-            foreach (MailHeader mailHeader in ParseMailHeaderTable(messageHeaderTable))
+            IList<MailHeader> mailHeaders = ParseMailHeaderTable(messageHeaderTable);
+            for (int i = 0; i < mailHeaders.Count; i++)
             {
+                MailHeader mailHeader = mailHeaders[i];
+
+                progress?.Report(new MessageLoadingProgress(i+1, mailHeaders.Count));
+
                 Mail ret;
-                if (contentCache != null && await contentCache.TryRetrieveAsync(mailHeader, out ret))
+                if (contentCache != null)
                 {
-                    result.Add(ret);
-                    continue;
+                    // try to load the message body from the cache
+                    ret = await contentCache.TryRetrieveAsync(mailHeader);
+                    if (ret != null)
+                    {
+                        result.Add(ret);
+                        continue;
+                    }
                 }
 
                 // load the mail itself
@@ -81,7 +91,7 @@ namespace NeptunLight.DataAccess
                         new KeyValuePair<string, string>("__EVENTARGUMENT", $"commandname=Subject;commandsource=select;id={mailHeader.TrId};level=1"),
                     },
                     false);
-                
+
                 string content = popupDocument.GetElementById("Readmessage1_lblMessage").InnerHtml;
                 ret = new Mail(mailHeader, content);
 
@@ -91,13 +101,12 @@ namespace NeptunLight.DataAccess
                 }
 
                 result.Add(ret);
-
             }
 
             return result;
         }
 
-        private IEnumerable<MailHeader> ParseMailHeaderTable(IHtmlTableElement table)
+        private IList<MailHeader> ParseMailHeaderTable(IHtmlTableElement table)
         {
             List<MailHeader> result = new List<MailHeader>();
             foreach (IHtmlTableRowElement row in table.Bodies[0].Rows)
@@ -125,7 +134,10 @@ namespace NeptunLight.DataAccess
             string majorId = exportPage.GetElementById("calexport_cmbTraining").Children[0].GetAttribute("value");
             await _client.PostJsonObjectAsnyc("main.aspx/GetICS", $"{{\"ID\":\"1_1_0_1_0_0_1\",\"fromDate\":\"{DateTime.Today.AddYears(-1):yyyy.MM.dd}\",\"toDate\":\"{DateTime.Today.AddYears(1):yyyy.MM.dd}\",\"trainingId\":\"{majorId}\"}}");
             string ics = await _client.GetRawAsnyc($"CommonControls/SaveFileDialog.aspx?id=1_1_0_1_0_0_1&Func=exportcalendar&from={DateTime.Today.AddYears(-1):yyyy.MM.dd}&to={DateTime.Today.AddYears(1):yyyy.MM.dd}&trainingid={majorId}");
-            IEnumerable<iCalVEvent> events = iCalSerializer.Deserialize(ics.Split('\n').Select(line => line.TrimEnd('\r'))).Cast<iCalVEvent>();
+            IEnumerable<iCalVEvent> events = await Task.Run(() =>
+            {
+                return iCalSerializer.Deserialize(ics.Split('\n').Select(line => line.TrimEnd('\r'))).Cast<iCalVEvent>();
+            });
             return events.Select(ice =>
             {
                 string[] summaryParts = ice.Summary.Split(new[] {" - "}, StringSplitOptions.None);

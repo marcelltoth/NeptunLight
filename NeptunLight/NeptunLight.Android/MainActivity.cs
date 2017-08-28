@@ -21,6 +21,8 @@ namespace NeptunLight.Droid
 	{
 	    private static readonly Dictionary<Type, Type> VmToFragment;
 
+	    private View _fragmentHolder;
+
 	    static MainActivity()
 	    {
 	        string targetNamespace = $"{nameof(NeptunLight)}.{nameof(Droid)}.{nameof(Pages)}";
@@ -28,14 +30,20 @@ namespace NeptunLight.Droid
 	                .ToDictionary(ti => ti.BaseType.GenericTypeArguments[0], ti => ti.AsType());
 	    }
 
+	    protected override void OnSaveInstanceState(Bundle outState)
+	    {
+            // workaround
+	    }
 
-        protected override void OnCreate (Bundle bundle)
+	    protected override void OnCreate (Bundle bundle)
 		{
             base.OnCreate(bundle);
 
 		    App.MainActivity = this;
 
 			SetContentView(Resource.Layout.Main);
+
+		    _fragmentHolder = FindViewById(Resource.Id.fragmentHolder);
             
 		    NavigateTo<MenuPageViewModel>(false);
 		}
@@ -52,7 +60,9 @@ namespace NeptunLight.Droid
 
 	    public void NavigateTo(PageViewModel destinationVm, bool addToStack = true)
 	    {
-	        Fragment fragment = (Fragment)Activator.CreateInstance(VmToFragment[destinationVm.GetType()]);
+	        _fragmentHolder.RequestFocus();
+
+            Fragment fragment = (Fragment)Activator.CreateInstance(VmToFragment[destinationVm.GetType()]);
 	        ((IViewFor) fragment).ViewModel = destinationVm;
 
             FragmentTransaction transaction = FragmentManager.BeginTransaction();

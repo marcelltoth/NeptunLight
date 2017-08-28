@@ -41,6 +41,10 @@ namespace NeptunLight.Droid
                    .As<IDataStorage>()
                    .SingleInstance();
 
+            builder.RegisterType<MailContentCache>()
+                   .As<IMailContentCache>()
+                   .SingleInstance();
+
             builder.Register(context => MainActivity)
                    .As<INavigator>();
 

@@ -38,6 +38,7 @@
     <Compile Include="Models\Exam.cs" />
     <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\MailHeader.cs" />
+    <Compile Include="Models\MessageLoadingProgress.cs" />
     <Compile Include="Models\NetworkException.cs" />
     <Compile Include="DataAccess\WebScraperClient.cs" />
     <Compile Include="Models\Period.cs" />

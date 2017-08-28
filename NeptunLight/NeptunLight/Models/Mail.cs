@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace NeptunLight.Models
 {
@@ -11,6 +12,7 @@ namespace NeptunLight.Models
             Content = content;
         }
 
+        [JsonConstructor]
         public Mail(DateTime receivedTime, string sender, string subject, string content)
             :base(receivedTime, sender, subject)
         {

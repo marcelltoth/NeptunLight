@@ -7,6 +7,6 @@ namespace NeptunLight.Services
     {
         Task StoreAsync(MailHeader key, Mail value);
 
-        Task<bool> TryRetrieveAsync(MailHeader key, out Mail value);
+        Task<Mail> TryRetrieveAsync(MailHeader key);
     }
 }

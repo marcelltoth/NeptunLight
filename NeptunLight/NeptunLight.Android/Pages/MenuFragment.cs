@@ -1,7 +1,9 @@
 ﻿using System;
 using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Views;
+using Android.Views.InputMethods;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
@@ -17,6 +19,7 @@ namespace NeptunLight.Droid.Pages
             set => this.RaiseAndSetIfChanged(ref _loadingDialog, value);
         }
 
+
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View layout = inflater.Inflate(Resource.Layout.Menu, container, false);
@@ -24,7 +27,7 @@ namespace NeptunLight.Droid.Pages
             this.Activated.InvokeCommand(ViewModel.EnsureDataAccessible);
             this.WireUpControls(layout);
 
-            LoadingDialog = new ProgressDialog(Context);
+            LoadingDialog = new ProgressDialog(Activity);
             LoadingDialog.SetCancelable(false);
             LoadingDialog.SetTitle("Szinkronizáció");
 

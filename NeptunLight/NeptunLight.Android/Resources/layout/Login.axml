@@ -16,7 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/PasswordField"
-        android:hint="Jelszó" />
+        android:hint="Jelszó" 
+        android:inputType="textPassword"/>
     <Button
         android:text="Belépés"
         android:layout_width="match_parent"

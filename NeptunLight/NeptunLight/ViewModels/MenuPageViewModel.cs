@@ -8,25 +8,15 @@ namespace NeptunLight.ViewModels
 {
     public class MenuPageViewModel : PageViewModel
     {
-        public MenuPageViewModel(IDataStorage storage, INeptunInterface client, INavigator navigator)
+        public MenuPageViewModel(IDataStorage storage, INeptunInterface client, INavigator navigator, IMailContentCache mailContentCache)
         {
             EnsureDataAccessible = ReactiveCommand.CreateFromTask(async () =>
             {
                 await storage.LoadDataAsync();
                 // see if there is saved data available
-                if (storage.CurrentData == null)
+                //if (storage.CurrentData == null)
                 {
                     // need to refresh
-                    try
-                    {
-                        await client.LoginAsync();
-                    }
-                    catch (Exception)
-                    {
-                        // invalid credentials
-                        navigator.NavigateTo<LoginPageViewModel>();
-                        return;
-                    }
 
                     LoadingDialogShown = true;
                     storage.CurrentData = new NeptunData();
@@ -40,13 +30,22 @@ namespace NeptunLight.ViewModels
                     storage.CurrentData.Calendar = await client.RefreshCalendarAsnyc();
                     LoadingDialogText = "Időszakok betöltése...";
                     storage.CurrentData.Periods = await client.RefreshPeriodsAsnyc();
-                    /*LoadingDialogText = "Üzenetek betöltése... (első alkalommal több percet is igénybe vehet)";
-                    storage.CurrentData.Messages = await client.RefreshMessagesAsnyc();*/
+                    LoadingDialogText = "Üzenetek betöltése... (első alkalommal több percet is igénybe vehet)";
+                    storage.CurrentData.Messages = await client.RefreshMessagesAsnyc(mailContentCache, new Progress<MessageLoadingProgress>(progress =>
+                    {
+                        LoadingDialogText = $"Üzenetek betöltése ({progress.Current} / {progress.Total})... (első alkalommal több percet is igénybe vehet)";
+                    }));
 
                     LoadingDialogText = "A szinkronizáció sikeres.";
                     await storage.SaveDataAsync();
                     LoadingDialogShown = false;
                 }
+            });
+
+            EnsureDataAccessible.ThrownExceptions.Subscribe(_ =>
+            {
+                LoadingDialogShown = false;
+                navigator.NavigateTo<LoginPageViewModel>();
             });
         }
 
