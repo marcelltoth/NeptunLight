@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
-using System.Threading.Tasks;
 using NeptunLight.DataAccess;
 using NeptunLight.Models;
+using NeptunLight.Services;
 using ReactiveUI;
 
 namespace NeptunLight.ViewModels
@@ -14,24 +13,35 @@ namespace NeptunLight.ViewModels
         private IReadOnlyList<Institute> _avaialbleInstitutes;
         private string _loginCode = "asd";
 
+        private string _loginError;
+
         private string _password;
 
-        public LoginPageViewModel(IInstituteDataProvider instituteDataProvider, INeptunInterfaceFactory neptunInterfaceFactory, Func<INeptunInterface, MenuPageViewModel> menuVmFactory)
+        private Institute _selectedInstitute;
+
+        public LoginPageViewModel(IInstituteDataProvider instituteDataProvider, INeptunInterface neptunInterface, INavigator navigator)
         {
             AvaialbleInstitutes = instituteDataProvider.GetAvaialbleInstitutes().ToList();
 
-            Login = ReactiveCommand.CreateFromTask(async ct => {
-                                                       neptunInterfaceFactory.Username = LoginCode;
-                                                       neptunInterfaceFactory.Password = Password;
-                                                       neptunInterfaceFactory.BaseUri = SelectedInstitute.RootUrl;
-                                                       INeptunInterface neptunInterface = neptunInterfaceFactory.Build();
+            Login = ReactiveCommand.CreateFromTask(async ct =>
+                                                   {
+                                                       LoginError = "";
+                                                       neptunInterface.Username = LoginCode;
+                                                       neptunInterface.Password = Password;
+                                                       neptunInterface.BaseUri = SelectedInstitute.RootUrl;
                                                        await neptunInterface.LoginAsync();
-                                                       return menuVmFactory(neptunInterface); },
+                                                       navigator.NavigateTo<MenuPageViewModel>();
+                                                   },
                                                    this.WhenAny(
                                                        x => x.LoginCode,
                                                        x => x.Password,
                                                        x => x.SelectedInstitute,
                                                        (loginCode, password, inst) => !string.IsNullOrEmpty(loginCode.Value) && !string.IsNullOrEmpty(password.Value) && inst != null));
+
+            Login.ThrownExceptions.Subscribe(e =>
+            {
+                LoginError = e is UnauthorizedAccessException ? "Hibás NEPTUN kód / jelszó." : "Hálózati hiba. Ellenőrizd az internetkapcsolatot és próbáld újra.";
+            });
         }
 
         public string LoginCode
@@ -46,8 +56,6 @@ namespace NeptunLight.ViewModels
             set => this.RaiseAndSetIfChanged(ref _password, value);
         }
 
-        private Institute _selectedInstitute;
-
         public Institute SelectedInstitute
         {
             get => _selectedInstitute;
@@ -60,6 +68,12 @@ namespace NeptunLight.ViewModels
             set => this.RaiseAndSetIfChanged(ref _avaialbleInstitutes, value);
         }
 
-        public ReactiveCommand<Unit,MenuPageViewModel> Login { get; }
+        public ReactiveCommand Login { get; }
+
+        public string LoginError
+        {
+            get => _loginError;
+            set => this.RaiseAndSetIfChanged(ref _loginError, value);
+        }
     }
 }

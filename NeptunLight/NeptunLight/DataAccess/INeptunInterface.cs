@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NeptunLight.Models;
 using NeptunLight.Services;
@@ -7,6 +8,11 @@ namespace NeptunLight.DataAccess
 {
     public interface INeptunInterface
     {
+        Uri BaseUri { get; set; }
+        string Username { get; set; }
+
+        string Password { get; set; }
+
         Task LoginAsync();
 
         Task<IReadOnlyCollection<Mail>> RefreshMessagesAsnyc(IMailContentCache contentCache = null);

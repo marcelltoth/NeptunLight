@@ -140,6 +140,10 @@ namespace NeptunLight.DataAccess
             {
                 return await response.Content.ReadAsStringAsync();
             }
+            catch (IOException)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
         }
 
         public async Task<JObject> GetJsonObjectAsnyc(string url)

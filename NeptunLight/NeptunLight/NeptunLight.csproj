@@ -31,6 +31,7 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AutofacModuleDefinition.cs" />
     <Compile Include="Helpers\DocumentExtensions.cs" />
     <Compile Include="Models\CalendarEvent.cs" />
     <Compile Include="Models\Course.cs" />
@@ -46,10 +47,8 @@
     <Compile Include="Services\IDataStorage.cs" />
     <Compile Include="DataAccess\IInstituteDataProvider.cs" />
     <Compile Include="DataAccess\INeptunInterface.cs" />
-    <Compile Include="DataAccess\INeptunInterfaceFactory.cs" />
     <Compile Include="DataAccess\StaticData.cs" />
     <Compile Include="DataAccess\WebNeptunInterface.cs" />
-    <Compile Include="DataAccess\WebNeptunInterfaceFactory.cs" />
     <Compile Include="Models\Institute.cs" />
     <Compile Include="Models\NeptunData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,6 +62,9 @@
   <ItemGroup>
     <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AngleSharp.0.9.9\lib\portable-windows8+net45+windowsphone8+wpa+monoandroid+monotouch\AngleSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="CGenT.Sprache, Version=1.0.0.0, Culture=neutral, PublicKeyToken=21cab3f7ca4a6a0f, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CGenT.Sprache.Release.1.0.0.1\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\CGenT.Sprache.dll</HintPath>

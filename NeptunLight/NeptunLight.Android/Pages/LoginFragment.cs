@@ -15,6 +15,7 @@ namespace NeptunLight.Droid.Pages
     {
         public EditText LoginField { get; set; }
         public EditText PasswordField { get; set; }
+        public TextView ErrorText { get; set; }
         public Button LoginButton { get; set; }
         public Spinner InstituteSelector { get; set; }
 
@@ -25,10 +26,17 @@ namespace NeptunLight.Droid.Pages
 
 
             this.WireUpControls(layout);
+
             this.Bind(ViewModel, x => x.LoginCode, x => x.LoginField.Text);
+
             this.Bind(ViewModel, x => x.Password, x => x.PasswordField.Text);
+
+            this.Bind(ViewModel, x => x.LoginError, x => x.ErrorText.Text);
+
             this.BindCommand(ViewModel, x => x.Login, x => x.LoginButton);
+
             this.WhenAnyValue(x => x.ViewModel.AvaialbleInstitutes).Subscribe(v => { InstituteSelector.Adapter = new InstituteAdapter(inflater, v.ToList()); });
+
             this.WhenAnyValue(x => x.InstituteSelector.SelectedItemPosition).Select(x => ((InstituteAdapter) InstituteSelector.Adapter)[x]).BindTo(this, x => x.ViewModel.SelectedInstitute);
 
             return layout;

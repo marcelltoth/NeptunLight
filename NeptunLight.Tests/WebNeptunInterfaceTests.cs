@@ -12,25 +12,24 @@ namespace NeptunLight.Tests
     {
         private static WebNeptunInterface CreateInterface()
         {
-            WebNeptunInterfaceFactory factory = new WebNeptunInterfaceFactory
+            WebNeptunInterface iface = new WebNeptunInterface
             {
                 BaseUri = new Uri("https://neptun3r.web.uni-corvinus.hu/hallgatoi_2/"),
                 Username = Environment.GetEnvironmentVariable("NEPTUN_USERNAME", EnvironmentVariableTarget.User),
                 Password = Environment.GetEnvironmentVariable("NEPTUN_PASSWORD", EnvironmentVariableTarget.User)
-            }; 
-            return (WebNeptunInterface)factory.Build();
+            };
+            return iface;
         }
 
         [Fact]
         public async void Login_WrongCredentials()
         {
-            WebNeptunInterfaceFactory factory = new WebNeptunInterfaceFactory
+            WebNeptunInterface client = new WebNeptunInterface
             {
                 BaseUri = new Uri("https://neptun3r.web.uni-corvinus.hu/hallgatoi_2/"),
-                Username = "random",
-                Password = "asd"
+                Username = "asd",
+                Password = "123"
             };
-            INeptunInterface client = factory.Build();
             await Assert.ThrowsAnyAsync<UnauthorizedAccessException>(() => client.LoginAsync());
         }
 

@@ -33,19 +33,11 @@ namespace NeptunLight.Droid
         {
             ContainerBuilder builder = new ContainerBuilder();
 
-            // viewmodels
-            builder.RegisterAssemblyTypes(typeof(INeptunInterface).GetTypeInfo().Assembly)
-                   .Where(t => t.IsAssignableTo<ViewModelBase>())
-                   .AsSelf();
-
-            // data access classes
-            // viewmodels
-            builder.RegisterAssemblyTypes(typeof(INeptunInterface).GetTypeInfo().Assembly)
-                   .Where(t => t.IsInNamespace($"{nameof(NeptunLight)}.{nameof(DataAccess)}"))
-                   .AsImplementedInterfaces();
+            // built in classes
+            builder.RegisterModule<AutofacModuleDefinition>();
 
             // service implementations
-            builder.RegisterType<InstanceDataStorage>()
+            builder.RegisterType<FileDataStorage>()
                    .As<IDataStorage>()
                    .SingleInstance();
 

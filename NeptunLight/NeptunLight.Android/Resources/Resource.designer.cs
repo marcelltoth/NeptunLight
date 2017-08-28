@@ -33,12 +33,70 @@ namespace NeptunLight.Droid
 		public partial class Attribute
 		{
 			
+			// aapt resource value: 0x7f010004
+			public const int alignmentMode = 2130771972;
+			
+			// aapt resource value: 0x7f010002
+			public const int columnCount = 2130771970;
+			
+			// aapt resource value: 0x7f010006
+			public const int columnOrderPreserved = 2130771974;
+			
+			// aapt resource value: 0x7f01000a
+			public const int layout_column = 2130771978;
+			
+			// aapt resource value: 0x7f01000b
+			public const int layout_columnSpan = 2130771979;
+			
+			// aapt resource value: 0x7f01000c
+			public const int layout_columnWeight = 2130771980;
+			
+			// aapt resource value: 0x7f01000d
+			public const int layout_gravity = 2130771981;
+			
+			// aapt resource value: 0x7f010007
+			public const int layout_row = 2130771975;
+			
+			// aapt resource value: 0x7f010008
+			public const int layout_rowSpan = 2130771976;
+			
+			// aapt resource value: 0x7f010009
+			public const int layout_rowWeight = 2130771977;
+			
+			// aapt resource value: 0x7f010000
+			public const int orientation = 2130771968;
+			
+			// aapt resource value: 0x7f010001
+			public const int rowCount = 2130771969;
+			
+			// aapt resource value: 0x7f010005
+			public const int rowOrderPreserved = 2130771973;
+			
+			// aapt resource value: 0x7f010003
+			public const int useDefaultMargins = 2130771971;
+			
 			static Attribute()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
 			}
 			
 			private Attribute()
+			{
+			}
+		}
+		
+		public partial class Dimension
+		{
+			
+			// aapt resource value: 0x7f050000
+			public const int default_gap = 2131034112;
+			
+			static Dimension()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Dimension()
 			{
 			}
 		}
@@ -62,20 +120,77 @@ namespace NeptunLight.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050000
-			public const int InstituteSelector = 2131034112;
+			// aapt resource value: 0x7f060012
+			public const int InstituteSelector = 2131099666;
 			
-			// aapt resource value: 0x7f050003
-			public const int LoginButton = 2131034115;
+			// aapt resource value: 0x7f060015
+			public const int LoginButton = 2131099669;
 			
-			// aapt resource value: 0x7f050001
-			public const int LoginField = 2131034113;
+			// aapt resource value: 0x7f060013
+			public const int LoginField = 2131099667;
 			
-			// aapt resource value: 0x7f050002
-			public const int PasswordField = 2131034114;
+			// aapt resource value: 0x7f060014
+			public const int PasswordField = 2131099668;
 			
-			// aapt resource value: 0x7f050004
-			public const int fragmentHolder = 2131034116;
+			// aapt resource value: 0x7f060002
+			public const int alignBounds = 2131099650;
+			
+			// aapt resource value: 0x7f060003
+			public const int alignMargins = 2131099651;
+			
+			// aapt resource value: 0x7f060004
+			public const int bottom = 2131099652;
+			
+			// aapt resource value: 0x7f060005
+			public const int center = 2131099653;
+			
+			// aapt resource value: 0x7f060006
+			public const int center_horizontal = 2131099654;
+			
+			// aapt resource value: 0x7f060007
+			public const int center_vertical = 2131099655;
+			
+			// aapt resource value: 0x7f060008
+			public const int clip_horizontal = 2131099656;
+			
+			// aapt resource value: 0x7f060009
+			public const int clip_vertical = 2131099657;
+			
+			// aapt resource value: 0x7f06000a
+			public const int end = 2131099658;
+			
+			// aapt resource value: 0x7f060016
+			public const int errorText = 2131099670;
+			
+			// aapt resource value: 0x7f06000b
+			public const int fill = 2131099659;
+			
+			// aapt resource value: 0x7f06000c
+			public const int fill_horizontal = 2131099660;
+			
+			// aapt resource value: 0x7f06000d
+			public const int fill_vertical = 2131099661;
+			
+			// aapt resource value: 0x7f060017
+			public const int fragmentHolder = 2131099671;
+			
+			// aapt resource value: 0x7f060000
+			public const int horizontal = 2131099648;
+			
+			// aapt resource value: 0x7f06000e
+			public const int left = 2131099662;
+			
+			// aapt resource value: 0x7f06000f
+			public const int right = 2131099663;
+			
+			// aapt resource value: 0x7f060010
+			public const int start = 2131099664;
+			
+			// aapt resource value: 0x7f060011
+			public const int top = 2131099665;
+			
+			// aapt resource value: 0x7f060001
+			public const int vertical = 2131099649;
 			
 			static Id()
 			{
@@ -95,6 +210,9 @@ namespace NeptunLight.Droid
 			
 			// aapt resource value: 0x7f030001
 			public const int Main = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int Menu = 2130903042;
 			
 			static Layout()
 			{
@@ -124,6 +242,107 @@ namespace NeptunLight.Droid
 			}
 			
 			private String()
+			{
+			}
+		}
+		
+		public partial class Styleable
+		{
+			
+			public static int[] GridLayout = new int[] {
+					2130771968,
+					2130771969,
+					2130771970,
+					2130771971,
+					2130771972,
+					2130771973,
+					2130771974};
+			
+			// aapt resource value: 4
+			public const int GridLayout_alignmentMode = 4;
+			
+			// aapt resource value: 2
+			public const int GridLayout_columnCount = 2;
+			
+			// aapt resource value: 6
+			public const int GridLayout_columnOrderPreserved = 6;
+			
+			// aapt resource value: 0
+			public const int GridLayout_orientation = 0;
+			
+			// aapt resource value: 1
+			public const int GridLayout_rowCount = 1;
+			
+			// aapt resource value: 5
+			public const int GridLayout_rowOrderPreserved = 5;
+			
+			// aapt resource value: 3
+			public const int GridLayout_useDefaultMargins = 3;
+			
+			public static int[] GridLayout_Layout = new int[] {
+					16842996,
+					16842997,
+					16842998,
+					16842999,
+					16843000,
+					16843001,
+					16843002,
+					2130771975,
+					2130771976,
+					2130771977,
+					2130771978,
+					2130771979,
+					2130771980,
+					2130771981};
+			
+			// aapt resource value: 1
+			public const int GridLayout_Layout_android_layout_height = 1;
+			
+			// aapt resource value: 2
+			public const int GridLayout_Layout_android_layout_margin = 2;
+			
+			// aapt resource value: 6
+			public const int GridLayout_Layout_android_layout_marginBottom = 6;
+			
+			// aapt resource value: 3
+			public const int GridLayout_Layout_android_layout_marginLeft = 3;
+			
+			// aapt resource value: 5
+			public const int GridLayout_Layout_android_layout_marginRight = 5;
+			
+			// aapt resource value: 4
+			public const int GridLayout_Layout_android_layout_marginTop = 4;
+			
+			// aapt resource value: 0
+			public const int GridLayout_Layout_android_layout_width = 0;
+			
+			// aapt resource value: 10
+			public const int GridLayout_Layout_layout_column = 10;
+			
+			// aapt resource value: 11
+			public const int GridLayout_Layout_layout_columnSpan = 11;
+			
+			// aapt resource value: 12
+			public const int GridLayout_Layout_layout_columnWeight = 12;
+			
+			// aapt resource value: 13
+			public const int GridLayout_Layout_layout_gravity = 13;
+			
+			// aapt resource value: 7
+			public const int GridLayout_Layout_layout_row = 7;
+			
+			// aapt resource value: 8
+			public const int GridLayout_Layout_layout_rowSpan = 8;
+			
+			// aapt resource value: 9
+			public const int GridLayout_Layout_layout_rowWeight = 9;
+			
+			static Styleable()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Styleable()
 			{
 			}
 		}

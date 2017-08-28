@@ -21,18 +21,11 @@ namespace NeptunLight.DataAccess
     {
         private WebScraperClient _client;
 
-        public WebNeptunInterface(string username, string password, Uri baseUri)
-        {
-            Username = username;
-            Password = password;
-            BaseUri = baseUri;
-        }
+        public string Username { get; set; }
 
-        public string Username { get; }
+        public string Password { get; set; }
 
-        public string Password { get; }
-
-        public Uri BaseUri { get; }
+        public Uri BaseUri { get; set; }
 
         public async Task LoginAsync()
         {
