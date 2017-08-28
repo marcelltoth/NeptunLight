@@ -24,5 +24,11 @@ namespace NeptunLight.Droid.Services
         {
             return Task.CompletedTask;
         }
+
+        public Task ClearDataAsync()
+        {
+            CurrentData = null;
+            return Task.CompletedTask;
+        }
     }
 }

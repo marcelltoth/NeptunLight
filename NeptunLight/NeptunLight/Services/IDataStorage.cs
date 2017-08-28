@@ -6,10 +6,12 @@ namespace NeptunLight.Services
 {
     public interface IDataStorage : IReactiveObject
     {
-        NeptunData CurrentData { get; }
+        NeptunData CurrentData { get; set; }
 
         Task LoadDataAsync(bool forceReload = false);
 
         Task SaveDataAsync();
+
+        Task ClearDataAsync();
     }
 }

@@ -37,7 +37,7 @@ namespace NeptunLight.Droid
 
 			SetContentView(Resource.Layout.Main);
             
-		    NavigateTo<LoginPageViewModel>(false);
+		    NavigateTo<MenuPageViewModel>(false);
 		}
 
 	    public void NavigateTo<T>(bool addToStack = true) where T : PageViewModel

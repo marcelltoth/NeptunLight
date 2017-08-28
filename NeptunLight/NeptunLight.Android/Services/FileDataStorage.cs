@@ -17,7 +17,7 @@ namespace NeptunLight.Droid.Services
         public NeptunData CurrentData
         {
             get => _currentData;
-            private set => this.RaiseAndSetIfChanged(ref _currentData, value);
+            set => this.RaiseAndSetIfChanged(ref _currentData, value);
         }
         public async Task LoadDataAsync(bool forceReload = false)
         {
@@ -38,6 +38,18 @@ namespace NeptunLight.Droid.Services
             await Task.Run(() =>
             {
                 File.WriteAllText(FileLocation, JsonConvert.SerializeObject(CurrentData));
+            });
+        }
+
+        public async Task ClearDataAsync()
+        {
+            await Task.Run(() =>
+            {
+                if (File.Exists(FileLocation))
+                {
+                    File.Delete(FileLocation);
+                }
+                CurrentData = null;
             });
         }
     }
