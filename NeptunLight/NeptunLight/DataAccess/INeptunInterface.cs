@@ -14,6 +14,6 @@ namespace NeptunLight.DataAccess
         Task<IReadOnlyDictionary<Semester, IReadOnlyCollection<Subject>>> RefreshSubjectsAsnyc();
         Task<IReadOnlyDictionary<Semester, IReadOnlyCollection<Exam>>> RefreshExamsAsnyc();
         Task<IReadOnlyCollection<SemesterData>> RefreshSemestersAsnyc();
-        Task<IReadOnlyCollection<SemesterData>> RefreshPeriodsAsnyc();
+        Task<IReadOnlyCollection<Period>> RefreshPeriodsAsnyc();
     }
 }

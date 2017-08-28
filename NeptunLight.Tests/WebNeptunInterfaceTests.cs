@@ -10,16 +10,15 @@ namespace NeptunLight.Tests
 {
     public class WebNeptunInterfaceTests
     {
-        private static INeptunInterface CreateInterface()
+        private static WebNeptunInterface CreateInterface()
         {
             WebNeptunInterfaceFactory factory = new WebNeptunInterfaceFactory
             {
                 BaseUri = new Uri("https://neptun3r.web.uni-corvinus.hu/hallgatoi_2/"),
                 Username = Environment.GetEnvironmentVariable("NEPTUN_USERNAME", EnvironmentVariableTarget.User),
                 Password = Environment.GetEnvironmentVariable("NEPTUN_PASSWORD", EnvironmentVariableTarget.User)
-            };
-            INeptunInterface client = factory.Build();
-            return client;
+            }; 
+            return (WebNeptunInterface)factory.Build();
         }
 
         [Fact]
@@ -72,6 +71,14 @@ namespace NeptunLight.Tests
             INeptunInterface client = CreateInterface();
             IReadOnlyCollection<CalendarEvent> events = await client.RefreshCalendarAsnyc();
             Assert.InRange(events.Count, 40, Int32.MaxValue);
+        }
+
+        [Fact]
+        public async void Periods_HasData()
+        {
+            WebNeptunInterface client = CreateInterface();
+            IReadOnlyCollection<Period> periods = await client.RefreshPeriodsAsnyc();
+            Assert.InRange(periods.Count, 3, Int32.MaxValue);
         }
     }
 }

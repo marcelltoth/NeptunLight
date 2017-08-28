@@ -264,9 +264,51 @@ namespace NeptunLight.DataAccess
             throw new NotImplementedException();
         }
 
-        public async Task<IReadOnlyCollection<SemesterData>> RefreshPeriodsAsnyc()
+        public async Task<IReadOnlyCollection<Period>> RefreshPeriodsAsnyc()
         {
-            throw new NotImplementedException();
+            await LoginAsync();
+            List<Period> result = new List<Period>();
+
+            IDocument periodsPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=1301");
+            IEnumerable<IElement> semesterOptions = periodsPage.GetElementById("upFilter_cmbTerms").Children.Where(opt => opt.GetAttribute("value") != "-1");
+            foreach (IElement option in semesterOptions.Take(8))
+            {
+                try
+                {
+                    Semester semester = Semester.Parse(option.TextContent);
+                    if (semester.IsFarFuture)
+                        continue;
+
+                    // load period data in semester
+                    await Task.Delay(200);
+                    periodsPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=1301");
+                    await Task.Delay(100);
+                    IDocument semesterExamData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=1301", periodsPage, new[] {new KeyValuePair<string, string>("upFilter$cmbTerms", option.GetAttribute("value"))});
+                    IHtmlTableElement subjectDataTable = (IHtmlTableElement) semesterExamData.GetElementById("h_seasons_gridSeasons_bodytable");
+
+                    foreach (IHtmlTableRowElement dataRow in subjectDataTable.Bodies[0].Rows)
+                    {
+                        if (dataRow.ClassList.Contains("NoMatch"))
+                            continue;
+                        DateTime startTime = DateTime.ParseExact(dataRow.Cells[1].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo);
+                        DateTime endTime = DateTime.ParseExact(dataRow.Cells[2].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo);
+                        string type = dataRow.Cells[3].TextContent;
+                        string name = dataRow.Cells[4].TextContent;
+
+                        result.Add(new Period(startTime, endTime, type, name));
+                    }
+                }
+                catch (FormatException)
+                {
+                    // e.g. "Kérem válasszon" semester
+                }
+                catch (Exception ex)
+                {
+                    throw new NetworkException("Error loading periods", ex);
+                }
+            }
+
+            return result;
         }
     }
 }
