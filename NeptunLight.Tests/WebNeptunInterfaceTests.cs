@@ -80,5 +80,13 @@ namespace NeptunLight.Tests
             IReadOnlyCollection<Period> periods = await client.RefreshPeriodsAsnyc();
             Assert.InRange(periods.Count, 3, Int32.MaxValue);
         }
+
+        [Fact]
+        public async void Semesters_HasData()
+        {
+            WebNeptunInterface client = CreateInterface();
+            IReadOnlyCollection<SemesterData> semesters = await client.RefreshSemestersAsnyc();
+            Assert.InRange(semesters.Count, 1, 20);
+        }
     }
 }
