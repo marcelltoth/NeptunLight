@@ -21,6 +21,7 @@ namespace NeptunLight.Droid.Pages
         }
 
         public Button CalendarButton { get; set; }
+        public Button MessagesButton { get; set; }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -43,7 +44,8 @@ namespace NeptunLight.Droid.Pages
             });
 
             this.BindCommand(ViewModel, x => x.GoToCalendar, x => x.CalendarButton);
-            
+            this.BindCommand(ViewModel, x => x.GoToMessages, x => x.MessagesButton);
+
 
             return layout;
         }
