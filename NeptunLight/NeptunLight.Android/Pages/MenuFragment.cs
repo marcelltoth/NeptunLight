@@ -4,6 +4,7 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Views.InputMethods;
+using Android.Widget;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
@@ -19,6 +20,7 @@ namespace NeptunLight.Droid.Pages
             set => this.RaiseAndSetIfChanged(ref _loadingDialog, value);
         }
 
+        public Button CalendarButton { get; set; }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -39,6 +41,9 @@ namespace NeptunLight.Droid.Pages
                 else
                     LoadingDialog.Dismiss();
             });
+
+            this.BindCommand(ViewModel, x => x.GoToCalendar, x => x.CalendarButton);
+            
 
             return layout;
         }

@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                      xmlns:grid="http://schemas.android.com/apk/res-auto"
-                                      android:layout_width="fill_parent"
-                                      android:layout_height="fill_parent"
-                                      grid:rowCount="3"
-                                      grid:columnCount="2">
+    xmlns:grid="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    grid:rowCount="3"
+    grid:columnCount="2">
+    <Button
+        android:id="@+id/messagesButton"
+        android:text="Üzenetek"
+        grid:layout_columnWeight="1"
+        grid:layout_rowWeight="1"
+        grid:layout_gravity="fill" />
   <Button
-    android:text="Üzenetek"
-    grid:layout_columnWeight="1"
-    grid:layout_rowWeight="1"
-    grid:layout_gravity="fill" />
+    android:id="@+id/calendarButton"
+        android:text="Órarend"
+        grid:layout_columnWeight="1"
+        grid:layout_rowWeight="1"
+        grid:layout_gravity="fill" />
   <Button
-    android:text="Órarend"
-    grid:layout_columnWeight="1"
-    grid:layout_rowWeight="1"
-    grid:layout_gravity="fill" />
+    android:id="@+id/coursesButton"
+        android:text="Kurzusok"
+        grid:layout_columnWeight="1"
+        grid:layout_rowWeight="1"
+        grid:layout_gravity="fill" />
   <Button
-    android:text="Kurzusok"
-    grid:layout_columnWeight="1"
-    grid:layout_rowWeight="1"
-    grid:layout_gravity="fill" />
+    android:id="@+id/examsButton"
+        android:text="Vizsgák"
+        grid:layout_columnWeight="1"
+        grid:layout_rowWeight="1"
+        grid:layout_gravity="fill" />
   <Button
-    android:text="Vizsgák"
-    grid:layout_columnWeight="1"
-    grid:layout_rowWeight="1"
-    grid:layout_gravity="fill" />
+    android:id="@+id/semestersButton"
+        android:text="Félévek"
+        grid:layout_columnWeight="1"
+        grid:layout_rowWeight="1"
+        grid:layout_gravity="fill" />
   <Button
-    android:text="Félévek"
-    grid:layout_columnWeight="1"
-    grid:layout_rowWeight="1"
-    grid:layout_gravity="fill" />
-  <Button
-    android:text="Időszakok"
-    grid:layout_columnWeight="1"
-    grid:layout_rowWeight="1"
-    grid:layout_gravity="fill" />
+    android:id="@+id/periodsButton"
+        android:text="Időszakok"
+        grid:layout_columnWeight="1"
+        grid:layout_rowWeight="1"
+        grid:layout_gravity="fill" />
 </android.support.v7.widget.GridLayout>

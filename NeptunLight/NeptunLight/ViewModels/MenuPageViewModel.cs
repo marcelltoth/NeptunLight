@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Linq;
 using NeptunLight.DataAccess;
 using NeptunLight.Models;
 using NeptunLight.Services;
@@ -19,6 +20,8 @@ namespace NeptunLight.ViewModels
                     // need to refresh
 
                     LoadingDialogShown = true;
+                    LoadingDialogText = "Belépés...";
+                    await client.LoginAsync();
                     storage.CurrentData = new NeptunData();
                     LoadingDialogText = "Féléves adatok betöltése...";
                     storage.CurrentData.SemesterInfo = await client.RefreshSemestersAsnyc();
@@ -47,6 +50,8 @@ namespace NeptunLight.ViewModels
                 LoadingDialogShown = false;
                 navigator.NavigateTo<LoginPageViewModel>();
             });
+
+            GoToCalendar = ReactiveCommand.Create(() => navigator.NavigateTo<CalendarPageViewModel>(), this.WhenAnyValue(x => x.LoadingDialogShown).Select(x => !x));
         }
 
         private bool _loadingDialogShown;
@@ -66,5 +71,7 @@ namespace NeptunLight.ViewModels
         }
 
         public ReactiveCommand EnsureDataAccessible { get; }
+
+        public ReactiveCommand GoToCalendar { get; }
     }
 }
