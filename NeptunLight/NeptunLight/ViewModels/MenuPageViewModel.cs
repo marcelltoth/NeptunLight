@@ -14,7 +14,7 @@ namespace NeptunLight.ViewModels
             {
                 await storage.LoadDataAsync();
                 // see if there is saved data available
-                //if (storage.CurrentData == null)
+                if (storage.CurrentData == null)
                 {
                     // need to refresh
 
