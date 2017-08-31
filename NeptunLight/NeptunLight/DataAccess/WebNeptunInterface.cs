@@ -141,7 +141,9 @@ namespace NeptunLight.DataAccess
             return events.Select(ice =>
             {
                 string[] summaryParts = ice.Summary.Split(new[] {" - "}, StringSplitOptions.None);
-                string title = summaryParts[0].Substring(summaryParts[0].IndexOf('(')).Trim();
+                string title = summaryParts[0];
+                if(title.Contains("("))
+                    title = title.Substring(0, summaryParts[0].IndexOf('(')).Trim();
                 string details = summaryParts[0].Replace(title, "").Trim();
                 return new CalendarEvent(ice.DTStart, ice.DTEnd, ice.Location, summaryParts.Last(), title, summaryParts[1], details, summaryParts.Length > 3 ? summaryParts[2] : null);
             }).ToList();
