@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
 using NeptunLight.Models;
@@ -27,7 +29,7 @@ namespace NeptunLight.Droid.Services
                 await Task.Run(() =>
                 {
                     string text = File.ReadAllText(FileLocation);
-                    deserializedData = JsonConvert.DeserializeObject<NeptunData>(text);
+                    deserializedData = JsonConvert.DeserializeObject<NeptunDataProxy>(text).ToNeptunData();
                 });
                 CurrentData = deserializedData;
             }
@@ -37,7 +39,7 @@ namespace NeptunLight.Droid.Services
         {
             await Task.Run(() =>
             {
-                File.WriteAllText(FileLocation, JsonConvert.SerializeObject(CurrentData));
+                File.WriteAllText(FileLocation, JsonConvert.SerializeObject(NeptunDataProxy.FromNeptunData(CurrentData)));
             });
         }
 
@@ -51,6 +53,47 @@ namespace NeptunLight.Droid.Services
                 }
                 CurrentData = null;
             });
+        }
+
+        private class NeptunDataProxy
+        {
+            public static NeptunDataProxy FromNeptunData(NeptunData d)
+            {
+                return new NeptunDataProxy
+                {
+                    Calendar = d.Calendar.ToList(),
+                    Messages = d.Messages.ToList(),
+                    SubjectsPerSemester = d.SubjectsPerSemester.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value.ToList()),
+                    ExamsPerSemester = d.ExamsPerSemester.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value.ToList()),
+                    SemesterInfo = d.SemesterInfo.ToList(),
+                    Periods = d.Periods.ToList()
+                };
+            }
+
+            public NeptunData ToNeptunData()
+            {
+                return new NeptunData()
+                {
+                    Calendar = Calendar,
+                    Messages = Messages,
+                    SubjectsPerSemester =  SubjectsPerSemester.ToDictionary(kvp => Semester.Parse(kvp.Key), kvp => (IReadOnlyCollection<Subject>)kvp.Value),
+                    ExamsPerSemester = ExamsPerSemester.ToDictionary(kvp => Semester.Parse(kvp.Key), kvp => (IReadOnlyCollection<Exam>)kvp.Value),
+                    SemesterInfo = SemesterInfo,
+                    Periods = Periods
+                };
+            }
+
+            public List<Mail> Messages { get; set; }
+
+            public List<CalendarEvent> Calendar { get; set; }
+
+            public Dictionary<string, List<Subject>> SubjectsPerSemester { get; set; }
+
+            public Dictionary<string, List<Exam>> ExamsPerSemester { get; set; }
+
+            public IReadOnlyCollection<SemesterData> SemesterInfo { get; set; }
+
+            public IReadOnlyCollection<Period> Periods { get; set; }
         }
     }
 }
