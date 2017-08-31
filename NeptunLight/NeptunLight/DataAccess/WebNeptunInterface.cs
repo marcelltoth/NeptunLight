@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using AngleSharp.Dom;
 using AngleSharp.Dom.Html;
@@ -106,7 +103,7 @@ namespace NeptunLight.DataAccess
             return result;
         }
 
-        private IList<MailHeader> ParseMailHeaderTable(IHtmlTableElement table)
+        private static IList<MailHeader> ParseMailHeaderTable(IHtmlTableElement table)
         {
             List<MailHeader> result = new List<MailHeader>();
             foreach (IHtmlTableRowElement row in table.Bodies[0].Rows)
