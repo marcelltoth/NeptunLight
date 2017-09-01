@@ -53,6 +53,7 @@ namespace NeptunLight.ViewModels
 
             GoToCalendar = ReactiveCommand.Create(() => navigator.NavigateTo<CalendarPageViewModel>(), this.WhenAnyValue(x => x.LoadingDialogShown).Select(x => !x));
             GoToMessages = ReactiveCommand.Create(() => navigator.NavigateTo<MessagesPageViewModel>(), this.WhenAnyValue(x => x.LoadingDialogShown).Select(x => !x));
+            GoToPeriods = ReactiveCommand.Create(() => navigator.NavigateTo<PeriodsPageViewModel>(), this.WhenAnyValue(x => x.LoadingDialogShown).Select(x => !x));
         }
 
         private bool _loadingDialogShown;
@@ -75,5 +76,7 @@ namespace NeptunLight.ViewModels
 
         public ReactiveCommand GoToCalendar { get; }
         public ReactiveCommand GoToMessages { get; }
+
+        public ReactiveCommand GoToPeriods { get; }
     }
 }

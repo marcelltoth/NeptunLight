@@ -112,6 +112,7 @@
     <Compile Include="Pages\MenuFragment.cs" />
     <Compile Include="Pages\MessageDetailsFragment.cs" />
     <Compile Include="Pages\MessagesFragment.cs" />
+    <Compile Include="Pages\PeriodsFragment.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FileDataStorage.cs" />
@@ -142,6 +143,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\MessageDetails.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Periods.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\PeriodsListItem.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

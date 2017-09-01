@@ -246,6 +246,9 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f06001e
 			public const int PasswordField = 2131099678;
 			
+			// aapt resource value: 0x7f060030
+			public const int PeriodList = 2131099696;
+			
 			// aapt resource value: 0x7f060002
 			public const int alignBounds = 2131099650;
 			
@@ -257,6 +260,9 @@ namespace NeptunLight.Droid
 			
 			// aapt resource value: 0x7f060023
 			public const int calendarButton = 2131099683;
+			
+			// aapt resource value: 0x7f060031
+			public const int categoryTextView = 2131099697;
 			
 			// aapt resource value: 0x7f060005
 			public const int center = 2131099653;
@@ -284,6 +290,9 @@ namespace NeptunLight.Droid
 			
 			// aapt resource value: 0x7f06000a
 			public const int end = 2131099658;
+			
+			// aapt resource value: 0x7f060033
+			public const int endDateTextView = 2131099699;
 			
 			// aapt resource value: 0x7f060020
 			public const int errorText = 2131099680;
@@ -344,6 +353,9 @@ namespace NeptunLight.Droid
 			
 			// aapt resource value: 0x7f060010
 			public const int start = 2131099664;
+			
+			// aapt resource value: 0x7f060032
+			public const int startDateTextView = 2131099698;
 			
 			// aapt resource value: 0x7f06002b
 			public const int subjectTextView = 2131099691;
@@ -408,6 +420,12 @@ namespace NeptunLight.Droid
 			
 			// aapt resource value: 0x7f030006
 			public const int Messages = 2130903046;
+			
+			// aapt resource value: 0x7f030007
+			public const int Periods = 2130903047;
+			
+			// aapt resource value: 0x7f030008
+			public const int PeriodsListItem = 2130903048;
 			
 			static Layout()
 			{

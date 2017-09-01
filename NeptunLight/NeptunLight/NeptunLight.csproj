@@ -61,6 +61,8 @@
     <Compile Include="ViewModels\MessagesPageViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />
+    <Compile Include="ViewModels\PeriodsPageViewModel.cs" />
+    <Compile Include="ViewModels\PeriodViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
