@@ -215,6 +215,9 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f020000
 			public const int Icon = 2130837504;
 			
+			// aapt resource value: 0x7f020001
+			public const int message_title_box = 2130837505;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -236,6 +239,9 @@ namespace NeptunLight.Droid
 			
 			// aapt resource value: 0x7f06001d
 			public const int LoginField = 2131099677;
+			
+			// aapt resource value: 0x7f06002b
+			public const int MessageList = 2131099691;
 			
 			// aapt resource value: 0x7f06001e
 			public const int PasswordField = 2131099678;
@@ -306,6 +312,9 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f06001a
 			public const int length_short = 2131099674;
 			
+			// aapt resource value: 0x7f060028
+			public const int letterBox = 2131099688;
+			
 			// aapt resource value: 0x7f060022
 			public const int messagesButton = 2131099682;
 			
@@ -324,6 +333,9 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f060026
 			public const int semestersButton = 2131099686;
 			
+			// aapt resource value: 0x7f060029
+			public const int senderTextView = 2131099689;
+			
 			// aapt resource value: 0x7f060010
 			public const int start = 2131099664;
 			
@@ -332,6 +344,9 @@ namespace NeptunLight.Droid
 			
 			// aapt resource value: 0x7f060016
 			public const int thursday = 2131099670;
+			
+			// aapt resource value: 0x7f06002a
+			public const int titleTextView = 2131099690;
 			
 			// aapt resource value: 0x7f060011
 			public const int top = 2131099665;
@@ -374,7 +389,10 @@ namespace NeptunLight.Droid
 			public const int Menu = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int Messages = 2130903044;
+			public const int MessageListItem = 2130903044;
+			
+			// aapt resource value: 0x7f030005
+			public const int Messages = 2130903045;
 			
 			static Layout()
 			{

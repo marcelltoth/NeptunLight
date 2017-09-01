@@ -16,6 +16,7 @@ namespace NeptunLight.ViewModels
         public MessageViewModel(Mail model)
         {
             Title = model.Subject;
+            Sender = model.Sender;
             HtmlContent = model.Content;
             this.WhenAny(x => x.Sender, sender => string.IsNullOrEmpty(sender.Value) ? String.Empty : sender.Value.ToUpper().Substring(0, 1)).ToProperty(this, x => x.SenderCode, out _senderCode);
         }
