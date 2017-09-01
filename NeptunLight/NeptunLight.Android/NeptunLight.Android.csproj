@@ -58,6 +58,9 @@
     <Reference Include="ReactiveUI, Version=7.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\reactiveui-core.7.4.0\lib\MonoAndroid403\ReactiveUI.dll</HintPath>
     </Reference>
+    <Reference Include="ReactiveUI.Events, Version=7.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\reactiveui-events.7.3.0\lib\MonoAndroid403\ReactiveUI.Events.dll</HintPath>
+    </Reference>
     <Reference Include="Splat, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Splat.1.4.0\lib\monoandroid\Splat.dll</HintPath>
     </Reference>
@@ -107,6 +110,7 @@
     <Compile Include="Pages\LoginFragment.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Pages\MenuFragment.cs" />
+    <Compile Include="Pages\MessageDetailsFragment.cs" />
     <Compile Include="Pages\MessagesFragment.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -135,6 +139,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\MessageListItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\MessageDetails.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using NeptunLight.Models;
 using NeptunLight.Services;
 using ReactiveUI;
@@ -14,10 +15,18 @@ namespace NeptunLight.ViewModels
         private readonly ObservableAsPropertyHelper<IEnumerable<MessageViewModel>> _messages;
         public IEnumerable<MessageViewModel> Messages => _messages.Value;
 
-        public MessagesPageViewModel(IDataStorage data, Func<Mail, MessageViewModel> messageVmFac)
+        public MessagesPageViewModel(IDataStorage data, Func<Mail, MessageViewModel> messageVmFac, INavigator navigator)
         {
             DataStorage = data;
             this.WhenAny(x => x.DataStorage.CurrentData.Messages, messages => messages.Value.Select(messageVmFac)).ToProperty(this, x => x.Messages, out _messages);
+
+            OpenMessage = ReactiveCommand.Create<MessageViewModel, Unit>(vm =>
+            {
+                navigator.NavigateTo(vm);
+                return Unit.Default;
+            });
         }
+
+        public ReactiveCommand<MessageViewModel, Unit> OpenMessage { get; }
     }
 }
