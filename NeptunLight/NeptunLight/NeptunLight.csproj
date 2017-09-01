@@ -56,6 +56,8 @@
     <Compile Include="Services\IMailContentCache.cs" />
     <Compile Include="Services\INavigator.cs" />
     <Compile Include="ViewModels\CalendarPageViewModel.cs" />
+    <Compile Include="ViewModels\CoursesPageViewModel.cs" />
+    <Compile Include="ViewModels\ExamsPageViewModel.cs" />
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\MenuPageViewModel.cs" />
     <Compile Include="ViewModels\MessagesPageViewModel.cs" />
@@ -63,6 +65,7 @@
     <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\PeriodsPageViewModel.cs" />
     <Compile Include="ViewModels\PeriodViewModel.cs" />
+    <Compile Include="ViewModels\SemestersPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>

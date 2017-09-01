@@ -20,8 +20,11 @@ namespace NeptunLight.Droid.Pages
             set => this.RaiseAndSetIfChanged(ref _loadingDialog, value);
         }
 
-        public Button CalendarButton { get; set; }
         public Button MessagesButton { get; set; }
+        public Button CalendarButton { get; set; }
+        public Button CoursesButton { get; set; }
+        public Button ExamsButton { get; set; }
+        public Button SemestersButton { get; set; }
         public Button PeriodsButton { get; set; }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -44,8 +47,11 @@ namespace NeptunLight.Droid.Pages
                     LoadingDialog.Dismiss();
             });
 
-            this.BindCommand(ViewModel, x => x.GoToCalendar, x => x.CalendarButton);
             this.BindCommand(ViewModel, x => x.GoToMessages, x => x.MessagesButton);
+            this.BindCommand(ViewModel, x => x.GoToCalendar, x => x.CalendarButton);
+            this.BindCommand(ViewModel, x => x.GoToCourses, x => x.CoursesButton);
+            this.BindCommand(ViewModel, x => x.GoToExams, x => x.ExamsButton);
+            this.BindCommand(ViewModel, x => x.GoToSemesters, x => x.SemestersButton);
             this.BindCommand(ViewModel, x => x.GoToPeriods, x => x.PeriodsButton);
 
             return layout;

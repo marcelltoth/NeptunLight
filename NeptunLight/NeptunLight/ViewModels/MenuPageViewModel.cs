@@ -51,9 +51,13 @@ namespace NeptunLight.ViewModels
                 navigator.NavigateTo<LoginPageViewModel>();
             });
 
-            GoToCalendar = ReactiveCommand.Create(() => navigator.NavigateTo<CalendarPageViewModel>(), this.WhenAnyValue(x => x.LoadingDialogShown).Select(x => !x));
-            GoToMessages = ReactiveCommand.Create(() => navigator.NavigateTo<MessagesPageViewModel>(), this.WhenAnyValue(x => x.LoadingDialogShown).Select(x => !x));
-            GoToPeriods = ReactiveCommand.Create(() => navigator.NavigateTo<PeriodsPageViewModel>(), this.WhenAnyValue(x => x.LoadingDialogShown).Select(x => !x));
+            IObservable<bool> menuAvailable = this.WhenAnyValue(x => x.LoadingDialogShown).Select(x => !x);
+            GoToMessages = ReactiveCommand.Create(() => navigator.NavigateTo<MessagesPageViewModel>(), menuAvailable);
+            GoToCalendar = ReactiveCommand.Create(() => navigator.NavigateTo<CalendarPageViewModel>(), menuAvailable);
+            GoToCourses = ReactiveCommand.Create(() => navigator.NavigateTo<CoursesPageViewModel>(), menuAvailable);
+            GoToExams = ReactiveCommand.Create(() => navigator.NavigateTo<ExamsPageViewModel>(), menuAvailable);
+            GoToSemesters = ReactiveCommand.Create(() => navigator.NavigateTo<SemestersPageViewModel>(), menuAvailable);
+            GoToPeriods = ReactiveCommand.Create(() => navigator.NavigateTo<PeriodsPageViewModel>(), menuAvailable);
         }
 
         private bool _loadingDialogShown;
@@ -74,9 +78,11 @@ namespace NeptunLight.ViewModels
 
         public ReactiveCommand EnsureDataAccessible { get; }
 
-        public ReactiveCommand GoToCalendar { get; }
         public ReactiveCommand GoToMessages { get; }
-
+        public ReactiveCommand GoToCalendar { get; }
+        public ReactiveCommand GoToCourses { get; }
+        public ReactiveCommand GoToExams { get; }
+        public ReactiveCommand GoToSemesters { get; }
         public ReactiveCommand GoToPeriods { get; }
     }
 }
