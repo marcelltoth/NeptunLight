@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace NeptunLight.Models
 {
@@ -65,15 +66,15 @@ namespace NeptunLight.Models
 
         #endregion
 
-
-        public Semester(int year, int semester)
+        [JsonConstructor]
+        public Semester(int primaryYear, int semesterNumber)
         {
-            if (semester > 2 || semester < 1)
+            if (semesterNumber > 2 || semesterNumber < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(semester), "Semester number can either be 1 or 2");
+                throw new ArgumentOutOfRangeException(nameof(semesterNumber), "Semester number can either be 1 or 2");
             }
-            PrimaryYear = year;
-            SemesterNumber = semester;
+            PrimaryYear = primaryYear;
+            SemesterNumber = semesterNumber;
         }
 
         public int PrimaryYear { get; }
