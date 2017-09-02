@@ -7,9 +7,9 @@ using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
-namespace NeptunLight.Droid.Pages
+namespace NeptunLight.Droid.Views
 {
-    public class PeriodsFragment : ReactiveFragment<PeriodsPageViewModel>
+    public class PeriodsPage : ReactiveFragment<PeriodsPageViewModel>
     {
         public ListView PeriodList { get; set; }
 

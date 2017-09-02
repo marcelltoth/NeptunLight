@@ -9,7 +9,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Autofac;
-using NeptunLight.Droid.Pages;
+using NeptunLight.Droid.Views;
 using NeptunLight.Services;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -25,7 +25,7 @@ namespace NeptunLight.Droid
 
 	    static MainActivity()
 	    {
-	        string targetNamespace = $"{nameof(NeptunLight)}.{nameof(Droid)}.{nameof(Pages)}";
+	        string targetNamespace = $"{nameof(NeptunLight)}.{nameof(Droid)}.{nameof(Views)}";
 	        VmToFragment = Assembly.GetExecutingAssembly().DefinedTypes.Where(ti => ti.Namespace == targetNamespace && typeof(ReactiveFragment).IsAssignableFrom(ti))
 	                .ToDictionary(ti => ti.BaseType.GenericTypeArguments[0], ti => ti.AsType());
 	    }

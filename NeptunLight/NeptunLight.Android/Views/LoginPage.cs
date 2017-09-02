@@ -9,9 +9,9 @@ using NeptunLight.Models;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
-namespace NeptunLight.Droid.Pages
+namespace NeptunLight.Droid.Views
 {
-    public class LoginFragment : ReactiveFragment<LoginPageViewModel>
+    public class LoginPage : ReactiveFragment<LoginPageViewModel>
     {
         public EditText LoginField { get; set; }
         public EditText PasswordField { get; set; }
@@ -52,7 +52,7 @@ namespace NeptunLight.Droid.Pages
                 Elements = elements;
             }
 
-            public IList<Institute> Elements { get; }
+            private IList<Institute> Elements { get; }
 
             public override int Count => Elements.Count;
 

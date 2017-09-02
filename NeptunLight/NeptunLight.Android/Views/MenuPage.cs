@@ -1,16 +1,14 @@
 ﻿using System;
 using Android.App;
-using Android.Content;
 using Android.OS;
 using Android.Views;
-using Android.Views.InputMethods;
 using Android.Widget;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
-namespace NeptunLight.Droid.Pages
+namespace NeptunLight.Droid.Views
 {
-    public class MenuFragment : ReactiveFragment<MenuPageViewModel>
+    public class MenuPage : ReactiveFragment<MenuPageViewModel>
     {
         private ProgressDialog _loadingDialog;
 
@@ -31,7 +29,7 @@ namespace NeptunLight.Droid.Pages
         {
             View layout = inflater.Inflate(Resource.Layout.Menu, container, false);
 
-            this.Activated.InvokeCommand(ViewModel.EnsureDataAccessible);
+            Activated.InvokeCommand(ViewModel.EnsureDataAccessible);
             this.WireUpControls(layout);
 
             LoadingDialog = new ProgressDialog(Activity);

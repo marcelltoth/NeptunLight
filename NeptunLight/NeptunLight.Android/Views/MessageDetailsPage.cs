@@ -6,9 +6,9 @@ using Android.Widget;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
-namespace NeptunLight.Droid.Pages
+namespace NeptunLight.Droid.Views
 {
-    public class MessageDetailsFragment : ReactiveFragment<MessageViewModel>
+    public class MessageDetailsPage : ReactiveFragment<MessageViewModel>
     {
         private TextView DateTextView { get; set; }
         private TextView SenderTextView { get; set; }

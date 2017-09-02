@@ -10,9 +10,9 @@ using Java.Lang;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
-namespace NeptunLight.Droid.Pages
+namespace NeptunLight.Droid.Views
 {
-    public class ExamsFragment : ReactiveFragment<ExamsPageViewModel>
+    public class ExamsPage : ReactiveFragment<ExamsPageViewModel>
     {
         private ViewPager Pager { get; set; }
 
@@ -35,7 +35,7 @@ namespace NeptunLight.Droid.Pages
 
         private class TabAdapter : FragmentStatePagerAdapter
         {
-            public IReadOnlyList<ExamsTabViewModel> Items { get; }
+            private IReadOnlyList<ExamsTabViewModel> Items { get; }
 
             public TabAdapter(FragmentManager fm, IEnumerable<ExamsTabViewModel> items) : base(fm)
             {

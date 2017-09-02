@@ -7,7 +7,7 @@ using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
-namespace NeptunLight.Droid.Pages
+namespace NeptunLight.Droid.Views
 {
     public class ExamsTab : ReactiveFragment<ExamsTabViewModel>
     {

@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive.Linq;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 using NeptunLight.Droid.Utils;
-using NeptunLight.Models;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
-namespace NeptunLight.Droid.Pages
+namespace NeptunLight.Droid.Views
 {
-    public class MessagesFragment : ReactiveFragment<MessagesPageViewModel>
+    public class MessagesPage : ReactiveFragment<MessagesPageViewModel>
     {
         public ListView MessageList { get; set; }
 

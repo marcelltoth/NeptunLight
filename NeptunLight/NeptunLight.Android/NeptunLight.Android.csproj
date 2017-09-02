@@ -121,15 +121,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="Pages\CalendarFragment.cs" />
-    <Compile Include="Pages\ExamsFragment.cs" />
-    <Compile Include="Pages\ExamsTab.cs" />
-    <Compile Include="Pages\LoginFragment.cs" />
+    <Compile Include="Views\CalendarPage.cs" />
+    <Compile Include="Views\ExamsPage.cs" />
+    <Compile Include="Views\ExamsTab.cs" />
+    <Compile Include="Views\LoginPage.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="Pages\MenuFragment.cs" />
-    <Compile Include="Pages\MessageDetailsFragment.cs" />
-    <Compile Include="Pages\MessagesFragment.cs" />
-    <Compile Include="Pages\PeriodsFragment.cs" />
+    <Compile Include="Views\MenuPage.cs" />
+    <Compile Include="Views\MessageDetailsPage.cs" />
+    <Compile Include="Views\MessagesPage.cs" />
+    <Compile Include="Views\PeriodsPage.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FileDataStorage.cs" />

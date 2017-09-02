@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reactive.Linq;
 using Android.OS;
 using Android.Views;
 using Com.Alamkanak.Weekview;
-using NeptunLight.Droid.Utils;
 using NeptunLight.Models;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
-namespace NeptunLight.Droid.Pages
+namespace NeptunLight.Droid.Views
 {
-    public class CalendarFragment : ReactiveFragment<CalendarPageViewModel>, MonthLoader.IMonthChangeListener
+    public class CalendarPage : ReactiveFragment<CalendarPageViewModel>, MonthLoader.IMonthChangeListener
     {
         public WeekView WeekView { get; set; }
 
