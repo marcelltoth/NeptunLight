@@ -121,7 +121,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Utils\TabListAdapter.cs" />
     <Compile Include="Views\CalendarPage.cs" />
+    <Compile Include="Views\CoursesPage.cs" />
+    <Compile Include="Views\CoursesTab.cs" />
     <Compile Include="Views\ExamsPage.cs" />
     <Compile Include="Views\ExamsTab.cs" />
     <Compile Include="Views\LoginPage.cs" />
@@ -175,6 +178,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\ExamListItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\CoursesPage.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\CoursesTab.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

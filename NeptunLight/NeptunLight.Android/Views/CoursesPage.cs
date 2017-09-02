@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Android.App;
 using Android.OS;
-using Android.Support.V13.App;
 using Android.Support.V4.View;
 using Android.Views;
 using Java.Lang;
@@ -13,30 +11,27 @@ using ReactiveUI;
 
 namespace NeptunLight.Droid.Views
 {
-    public class ExamsPage : ReactiveFragment<ExamsPageViewModel>
+    public class CoursesPage : ReactiveFragment<CoursesPageViewModel>
     {
         private ViewPager Pager { get; set; }
 
-        private TabAdapter PagerAdapter { get; set; }
-
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            View layout = inflater.Inflate(Resource.Layout.ExamsPage, container, false);
+            View layout = inflater.Inflate(Resource.Layout.CoursesPage, container, false);
 
             this.WireUpControls(layout);
 
             this.WhenAnyValue(x => x.ViewModel.Tabs).Subscribe(tabs =>
             {
-                PagerAdapter = new TabAdapter(FragmentManager, tabs);
-                Pager.Adapter = PagerAdapter;
+                Pager.Adapter = new TabAdapter(FragmentManager, tabs);
             });
 
             return layout;
         }
 
-        private class TabAdapter : TabListAdapter<ExamsTabViewModel, ExamsTab>
+        private class TabAdapter : TabListAdapter<CoursesTabViewModel, CoursesTab>
         {
-            public TabAdapter(FragmentManager fm, IEnumerable<ExamsTabViewModel> items) : base(fm, items)
+            public TabAdapter(FragmentManager fm, IEnumerable<CoursesTabViewModel> items) : base(fm, items)
             {
             }
 

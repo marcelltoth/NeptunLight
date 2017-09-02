@@ -57,6 +57,8 @@
     <Compile Include="Services\INavigator.cs" />
     <Compile Include="ViewModels\CalendarPageViewModel.cs" />
     <Compile Include="ViewModels\CoursesPageViewModel.cs" />
+    <Compile Include="ViewModels\CoursesTabViewModel.cs" />
+    <Compile Include="ViewModels\CourseViewModel.cs" />
     <Compile Include="ViewModels\ExamsPageViewModel.cs" />
     <Compile Include="ViewModels\ExamsTabViewModel.cs" />
     <Compile Include="ViewModels\ExamViewModel.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="ViewModels\PeriodsPageViewModel.cs" />
     <Compile Include="ViewModels\PeriodViewModel.cs" />
     <Compile Include="ViewModels\SemestersPageViewModel.cs" />
+    <Compile Include="ViewModels\SubjectViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
