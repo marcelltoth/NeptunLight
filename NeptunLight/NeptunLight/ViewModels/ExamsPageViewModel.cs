@@ -23,5 +23,7 @@ namespace NeptunLight.ViewModels
                 .Select(examsDict => examsDict.Select(kvp => examsTabVmFac(kvp.Key)))
                 .ToProperty(this, x => x.Tabs, out _tabs);
         }
+
+        public override string Title { get; } = "Vizsgák";
     }
 }

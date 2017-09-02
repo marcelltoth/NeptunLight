@@ -20,5 +20,7 @@ namespace NeptunLight.ViewModels
 
         public IEnumerable<PeriodViewModel> Periods => _periods.Value;
         private IDataStorage DataStorage { get; }
+
+        public override string Title { get; } = "Időszakok";
     }
 }

@@ -19,5 +19,7 @@ namespace NeptunLight.ViewModels
         {
             Events = dataStorage.CurrentData.Calendar;
         }
+
+        public override string Title { get; } = "Órarend";
     }
 }

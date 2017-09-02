@@ -44,10 +44,14 @@ namespace NeptunLight.Droid
 			SetContentView(Resource.Layout.Main);
 
 		    _fragmentHolder = FindViewById(Resource.Id.fragmentHolder);
+
+		    FragmentManager.Events().BackStackChanged.Subscribe(args =>
+		    {
+		        Title = ((PageViewModel) ((IViewFor) FragmentManager.FindFragmentByTag("ACTIVE")).ViewModel).Title;
+		    });
             
 		    NavigateTo<MenuPageViewModel>(false);
 		}
-
 	    public void NavigateTo<T>(bool addToStack = true) where T : PageViewModel
 	    {
             NavigateTo(typeof(T), addToStack);
@@ -66,15 +70,16 @@ namespace NeptunLight.Droid
 	        ((IViewFor) fragment).ViewModel = destinationVm;
 
             FragmentTransaction transaction = FragmentManager.BeginTransaction();
-	        transaction.Replace(Resource.Id.fragmentHolder, fragment);
+	        transaction.Replace(Resource.Id.fragmentHolder, fragment, "ACTIVE");
 	        if (addToStack)
 	        {
 	            transaction.AddToBackStack(null);
 	        }
 	        transaction.Commit();
-        }
+	        Title = destinationVm.Title;
+	    }
 
-	    public void NavigateUp<T>() where T : PageViewModel
+	    public void NavigateUp()
 	    {
             if(FragmentManager.BackStackEntryCount > 0)
 	            FragmentManager.PopBackStack();

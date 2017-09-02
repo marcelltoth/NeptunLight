@@ -23,7 +23,7 @@ namespace NeptunLight.Droid.Views
             {
                 var messageListAdapter = new ListAdapter<MessageViewModel>(inflater, items, Resource.Layout.MessageListItem, (itemView, model) =>
                 {
-                    itemView.FindViewById<TextView>(Resource.Id.titleTextView).Text = model.Title;
+                    itemView.FindViewById<TextView>(Resource.Id.titleTextView).Text = model.Subject;
                     itemView.FindViewById<TextView>(Resource.Id.senderTextView).Text = model.Sender;
                     itemView.FindViewById<TextView>(Resource.Id.letterBox).Text = model.SenderCode;
                 });

@@ -23,7 +23,7 @@ namespace NeptunLight.Droid.Views
 
             this.Bind(ViewModel, x => x.Date, x => x.DateTextView.Text);
             this.Bind(ViewModel, x => x.Sender, x => x.SenderTextView.Text);
-            this.Bind(ViewModel, x => x.Title, x => x.SubjectTextView.Text);
+            this.Bind(ViewModel, x => x.Subject, x => x.SubjectTextView.Text);
             this.WhenAnyValue(x => x.ViewModel.HtmlContent).Subscribe(html =>
             {
                 if (Android.OS.Build.VERSION.SdkInt >= BuildVersionCodes.N)

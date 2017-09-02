@@ -11,12 +11,12 @@ namespace NeptunLight.ViewModels
         private DateTime _date;
         private string _htmlContent;
         private string _sender;
-        private string _title;
+        private string _subject;
 
         public MessageViewModel(Mail model)
         {
             Date = model.ReceivedTime;
-            Title = model.Subject;
+            Subject = model.Subject;
             Sender = model.Sender;
             HtmlContent = model.Content;
             this.WhenAny(x => x.Sender, sender => string.IsNullOrEmpty(sender.Value) ? String.Empty : sender.Value.ToUpper().Substring(0, 1)).ToProperty(this, x => x.SenderCode, out _senderCode);
@@ -28,10 +28,10 @@ namespace NeptunLight.ViewModels
             set => this.RaiseAndSetIfChanged(ref _date, value);
         }
 
-        public string Title
+        public string Subject
         {
-            get => _title;
-            set => this.RaiseAndSetIfChanged(ref _title, value);
+            get => _subject;
+            set => this.RaiseAndSetIfChanged(ref _subject, value);
         }
 
         public string HtmlContent
@@ -47,5 +47,14 @@ namespace NeptunLight.ViewModels
         }
 
         public string SenderCode => _senderCode.Value;
+        public override string Title
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Subject))
+                    return String.Empty;
+                return Subject.Substring(0, 1).ToUpper() + Subject.Substring(1);
+            }
+        }
     }
 }

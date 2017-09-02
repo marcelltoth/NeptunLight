@@ -2,6 +2,6 @@
 {
     public class CoursesPageViewModel : PageViewModel
     {
-        
+        public override string Title { get; } = "Tárgyak";
     }
 }

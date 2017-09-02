@@ -28,5 +28,7 @@ namespace NeptunLight.ViewModels
         }
 
         public ReactiveCommand<MessageViewModel, Unit> OpenMessage { get; }
+
+        public override string Title { get; } = "Üzenetek";
     }
 }

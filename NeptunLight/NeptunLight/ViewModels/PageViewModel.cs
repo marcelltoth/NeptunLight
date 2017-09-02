@@ -1,7 +1,7 @@
 ﻿namespace NeptunLight.ViewModels
 {
-    public class PageViewModel : ViewModelBase
+    public abstract class PageViewModel : ViewModelBase
     {
-        
+        public abstract string Title { get; }
     }
 }

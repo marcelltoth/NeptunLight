@@ -75,5 +75,7 @@ namespace NeptunLight.ViewModels
             get => _loginError;
             set => this.RaiseAndSetIfChanged(ref _loginError, value);
         }
+
+        public override string Title { get; } = "Bejelentkezés";
     }
 }
