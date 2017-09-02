@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reactive;
+using System.Windows.Input;
 using Android.App;
 using Android.OS;
 using Android.Views;
@@ -29,7 +31,7 @@ namespace NeptunLight.Droid.Views
         {
             View layout = inflater.Inflate(Resource.Layout.Menu, container, false);
 
-            Activated.InvokeCommand(ViewModel.EnsureDataAccessible);
+            Activated.InvokeCommand(this, x=> x.ViewModel.EnsureDataAccessible);
             this.WireUpControls(layout);
 
             LoadingDialog = new ProgressDialog(Activity);

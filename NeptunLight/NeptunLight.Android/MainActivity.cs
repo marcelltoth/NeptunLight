@@ -81,7 +81,7 @@ namespace NeptunLight.Droid
 
 	    public void NavigateUp()
 	    {
-            if(FragmentManager.BackStackEntryCount > 0)
+            if(FragmentManager.BackStackEntryCount > 1)
 	            FragmentManager.PopBackStack();
         }
     }

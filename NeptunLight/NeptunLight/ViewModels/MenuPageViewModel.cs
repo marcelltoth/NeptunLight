@@ -13,7 +13,8 @@ namespace NeptunLight.ViewModels
         {
             EnsureDataAccessible = ReactiveCommand.CreateFromTask(async () =>
             {
-                await storage.LoadDataAsync();
+                if (storage.CurrentData == null)
+                    await storage.LoadDataAsync();
                 // see if there is saved data available
                 if (storage.CurrentData == null)
                 {
@@ -51,7 +52,7 @@ namespace NeptunLight.ViewModels
                 navigator.NavigateTo<LoginPageViewModel>();
             });
 
-            IObservable<bool> menuAvailable = this.WhenAnyValue(x => x.LoadingDialogShown).Select(x => !x);
+            IObservable<bool> menuAvailable = this.EnsureDataAccessible.IsExecuting.Select(x => !x);
             GoToMessages = ReactiveCommand.Create(() => navigator.NavigateTo<MessagesPageViewModel>(), menuAvailable);
             GoToCalendar = ReactiveCommand.Create(() => navigator.NavigateTo<CalendarPageViewModel>(), menuAvailable);
             GoToCourses = ReactiveCommand.Create(() => navigator.NavigateTo<CoursesPageViewModel>(), menuAvailable);
