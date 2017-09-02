@@ -246,8 +246,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f060028
 			public const int PasswordField = 2131099688;
 			
-			// aapt resource value: 0x7f060037
-			public const int PeriodList = 2131099703;
+			// aapt resource value: 0x7f06003a
+			public const int PeriodList = 2131099706;
 			
 			// aapt resource value: 0x7f060002
 			public const int alignBounds = 2131099650;
@@ -261,8 +261,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f06002d
 			public const int calendarButton = 2131099693;
 			
-			// aapt resource value: 0x7f060038
-			public const int categoryTextView = 2131099704;
+			// aapt resource value: 0x7f060037
+			public const int categoryTextView = 2131099703;
 			
 			// aapt resource value: 0x7f060005
 			public const int center = 2131099653;
@@ -291,8 +291,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f06000a
 			public const int end = 2131099658;
 			
-			// aapt resource value: 0x7f06003a
-			public const int endDateTextView = 2131099706;
+			// aapt resource value: 0x7f060039
+			public const int endDateTextView = 2131099705;
 			
 			// aapt resource value: 0x7f06002a
 			public const int errorText = 2131099690;
@@ -366,8 +366,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f060010
 			public const int start = 2131099664;
 			
-			// aapt resource value: 0x7f060039
-			public const int startDateTextView = 2131099705;
+			// aapt resource value: 0x7f060038
+			public const int startDateTextView = 2131099704;
 			
 			// aapt resource value: 0x7f06001d
 			public const int subjectTextView = 2131099677;
@@ -422,40 +422,40 @@ namespace NeptunLight.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Calendar = 2130903040;
+			public const int CalendarPage = 2130903040;
 			
 			// aapt resource value: 0x7f030001
 			public const int ExamListItem = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int Exams = 2130903042;
+			public const int ExamsPage = 2130903042;
 			
 			// aapt resource value: 0x7f030003
 			public const int ExamsTab = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int Login = 2130903044;
+			public const int LoginPage = 2130903044;
 			
 			// aapt resource value: 0x7f030005
 			public const int Main = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int Menu = 2130903046;
+			public const int MenuPage = 2130903046;
 			
 			// aapt resource value: 0x7f030007
-			public const int MessageDetails = 2130903047;
+			public const int MessageDetailsPage = 2130903047;
 			
 			// aapt resource value: 0x7f030008
 			public const int MessageListItem = 2130903048;
 			
 			// aapt resource value: 0x7f030009
-			public const int Messages = 2130903049;
+			public const int MessagesPage = 2130903049;
 			
 			// aapt resource value: 0x7f03000a
-			public const int Periods = 2130903050;
+			public const int PeriodsListItem = 2130903050;
 			
 			// aapt resource value: 0x7f03000b
-			public const int PeriodsListItem = 2130903051;
+			public const int PeriodsPage = 2130903051;
 			
 			static Layout()
 			{

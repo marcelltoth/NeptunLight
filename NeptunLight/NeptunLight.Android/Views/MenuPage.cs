@@ -29,7 +29,7 @@ namespace NeptunLight.Droid.Views
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            View layout = inflater.Inflate(Resource.Layout.Menu, container, false);
+            View layout = inflater.Inflate(Resource.Layout.MenuPage, container, false);
 
             Activated.InvokeCommand(this, x=> x.ViewModel.EnsureDataAccessible);
             this.WireUpControls(layout);

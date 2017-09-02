@@ -15,7 +15,7 @@ namespace NeptunLight.Droid.Views
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            View layout = inflater.Inflate(Resource.Layout.Calendar, container, false);
+            View layout = inflater.Inflate(Resource.Layout.CalendarPage, container, false);
 
             this.WireUpControls(layout);
 

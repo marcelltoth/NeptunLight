@@ -144,31 +144,31 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
-    <AndroidResource Include="Resources\layout\Login.axml">
+    <AndroidResource Include="Resources\layout\LoginPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\Menu.axml">
+    <AndroidResource Include="Resources\layout\MenuPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\Calendar.axml">
+    <AndroidResource Include="Resources\layout\CalendarPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\Messages.axml">
+    <AndroidResource Include="Resources\layout\MessagesPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\MessageListItem.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\MessageDetails.axml">
+    <AndroidResource Include="Resources\layout\MessageDetailsPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\Periods.axml">
+    <AndroidResource Include="Resources\layout\PeriodsPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\PeriodsListItem.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\Exams.axml">
+    <AndroidResource Include="Resources\layout\ExamsPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\ExamsTab.axml">

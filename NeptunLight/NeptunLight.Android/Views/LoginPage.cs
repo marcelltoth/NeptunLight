@@ -22,7 +22,7 @@ namespace NeptunLight.Droid.Views
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             // Use this to return your custom view for this Fragment
-            View layout = inflater.Inflate(Resource.Layout.Login, container, false);
+            View layout = inflater.Inflate(Resource.Layout.LoginPage, container, false);
 
 
             this.WireUpControls(layout);
