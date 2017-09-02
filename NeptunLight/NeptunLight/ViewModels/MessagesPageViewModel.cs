@@ -18,7 +18,7 @@ namespace NeptunLight.ViewModels
         public MessagesPageViewModel(IDataStorage data, Func<Mail, MessageViewModel> messageVmFac, INavigator navigator)
         {
             DataStorage = data;
-            this.WhenAny(x => x.DataStorage.CurrentData.Messages, messages => messages.Value.Select(messageVmFac)).ToProperty(this, x => x.Messages, out _messages);
+            this.WhenAny(x => x.DataStorage.CurrentData.Messages, messages => messages.Value.Take(100).Select(messageVmFac)).ToProperty(this, x => x.Messages, out _messages);
 
             OpenMessage = ReactiveCommand.Create<MessageViewModel, Unit>(vm =>
             {
