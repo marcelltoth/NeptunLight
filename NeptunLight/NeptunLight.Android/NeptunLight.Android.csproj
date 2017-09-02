@@ -146,6 +146,7 @@
     <Compile Include="Services\MailContentCache.cs" />
     <Compile Include="Utils\DateTimeExtensions.cs" />
     <Compile Include="Utils\ListAdapter.cs" />
+    <Compile Include="Views\SemestersPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -196,6 +197,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\CoursesListItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SemestersPage.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SemestersListItem.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+  <TextView
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/semesterNameTextView"/>
+  <TextView
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/textView1"
+    android:text="Státusz" />
+  <TextView
+    android:text="Text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/statusTextView" />
+  <TextView
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/textView2"
+    android:text="Teljesített / felvett kredit" />
+  <TextView
+    android:text="Text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/creditInfoTextView" />
+  <TextView
+    android:text="Összes teljesített / felvett kredit"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/textView3" />
+  <TextView
+    android:text="Text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/totalCreditInfoTextView" />
+  <TextView
+    android:text="Átlag"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/textView3" />
+  <TextView
+    android:text="Text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/averageTextView" />
+
+  <TextView
+    android:text="Kummulatív Átlag"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/textView3" />
+  <TextView
+    android:text="Text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cumulativeAverageTextView" />
+</LinearLayout>

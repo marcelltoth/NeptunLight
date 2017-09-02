@@ -196,8 +196,8 @@ namespace NeptunLight.Droid
 		public partial class Dimension
 		{
 			
-			// aapt resource value: 0x7f040000
-			public const int default_gap = 2130968576;
+			// aapt resource value: 0x7f050000
+			public const int default_gap = 2131034112;
 			
 			static Dimension()
 			{
@@ -255,6 +255,9 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f060003
 			public const int alignMargins = 2131099651;
 			
+			// aapt resource value: 0x7f060044
+			public const int averageTextView = 2131099716;
+			
 			// aapt resource value: 0x7f060004
 			public const int bottom = 2131099652;
 			
@@ -284,6 +287,12 @@ namespace NeptunLight.Droid
 			
 			// aapt resource value: 0x7f060033
 			public const int coursesButton = 2131099699;
+			
+			// aapt resource value: 0x7f060042
+			public const int creditInfoTextView = 2131099714;
+			
+			// aapt resource value: 0x7f060045
+			public const int cumulativeAverageTextView = 2131099717;
 			
 			// aapt resource value: 0x7f060025
 			public const int dateTextView = 2131099685;
@@ -372,6 +381,12 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f060014
 			public const int saturday = 2131099668;
 			
+			// aapt resource value: 0x7f060046
+			public const int semesterList = 2131099718;
+			
+			// aapt resource value: 0x7f060040
+			public const int semesterNameTextView = 2131099712;
+			
 			// aapt resource value: 0x7f060035
 			public const int semestersButton = 2131099701;
 			
@@ -383,6 +398,9 @@ namespace NeptunLight.Droid
 			
 			// aapt resource value: 0x7f06003d
 			public const int startDateTextView = 2131099709;
+			
+			// aapt resource value: 0x7f060041
+			public const int statusTextView = 2131099713;
 			
 			// aapt resource value: 0x7f060023
 			public const int subjectTextView = 2131099683;
@@ -410,6 +428,9 @@ namespace NeptunLight.Droid
 			
 			// aapt resource value: 0x7f060011
 			public const int top = 2131099665;
+			
+			// aapt resource value: 0x7f060043
+			public const int totalCreditInfoTextView = 2131099715;
 			
 			// aapt resource value: 0x7f060017
 			public const int tuesday = 2131099671;
@@ -484,6 +505,12 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f03000f
 			public const int PeriodsPage = 2130903055;
 			
+			// aapt resource value: 0x7f030010
+			public const int SemestersListItem = 2130903056;
+			
+			// aapt resource value: 0x7f030011
+			public const int SemestersPage = 2130903057;
+			
 			static Layout()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -497,14 +524,14 @@ namespace NeptunLight.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f050002
-			public const int app_name = 2131034114;
+			// aapt resource value: 0x7f040002
+			public const int app_name = 2130968578;
 			
-			// aapt resource value: 0x7f050001
-			public const int hello = 2131034113;
+			// aapt resource value: 0x7f040001
+			public const int hello = 2130968577;
 			
-			// aapt resource value: 0x7f050000
-			public const int library_name = 2131034112;
+			// aapt resource value: 0x7f040000
+			public const int library_name = 2130968576;
 			
 			static String()
 			{
