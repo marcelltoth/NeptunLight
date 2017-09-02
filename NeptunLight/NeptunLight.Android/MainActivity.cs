@@ -19,6 +19,7 @@ namespace NeptunLight.Droid
 	[Activity (Label = "NeptunLight.Android", MainLauncher = true, Icon = "@drawable/icon")]
 	public class MainActivity : Activity, INavigator
 	{
+	    private readonly Dictionary<Type, PageViewModel> _pageViewModelCache = new Dictionary<Type, PageViewModel>();
 	    private static readonly Dictionary<Type, Type> VmToFragment;
 
 	    private View _fragmentHolder;
@@ -59,7 +60,16 @@ namespace NeptunLight.Droid
 
 	    public void NavigateTo(Type destinationVm, bool addToStack = true)
 	    {
-	        NavigateTo((PageViewModel)App.Container.Value.Resolve(destinationVm));
+
+	        PageViewModel vm;
+            // Only instanciate one root view model once.
+            if(!_pageViewModelCache.TryGetValue(destinationVm, out vm))
+            {
+                vm = (PageViewModel)App.Container.Value.Resolve(destinationVm);
+                _pageViewModelCache[destinationVm] = vm;
+            }
+
+            NavigateTo(vm);
 	    }
 
 	    public void NavigateTo(PageViewModel destinationVm, bool addToStack = true)
