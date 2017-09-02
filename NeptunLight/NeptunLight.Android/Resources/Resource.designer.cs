@@ -231,23 +231,23 @@ namespace NeptunLight.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f060029
-			public const int InstituteSelector = 2131099689;
+			// aapt resource value: 0x7f06002b
+			public const int InstituteSelector = 2131099691;
+			
+			// aapt resource value: 0x7f06002e
+			public const int LoginButton = 2131099694;
 			
 			// aapt resource value: 0x7f06002c
-			public const int LoginButton = 2131099692;
+			public const int LoginField = 2131099692;
 			
-			// aapt resource value: 0x7f06002a
-			public const int LoginField = 2131099690;
+			// aapt resource value: 0x7f06003b
+			public const int MessageList = 2131099707;
 			
-			// aapt resource value: 0x7f060039
-			public const int MessageList = 2131099705;
+			// aapt resource value: 0x7f06002d
+			public const int PasswordField = 2131099693;
 			
-			// aapt resource value: 0x7f06002b
-			public const int PasswordField = 2131099691;
-			
-			// aapt resource value: 0x7f06003d
-			public const int PeriodList = 2131099709;
+			// aapt resource value: 0x7f06003f
+			public const int PeriodList = 2131099711;
 			
 			// aapt resource value: 0x7f060002
 			public const int alignBounds = 2131099650;
@@ -258,11 +258,11 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f060004
 			public const int bottom = 2131099652;
 			
-			// aapt resource value: 0x7f060030
-			public const int calendarButton = 2131099696;
+			// aapt resource value: 0x7f060032
+			public const int calendarButton = 2131099698;
 			
-			// aapt resource value: 0x7f06003a
-			public const int categoryTextView = 2131099706;
+			// aapt resource value: 0x7f06003c
+			public const int categoryTextView = 2131099708;
 			
 			// aapt resource value: 0x7f060005
 			public const int center = 2131099653;
@@ -279,35 +279,32 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f060009
 			public const int clip_vertical = 2131099657;
 			
-			// aapt resource value: 0x7f060036
-			public const int contentTextView = 2131099702;
+			// aapt resource value: 0x7f060038
+			public const int contentTextView = 2131099704;
 			
-			// aapt resource value: 0x7f060031
-			public const int coursesButton = 2131099697;
+			// aapt resource value: 0x7f060033
+			public const int coursesButton = 2131099699;
 			
-			// aapt resource value: 0x7f060023
-			public const int dateTextView = 2131099683;
+			// aapt resource value: 0x7f060025
+			public const int dateTextView = 2131099685;
 			
 			// aapt resource value: 0x7f06000a
 			public const int end = 2131099658;
 			
-			// aapt resource value: 0x7f06003c
-			public const int endDateTextView = 2131099708;
+			// aapt resource value: 0x7f06003e
+			public const int endDateTextView = 2131099710;
 			
-			// aapt resource value: 0x7f06002d
-			public const int errorText = 2131099693;
+			// aapt resource value: 0x7f06002f
+			public const int errorText = 2131099695;
 			
-			// aapt resource value: 0x7f060028
-			public const int examList = 2131099688;
+			// aapt resource value: 0x7f06002a
+			public const int examList = 2131099690;
 			
-			// aapt resource value: 0x7f060032
-			public const int examsButton = 2131099698;
+			// aapt resource value: 0x7f060034
+			public const int examsButton = 2131099700;
 			
-			// aapt resource value: 0x7f06001f
-			public const int expandableList = 2131099679;
-			
-			// aapt resource value: 0x7f06001d
-			public const int expandedListItem = 2131099677;
+			// aapt resource value: 0x7f060021
+			public const int expandableList = 2131099681;
 			
 			// aapt resource value: 0x7f06000b
 			public const int fill = 2131099659;
@@ -318,8 +315,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f06000d
 			public const int fill_vertical = 2131099661;
 			
-			// aapt resource value: 0x7f06002e
-			public const int fragmentHolder = 2131099694;
+			// aapt resource value: 0x7f060030
+			public const int fragmentHolder = 2131099696;
 			
 			// aapt resource value: 0x7f060012
 			public const int friday = 2131099666;
@@ -336,29 +333,38 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f06001a
 			public const int length_short = 2131099674;
 			
-			// aapt resource value: 0x7f060037
-			public const int letterBox = 2131099703;
+			// aapt resource value: 0x7f060039
+			public const int letterBox = 2131099705;
+			
+			// aapt resource value: 0x7f06001d
+			public const int line1 = 2131099677;
+			
+			// aapt resource value: 0x7f06001e
+			public const int line2 = 2131099678;
+			
+			// aapt resource value: 0x7f06001f
+			public const int line3 = 2131099679;
 			
 			// aapt resource value: 0x7f06001c
 			public const int listTitle = 2131099676;
 			
-			// aapt resource value: 0x7f060025
-			public const int locationTextView = 2131099685;
+			// aapt resource value: 0x7f060027
+			public const int locationTextView = 2131099687;
 			
-			// aapt resource value: 0x7f06002f
-			public const int messagesButton = 2131099695;
+			// aapt resource value: 0x7f060031
+			public const int messagesButton = 2131099697;
 			
 			// aapt resource value: 0x7f060013
 			public const int monday = 2131099667;
 			
-			// aapt resource value: 0x7f06001e
-			public const int pager = 2131099678;
+			// aapt resource value: 0x7f060020
+			public const int pager = 2131099680;
 			
-			// aapt resource value: 0x7f060034
-			public const int periodsButton = 2131099700;
+			// aapt resource value: 0x7f060036
+			public const int periodsButton = 2131099702;
 			
-			// aapt resource value: 0x7f060027
-			public const int resultTextView = 2131099687;
+			// aapt resource value: 0x7f060029
+			public const int resultTextView = 2131099689;
 			
 			// aapt resource value: 0x7f06000f
 			public const int right = 2131099663;
@@ -366,41 +372,41 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f060014
 			public const int saturday = 2131099668;
 			
-			// aapt resource value: 0x7f060033
-			public const int semestersButton = 2131099699;
-			
 			// aapt resource value: 0x7f060035
-			public const int senderTextView = 2131099701;
+			public const int semestersButton = 2131099701;
+			
+			// aapt resource value: 0x7f060037
+			public const int senderTextView = 2131099703;
 			
 			// aapt resource value: 0x7f060010
 			public const int start = 2131099664;
 			
-			// aapt resource value: 0x7f06003b
-			public const int startDateTextView = 2131099707;
+			// aapt resource value: 0x7f06003d
+			public const int startDateTextView = 2131099709;
 			
-			// aapt resource value: 0x7f060021
-			public const int subjectTextView = 2131099681;
+			// aapt resource value: 0x7f060023
+			public const int subjectTextView = 2131099683;
 			
 			// aapt resource value: 0x7f060015
 			public const int sunday = 2131099669;
 			
-			// aapt resource value: 0x7f060020
-			public const int textView1 = 2131099680;
-			
 			// aapt resource value: 0x7f060022
-			public const int textView2 = 2131099682;
+			public const int textView1 = 2131099682;
 			
 			// aapt resource value: 0x7f060024
-			public const int textView3 = 2131099684;
+			public const int textView2 = 2131099684;
 			
 			// aapt resource value: 0x7f060026
-			public const int textView5 = 2131099686;
+			public const int textView3 = 2131099686;
+			
+			// aapt resource value: 0x7f060028
+			public const int textView5 = 2131099688;
 			
 			// aapt resource value: 0x7f060016
 			public const int thursday = 2131099670;
 			
-			// aapt resource value: 0x7f060038
-			public const int titleTextView = 2131099704;
+			// aapt resource value: 0x7f06003a
+			public const int titleTextView = 2131099706;
 			
 			// aapt resource value: 0x7f060011
 			public const int top = 2131099665;

@@ -186,13 +186,13 @@ namespace NeptunLight.DataAccess
                     int attemptCount = Int32.Parse(dataRow.Cells[4].TextContent);
                     IEnumerable<Course> courses = courseDataTable.Bodies[0].Rows.Where(r => r.Cells[1].TextContent == subjectCode).Select(r =>
                     {
-                        string courseCode = r.Cells[2].TextContent;
-                        string courseType = r.Cells[3].TextContent;
+                        string courseCode = r.Cells[3].TextContent;
+                        string courseType = r.Cells[4].TextContent;
                         int periodCount;
-                        if (!Int32.TryParse(r.Cells[4].TextContent, out periodCount))
+                        if (!Int32.TryParse(r.Cells[5].TextContent, out periodCount))
                             periodCount = 1;
-                        string scheduleInfo = r.Cells[5].TextContent;
-                        IEnumerable<string> instructors = r.Cells[6].TextContent.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim());
+                        string scheduleInfo = r.Cells[6].TextContent;
+                        IEnumerable<string> instructors = r.Cells[7].TextContent.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim());
                         return new Course(courseCode, courseType, periodCount, scheduleInfo, instructors);
                     });
 

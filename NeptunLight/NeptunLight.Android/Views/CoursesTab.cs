@@ -54,7 +54,9 @@ namespace NeptunLight.Droid.Views
             {
                 View layout = convertView ?? _inflater.Inflate(Resource.Layout.CoursesListItem, parent, false);
                 CourseViewModel item = _items[groupPosition].Courses[childPosition];
-                layout.FindViewById<TextView>(Resource.Id.expandedListItem).Text = item.Code;
+                layout.FindViewById<TextView>(Resource.Id.line1).Text = item.Type;
+                layout.FindViewById<TextView>(Resource.Id.line2).Text = item.ScheduleInfo;
+                layout.FindViewById<TextView>(Resource.Id.line3).Text = item.Instructors;
 
                 return layout;
             }
