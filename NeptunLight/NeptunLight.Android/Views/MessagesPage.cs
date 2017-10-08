@@ -68,5 +68,13 @@ namespace NeptunLight.Droid.Views
         {
             ((ICommand)ViewModel.RefreshMessages).Execute(null);
         }
+
+        public override void OnPause()
+        {
+            base.OnPause();
+            
+            SwipeRefresh.DestroyDrawingCache();
+            SwipeRefresh.ClearAnimation();
+        }
     }
 }
