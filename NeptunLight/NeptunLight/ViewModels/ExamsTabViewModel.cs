@@ -10,7 +10,6 @@ namespace NeptunLight.ViewModels
     {
         public ExamsTabViewModel(Semester semester, IDataStorage dataStorage, Func<Exam, ExamViewModel> examVmFac)
         {
-            DataStorage = dataStorage;
             Exams = dataStorage.CurrentData.ExamsPerSemester[semester].Select(examVmFac);
             SemesterName = semester.Name;
         }
@@ -18,7 +17,5 @@ namespace NeptunLight.ViewModels
         public IEnumerable<ExamViewModel> Exams { get; }
 
         public string SemesterName { get; }
-
-        private IDataStorage DataStorage { get; }
     }
 }

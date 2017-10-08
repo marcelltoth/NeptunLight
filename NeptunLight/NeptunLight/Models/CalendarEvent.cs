@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace NeptunLight.Models
 {
@@ -12,10 +13,12 @@ namespace NeptunLight.Models
 
         public string Title { get; }
 
+        [CanBeNull]
         public string Details { get; }
 
         public string Group { get; }
 
+        [CanBeNull]
         public string Instructor { get; }
 
         public string Category { get; }

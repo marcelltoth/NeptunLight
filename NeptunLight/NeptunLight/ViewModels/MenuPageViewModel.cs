@@ -52,7 +52,7 @@ namespace NeptunLight.ViewModels
                 navigator.NavigateTo<LoginPageViewModel>();
             });
 
-            IObservable<bool> menuAvailable = this.EnsureDataAccessible.IsExecuting.Select(x => !x);
+            IObservable<bool> menuAvailable = EnsureDataAccessible.IsExecuting.Select(x => !x);
             GoToMessages = ReactiveCommand.Create(() => navigator.NavigateTo<MessagesPageViewModel>(), menuAvailable);
             GoToCalendar = ReactiveCommand.Create(() => navigator.NavigateTo<CalendarPageViewModel>(), menuAvailable);
             GoToCourses = ReactiveCommand.Create(() => navigator.NavigateTo<CoursesPageViewModel>(), menuAvailable);

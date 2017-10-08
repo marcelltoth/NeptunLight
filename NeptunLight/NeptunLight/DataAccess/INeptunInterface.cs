@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NeptunLight.Models;
-using NeptunLight.Services;
 
 namespace NeptunLight.DataAccess
 {

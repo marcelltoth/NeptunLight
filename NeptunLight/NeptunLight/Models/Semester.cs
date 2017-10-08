@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace NeptunLight.Models
@@ -14,10 +15,10 @@ namespace NeptunLight.Models
             return UniqueId == other.UniqueId;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals([CanBeNull] object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            return obj is Semester && Equals((Semester) obj);
+            return obj is Semester semester && Equals(semester);
         }
 
         public override int GetHashCode()

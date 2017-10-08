@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 
 namespace NeptunLight.Models
 {
@@ -7,18 +8,18 @@ namespace NeptunLight.Models
     {
 
         #region Equality members
-        public bool Equals(MailHeader other)
+        public bool Equals([CanBeNull] MailHeader other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return ReceivedTime.Equals(other.ReceivedTime) && string.Equals(Sender, other.Sender) && string.Equals(Subject, other.Subject);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals([CanBeNull] object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((MailHeader) obj);
         }
 
@@ -27,8 +28,8 @@ namespace NeptunLight.Models
             unchecked
             {
                 int hashCode = ReceivedTime.GetHashCode();
-                hashCode = (hashCode * 397) ^ (Sender != null ? Sender.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (Subject != null ? Subject.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Sender.GetHashCode();
+                hashCode = (hashCode * 397) ^ Subject.GetHashCode();
                 return hashCode;
             }
         }

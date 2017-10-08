@@ -2,13 +2,14 @@
 using NeptunLight.DataAccess;
 using NeptunLight.ViewModels;
 using System.Reflection;
+using JetBrains.Annotations;
 using Module = Autofac.Module;
 
 namespace NeptunLight
 {
     public class AutofacModuleDefinition : Module
     {
-        protected override void Load(ContainerBuilder builder)
+        protected override void Load([NotNull] ContainerBuilder builder)
         {
             base.Load(builder);
             // viewmodels

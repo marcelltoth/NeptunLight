@@ -8,6 +8,7 @@ using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
 using iCal.PCL.DataModel;
 using iCal.PCL.Serialization;
+using JetBrains.Annotations;
 using NeptunLight.Models;
 using NeptunLight.Services;
 using Newtonsoft.Json.Linq;
@@ -17,9 +18,10 @@ namespace NeptunLight.DataAccess
     public class WebNeptunInterface : INeptunInterface
     {
         private WebScraperClient _client;
+        [CanBeNull]
         private readonly IMailContentCache _mailContentCache;
 
-        public WebNeptunInterface(IMailContentCache mailContentCache)
+        public WebNeptunInterface([CanBeNull] IMailContentCache mailContentCache)
         {
             _mailContentCache = mailContentCache;
         }
