@@ -240,14 +240,17 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f06002c
 			public const int LoginField = 2131099692;
 			
-			// aapt resource value: 0x7f06003b
-			public const int MessageList = 2131099707;
+			// aapt resource value: 0x7f06003c
+			public const int MessageList = 2131099708;
 			
 			// aapt resource value: 0x7f06002d
 			public const int PasswordField = 2131099693;
 			
-			// aapt resource value: 0x7f06003f
-			public const int PeriodList = 2131099711;
+			// aapt resource value: 0x7f060040
+			public const int PeriodList = 2131099712;
+			
+			// aapt resource value: 0x7f06003b
+			public const int SwipeRefresh = 2131099707;
 			
 			// aapt resource value: 0x7f060002
 			public const int alignBounds = 2131099650;
@@ -255,8 +258,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f060003
 			public const int alignMargins = 2131099651;
 			
-			// aapt resource value: 0x7f060044
-			public const int averageTextView = 2131099716;
+			// aapt resource value: 0x7f060045
+			public const int averageTextView = 2131099717;
 			
 			// aapt resource value: 0x7f060004
 			public const int bottom = 2131099652;
@@ -264,8 +267,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f060032
 			public const int calendarButton = 2131099698;
 			
-			// aapt resource value: 0x7f06003c
-			public const int categoryTextView = 2131099708;
+			// aapt resource value: 0x7f06003d
+			public const int categoryTextView = 2131099709;
 			
 			// aapt resource value: 0x7f060005
 			public const int center = 2131099653;
@@ -288,11 +291,11 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f060033
 			public const int coursesButton = 2131099699;
 			
-			// aapt resource value: 0x7f060042
-			public const int creditInfoTextView = 2131099714;
+			// aapt resource value: 0x7f060043
+			public const int creditInfoTextView = 2131099715;
 			
-			// aapt resource value: 0x7f060045
-			public const int cumulativeAverageTextView = 2131099717;
+			// aapt resource value: 0x7f060046
+			public const int cumulativeAverageTextView = 2131099718;
 			
 			// aapt resource value: 0x7f060025
 			public const int dateTextView = 2131099685;
@@ -300,8 +303,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f06000a
 			public const int end = 2131099658;
 			
-			// aapt resource value: 0x7f06003e
-			public const int endDateTextView = 2131099710;
+			// aapt resource value: 0x7f06003f
+			public const int endDateTextView = 2131099711;
 			
 			// aapt resource value: 0x7f06002f
 			public const int errorText = 2131099695;
@@ -381,11 +384,11 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f060014
 			public const int saturday = 2131099668;
 			
-			// aapt resource value: 0x7f060046
-			public const int semesterList = 2131099718;
+			// aapt resource value: 0x7f060047
+			public const int semesterList = 2131099719;
 			
-			// aapt resource value: 0x7f060040
-			public const int semesterNameTextView = 2131099712;
+			// aapt resource value: 0x7f060041
+			public const int semesterNameTextView = 2131099713;
 			
 			// aapt resource value: 0x7f060035
 			public const int semestersButton = 2131099701;
@@ -396,11 +399,11 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f060010
 			public const int start = 2131099664;
 			
-			// aapt resource value: 0x7f06003d
-			public const int startDateTextView = 2131099709;
+			// aapt resource value: 0x7f06003e
+			public const int startDateTextView = 2131099710;
 			
-			// aapt resource value: 0x7f060041
-			public const int statusTextView = 2131099713;
+			// aapt resource value: 0x7f060042
+			public const int statusTextView = 2131099714;
 			
 			// aapt resource value: 0x7f060023
 			public const int subjectTextView = 2131099683;
@@ -429,8 +432,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f060011
 			public const int top = 2131099665;
 			
-			// aapt resource value: 0x7f060043
-			public const int totalCreditInfoTextView = 2131099715;
+			// aapt resource value: 0x7f060044
+			public const int totalCreditInfoTextView = 2131099716;
 			
 			// aapt resource value: 0x7f060017
 			public const int tuesday = 2131099671;
