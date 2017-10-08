@@ -19,7 +19,7 @@ namespace NeptunLight.ViewModels
         private readonly ObservableAsPropertyHelper<bool> _isRefreshing;
         public bool IsRefreshing => _isRefreshing.Value;
 
-        public MessagesPageViewModel(IDataStorage data, INeptunInterface dataAccess, IMailContentCache mailCache, Func<Mail, MessageViewModel> messageVmFac, INavigator navigator)
+        public MessagesPageViewModel(IDataStorage data, INeptunInterface dataAccess, Func<Mail, MessageViewModel> messageVmFac, INavigator navigator)
         {
             DataStorage = data;
             this.WhenAny(x => x.DataStorage.CurrentData.Messages, messages => messages.Value.Take(100).Select(messageVmFac).ToList()).ToProperty(this, x => x.Messages, out _messages);
@@ -32,7 +32,7 @@ namespace NeptunLight.ViewModels
 
             RefreshMessages = ReactiveCommand.CreateFromTask(async () =>
             {
-                data.CurrentData.Messages = await dataAccess.RefreshMessagesAsnyc(mailCache);
+                data.CurrentData.Messages = await dataAccess.RefreshMessagesAsnyc();
                 await data.SaveDataAsync();
             });
 

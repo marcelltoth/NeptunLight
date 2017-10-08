@@ -15,7 +15,7 @@ namespace NeptunLight.DataAccess
 
         Task LoginAsync();
 
-        Task<IReadOnlyCollection<Mail>> RefreshMessagesAsnyc(IMailContentCache contentCache = null, IProgress<MessageLoadingProgress> progress = null);
+        Task<IReadOnlyCollection<Mail>> RefreshMessagesAsnyc(IProgress<MessageLoadingProgress> progress = null);
         Task<IReadOnlyCollection<CalendarEvent>> RefreshCalendarAsnyc();
         Task<IReadOnlyDictionary<Semester, IReadOnlyCollection<Subject>>> RefreshSubjectsAsnyc();
         Task<IReadOnlyDictionary<Semester, IReadOnlyCollection<Exam>>> RefreshExamsAsnyc();

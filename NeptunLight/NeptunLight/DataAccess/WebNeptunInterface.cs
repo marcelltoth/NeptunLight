@@ -17,6 +17,12 @@ namespace NeptunLight.DataAccess
     public class WebNeptunInterface : INeptunInterface
     {
         private WebScraperClient _client;
+        private readonly IMailContentCache _mailContentCache;
+
+        public WebNeptunInterface(IMailContentCache mailContentCache)
+        {
+            _mailContentCache = mailContentCache;
+        }
 
         public string Username { get; set; }
 
@@ -33,14 +39,14 @@ namespace NeptunLight.DataAccess
 
             try
             {
-                JObject r1 = await _client.PostJsonObjectAsnyc("Login.aspx/GetMaxTryNumber", "");
+                await _client.PostJsonObjectAsnyc("Login.aspx/GetMaxTryNumber", "");
                 JObject r2 = await _client.PostJsonObjectAsnyc("Login.aspx/CheckLoginEnable", $"{{user: \"{Username}\", pwd: \"{Password}\", UserLogin: null, GUID: null, captcha: \"\"}}");
                 JObject loginResult = JObject.Parse(r2.Value<string>("d"));
                 if (!string.Equals(loginResult.Value<string>("success"), "True", StringComparison.OrdinalIgnoreCase))
                 {
                     throw new UnauthorizedAccessException();
                 }
-                JObject r3 = await _client.PostJsonObjectAsnyc("Login.aspx/SavePopupState", "{state: \"hidden\", PopupID: \"upLoginWait_popupLoginWait\"}");
+                await _client.PostJsonObjectAsnyc("Login.aspx/SavePopupState", "{state: \"hidden\", PopupID: \"upLoginWait_popupLoginWait\"}");
             }
             catch (Exception exc) when (!(exc is UnauthorizedAccessException))
             {
@@ -48,7 +54,7 @@ namespace NeptunLight.DataAccess
             }
         }
 
-        public async Task<IReadOnlyCollection<Mail>> RefreshMessagesAsnyc(IMailContentCache contentCache = null, IProgress<MessageLoadingProgress> progress = null)
+        public async Task<IReadOnlyCollection<Mail>> RefreshMessagesAsnyc(IProgress<MessageLoadingProgress> progress = null)
         {
             await LoginAsync();
             IDocument inboxPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=inbox");
@@ -66,10 +72,10 @@ namespace NeptunLight.DataAccess
                 progress?.Report(new MessageLoadingProgress(i+1, mailHeaders.Count));
 
                 Mail ret;
-                if (contentCache != null)
+                if (_mailContentCache != null)
                 {
                     // try to load the message body from the cache
-                    ret = await contentCache.TryRetrieveAsync(mailHeader);
+                    ret = await _mailContentCache.TryRetrieveAsync(mailHeader);
                     if (ret != null)
                     {
                         result.Add(ret);
@@ -92,9 +98,9 @@ namespace NeptunLight.DataAccess
                 string content = popupDocument.GetElementById("Readmessage1_lblMessage").InnerHtml;
                 ret = new Mail(mailHeader, content);
 
-                if (contentCache != null)
+                if (_mailContentCache != null)
                 {
-                    await contentCache.StoreAsync(mailHeader, ret);
+                    await _mailContentCache.StoreAsync(mailHeader, ret);
                 }
 
                 result.Add(ret);
@@ -273,7 +279,7 @@ namespace NeptunLight.DataAccess
             for (int i = 0; i < dataTable.Bodies[0].Rows.Length - 1; i+=2)
             {
                 IHtmlTableRowElement headerRow = dataTable.Bodies[0].Rows[i];
-                IHtmlTableRowElement dataRow = dataTable.Bodies[0].Rows[i+1];
+                //IHtmlTableRowElement dataRow = dataTable.Bodies[0].Rows[i+1];
 
                 Semester semester = Semester.Parse(headerRow.Cells[1].TextContent);
                 string status = headerRow.Cells[2].TextContent;

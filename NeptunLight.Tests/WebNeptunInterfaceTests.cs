@@ -12,7 +12,7 @@ namespace NeptunLight.Tests
     {
         private static WebNeptunInterface CreateInterface()
         {
-            WebNeptunInterface iface = new WebNeptunInterface
+            WebNeptunInterface iface = new WebNeptunInterface(null)
             {
                 BaseUri = new Uri("https://neptun3r.web.uni-corvinus.hu/hallgatoi_2/"),
                 Username = Environment.GetEnvironmentVariable("NEPTUN_USERNAME", EnvironmentVariableTarget.User),
@@ -24,7 +24,7 @@ namespace NeptunLight.Tests
         [Fact]
         public async void Login_WrongCredentials()
         {
-            WebNeptunInterface client = new WebNeptunInterface
+            WebNeptunInterface client = new WebNeptunInterface(null)
             {
                 BaseUri = new Uri("https://neptun3r.web.uni-corvinus.hu/hallgatoi_2/"),
                 Username = "asd",

@@ -9,7 +9,7 @@ namespace NeptunLight.ViewModels
 {
     public class MenuPageViewModel : PageViewModel
     {
-        public MenuPageViewModel(IDataStorage storage, INeptunInterface client, INavigator navigator, IMailContentCache mailContentCache)
+        public MenuPageViewModel(IDataStorage storage, INeptunInterface client, INavigator navigator)
         {
             EnsureDataAccessible = ReactiveCommand.CreateFromTask(async () =>
             {
@@ -35,7 +35,7 @@ namespace NeptunLight.ViewModels
                     LoadingDialogText = "Időszakok betöltése...";
                     storage.CurrentData.Periods = await client.RefreshPeriodsAsnyc();
                     LoadingDialogText = "Üzenetek betöltése... (első alkalommal több percet is igénybe vehet)";
-                    storage.CurrentData.Messages = await client.RefreshMessagesAsnyc(mailContentCache, new Progress<MessageLoadingProgress>(progress =>
+                    storage.CurrentData.Messages = await client.RefreshMessagesAsnyc(new Progress<MessageLoadingProgress>(progress =>
                     {
                         LoadingDialogText = $"Üzenetek betöltése ({progress.Current} / {progress.Total})... (első alkalommal több percet is igénybe vehet)";
                     }));
