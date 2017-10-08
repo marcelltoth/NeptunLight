@@ -17,38 +17,76 @@ namespace NeptunLight.DataAccess
 {
     public class WebNeptunInterface : INeptunInterface
     {
-        private WebScraperClient _client;
+        private const string USERNAME_SETTING_KEY = "NEPTUN_USERNAME";
+        private const string PASSWORD_SETTING_KEY = "NEPTUN_PASSWORD";
+        private const string BASE_URL_SETTING_KEY = "NEPTUN_BASEURL";
+
         [CanBeNull]
         private readonly IMailContentCache _mailContentCache;
 
-        public WebNeptunInterface([CanBeNull] IMailContentCache mailContentCache)
+        [CanBeNull]
+        private readonly IPrimitiveStorage _primitiveStorage;
+
+        private Uri _baseUri;
+        private WebScraperClient _client;
+        private string _password;
+
+        private string _username;
+
+        public WebNeptunInterface([CanBeNull] IMailContentCache mailContentCache, [CanBeNull] IPrimitiveStorage primitiveStorage)
         {
             _mailContentCache = mailContentCache;
+            _primitiveStorage = primitiveStorage;
         }
 
-        public string Username { get; set; }
+        public string Username
+        {
+            get { return _username ?? (_primitiveStorage != null && _primitiveStorage.ContainsKey(USERNAME_SETTING_KEY) ? _primitiveStorage.GetString(USERNAME_SETTING_KEY) : String.Empty); }
+            set
+            {
+                _username = value;
+                _primitiveStorage?.PutString(USERNAME_SETTING_KEY, value);
+            }
+        }
 
-        public string Password { get; set; }
+        public string Password
+        {
+            get { return _password ?? (_primitiveStorage != null && _primitiveStorage.ContainsKey(PASSWORD_SETTING_KEY) ? _primitiveStorage.GetString(PASSWORD_SETTING_KEY) : String.Empty); }
+            set
+            {
+                _password = value;
+                _primitiveStorage?.PutString(PASSWORD_SETTING_KEY, value);
+            }
+        }
 
-        public Uri BaseUri { get; set; }
+        public Uri BaseUri
+        {
+            get { return _baseUri ?? new Uri(_primitiveStorage != null && _primitiveStorage.ContainsKey(BASE_URL_SETTING_KEY) ? _primitiveStorage.GetString(BASE_URL_SETTING_KEY) : String.Empty); }
+            set
+            {
+                _baseUri = value;
+                _primitiveStorage?.PutString(BASE_URL_SETTING_KEY, value.AbsoluteUri);
+            }
+        }
 
         public async Task LoginAsync()
         {
-            _client = new WebScraperClient
-            {
-                BaseUri = BaseUri
-            };
-
             try
             {
+                _client = new WebScraperClient
+                {
+                    BaseUri = BaseUri
+                };
                 await _client.PostJsonObjectAsnyc("Login.aspx/GetMaxTryNumber", "");
                 JObject r2 = await _client.PostJsonObjectAsnyc("Login.aspx/CheckLoginEnable", $"{{user: \"{Username}\", pwd: \"{Password}\", UserLogin: null, GUID: null, captcha: \"\"}}");
                 JObject loginResult = JObject.Parse(r2.Value<string>("d"));
                 if (!string.Equals(loginResult.Value<string>("success"), "True", StringComparison.OrdinalIgnoreCase))
-                {
                     throw new UnauthorizedAccessException();
-                }
                 await _client.PostJsonObjectAsnyc("Login.aspx/SavePopupState", "{state: \"hidden\", PopupID: \"upLoginWait_popupLoginWait\"}");
+            }
+            catch (FormatException) // UriFormatException - missing from fkin pcl
+            {
+                throw new UnauthorizedAccessException();
             }
             catch (Exception exc) when (!(exc is UnauthorizedAccessException))
             {
@@ -63,15 +101,15 @@ namespace NeptunLight.DataAccess
             string rawMessages = await _client.GetRawAsnyc("HandleRequest.ashx?RequestType=GetData&GridID=c_messages_gridMessages&pageindex=1&pagesize=500&sort1=SendDate%20DESC&sort2=&fixedheader=false&searchcol=&searchtext=&searchexpanded=false&allsubrowsexpanded=False&selectedid=undefined&functionname=&level=");
             HtmlParser parser = new HtmlParser();
             IDocument rawMessagesDocument = await parser.ParseAsync(rawMessages);
-            IHtmlTableElement messageHeaderTable = (IHtmlTableElement)rawMessagesDocument.GetElementById("c_messages_gridMessages_bodytable");
+            IHtmlTableElement messageHeaderTable = (IHtmlTableElement) rawMessagesDocument.GetElementById("c_messages_gridMessages_bodytable");
 
             List<Mail> result = new List<Mail>();
             IList<MailHeader> mailHeaders = ParseMailHeaderTable(messageHeaderTable);
-            for (int i = 0; i < mailHeaders.Count; i++)
+            for (int i = 0; i < Math.Min(mailHeaders.Count, 300); i++)
             {
                 MailHeader mailHeader = mailHeaders[i];
 
-                progress?.Report(new MessageLoadingProgress(i+1, mailHeaders.Count));
+                progress?.Report(new MessageLoadingProgress(i + 1, mailHeaders.Count));
 
                 Mail ret;
                 if (_mailContentCache != null)
@@ -93,7 +131,7 @@ namespace NeptunLight.DataAccess
                     new[]
                     {
                         new KeyValuePair<string, string>("__EVENTTARGET", "upFunction$c_messages$upMain$upGrid$gridMessages"),
-                        new KeyValuePair<string, string>("__EVENTARGUMENT", $"commandname=Subject;commandsource=select;id={mailHeader.TrId};level=1"),
+                        new KeyValuePair<string, string>("__EVENTARGUMENT", $"commandname=Subject;commandsource=select;id={mailHeader.TrId};level=1")
                     },
                     false);
 
@@ -101,34 +139,11 @@ namespace NeptunLight.DataAccess
                 ret = new Mail(mailHeader, content);
 
                 if (_mailContentCache != null)
-                {
                     await _mailContentCache.StoreAsync(mailHeader, ret);
-                }
 
                 result.Add(ret);
             }
 
-            return result;
-        }
-
-        private static IList<MailHeader> ParseMailHeaderTable(IHtmlTableElement table)
-        {
-            List<MailHeader> result = new List<MailHeader>();
-            foreach (IHtmlTableRowElement row in table.Bodies[0].Rows)
-            {
-                try
-                {
-                    DateTime receiveTime = DateTime.ParseExact(row.Cells[7].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo);
-                    string sender = row.Cells[4].TextContent;
-                    string title = row.Cells[6].TextContent;
-                    long trid = Int64.Parse(row.Id.Substring(4));
-                    result.Add(new MailHeader(receiveTime, sender, title) {TrId = trid});
-                }
-                catch (Exception)
-                {
-                    // skip unparsable stuff
-                }
-            }
             return result;
         }
 
@@ -139,15 +154,12 @@ namespace NeptunLight.DataAccess
             string majorId = exportPage.GetElementById("calexport_cmbTraining").Children[0].GetAttribute("value");
             await _client.PostJsonObjectAsnyc("main.aspx/GetICS", $"{{\"ID\":\"1_1_0_1_0_0_1\",\"fromDate\":\"{DateTime.Today.AddYears(-1):yyyy.MM.dd}\",\"toDate\":\"{DateTime.Today.AddYears(1):yyyy.MM.dd}\",\"trainingId\":\"{majorId}\"}}");
             string ics = await _client.GetRawAsnyc($"CommonControls/SaveFileDialog.aspx?id=1_1_0_1_0_0_1&Func=exportcalendar&from={DateTime.Today.AddYears(-1):yyyy.MM.dd}&to={DateTime.Today.AddYears(1):yyyy.MM.dd}&trainingid={majorId}");
-            IEnumerable<iCalVEvent> events = await Task.Run(() =>
-            {
-                return iCalSerializer.Deserialize(ics.Split('\n').Select(line => line.TrimEnd('\r'))).Cast<iCalVEvent>();
-            });
+            IEnumerable<iCalVEvent> events = await Task.Run(() => { return iCalSerializer.Deserialize(ics.Split('\n').Select(line => line.TrimEnd('\r'))).Cast<iCalVEvent>(); });
             return events.Select(ice =>
             {
                 string[] summaryParts = ice.Summary.Split(new[] {" - "}, StringSplitOptions.None);
                 string title = summaryParts[0];
-                if(title.Contains("("))
+                if (title.Contains("("))
                     title = title.Substring(0, summaryParts[0].IndexOf('(')).Trim();
                 string details = summaryParts[0].Replace(title, "").Trim();
                 return new CalendarEvent(ice.DTStart, ice.DTEnd, ice.Location, summaryParts.Last(), title, summaryParts[1], details, summaryParts.Length > 3 ? summaryParts[2] : null);
@@ -170,8 +182,8 @@ namespace NeptunLight.DataAccess
                 // load subcject data in semester
                 subjectsPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=0304");
                 await Task.Delay(100);
-                IDocument semesterSubjectData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0304", subjectsPage, new[]{new KeyValuePair<string, string>("upFilter$cmb$m_cmb", option.GetAttribute("value"))});
-                IHtmlTableElement subjectDataTable = (IHtmlTableElement)semesterSubjectData.GetElementById("h_addedsubjects_gridAddedSubjects_bodytable");
+                IDocument semesterSubjectData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0304", subjectsPage, new[] {new KeyValuePair<string, string>("upFilter$cmb$m_cmb", option.GetAttribute("value"))});
+                IHtmlTableElement subjectDataTable = (IHtmlTableElement) semesterSubjectData.GetElementById("h_addedsubjects_gridAddedSubjects_bodytable");
 
                 // load course data
 
@@ -180,11 +192,9 @@ namespace NeptunLight.DataAccess
                 await Task.Delay(100);
                 IElement optionToSelect = coursesPage.GetElementById("cmb_cmb").Children.FirstOrDefault(e => e.TextContent == semester.Name);
                 if (optionToSelect == null)
-                {
                     continue;
-                }
-                IDocument semesterCourseData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0302", coursesPage, new[] { new KeyValuePair<string, string>("upFilter$cmb$m_cmb", optionToSelect.GetAttribute("value")) });
-                IHtmlTableElement courseDataTable = (IHtmlTableElement)semesterCourseData.GetElementById("h_actual_courses_gridCourses_bodytable");
+                IDocument semesterCourseData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0302", coursesPage, new[] {new KeyValuePair<string, string>("upFilter$cmb$m_cmb", optionToSelect.GetAttribute("value"))});
+                IHtmlTableElement courseDataTable = (IHtmlTableElement) semesterCourseData.GetElementById("h_actual_courses_gridCourses_bodytable");
 
                 foreach (IHtmlTableRowElement dataRow in subjectDataTable.Bodies[0].Rows)
                 {
@@ -232,9 +242,9 @@ namespace NeptunLight.DataAccess
                 await Task.Delay(200);
                 examsPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=0402");
                 await Task.Delay(100);
-                IDocument semesterExamData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0402", examsPage, new[] { new KeyValuePair<string, string>("upFilter$cmbTerms", option.GetAttribute("value")) });
-                IHtmlTableElement subjectDataTable = (IHtmlTableElement)semesterExamData.GetElementById("h_signedexams_gridExamList_bodytable");
-                
+                IDocument semesterExamData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0402", examsPage, new[] {new KeyValuePair<string, string>("upFilter$cmbTerms", option.GetAttribute("value"))});
+                IHtmlTableElement subjectDataTable = (IHtmlTableElement) semesterExamData.GetElementById("h_signedexams_gridExamList_bodytable");
+
                 foreach (IHtmlTableRowElement dataRow in subjectDataTable.Bodies[0].Rows)
                 {
                     if (dataRow.ClassList.Contains("NoMatch"))
@@ -245,7 +255,7 @@ namespace NeptunLight.DataAccess
                     string attemptType = dataRow.Cells[5].TextContent;
                     DateTime startTime = DateTime.ParseExact(dataRow.Cells[6].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo);
                     string location = dataRow.Cells[7].TextContent;
-                    IEnumerable<string> instructors = dataRow.Cells[8].TextContent.Split(new [] {','}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim());
+                    IEnumerable<string> instructors = dataRow.Cells[8].TextContent.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim());
                     string[] placeCountParts = dataRow.Cells[9].TextContent.Trim().Split(' ')[0].Split('/');
                     int placesTaken = Int32.Parse(placeCountParts[0]);
                     int placesTotal = placeCountParts.Length > 1 ? Int32.Parse(placeCountParts[1]) : 0;
@@ -278,7 +288,7 @@ namespace NeptunLight.DataAccess
             IHtmlTableElement dataTable = (IHtmlTableElement) semestersPage.GetElementById("h_officialnote_average_gridAverages_bodytable");
 
             List<SemesterData> results = new List<SemesterData>();
-            for (int i = 0; i < dataTable.Bodies[0].Rows.Length - 1; i+=2)
+            for (int i = 0; i < dataTable.Bodies[0].Rows.Length - 1; i += 2)
             {
                 IHtmlTableRowElement headerRow = dataTable.Bodies[0].Rows[i];
                 //IHtmlTableRowElement dataRow = dataTable.Bodies[0].Rows[i+1];
@@ -286,12 +296,12 @@ namespace NeptunLight.DataAccess
                 Semester semester = Semester.Parse(headerRow.Cells[1].TextContent);
                 string status = headerRow.Cells[2].TextContent;
                 string financialStatus = headerRow.Cells[3].TextContent;
-                int? creditsAccpomlished = !string.IsNullOrEmpty(headerRow.Cells[4].TextContent) ? Int32.Parse(headerRow.Cells[4].TextContent) : (int?)null;
-                int? creditsTaken = !string.IsNullOrEmpty(headerRow.Cells[5].TextContent) ? Int32.Parse(headerRow.Cells[5].TextContent) : (int?)null;
-                int? totalCreditsAccpomlished = !string.IsNullOrEmpty(headerRow.Cells[6].TextContent) ? Int32.Parse(headerRow.Cells[6].TextContent) : (int?)null;
-                int? totalCreditsTaken = !string.IsNullOrEmpty(headerRow.Cells[7].TextContent) ? Int32.Parse(headerRow.Cells[7].TextContent) : (int?)null;
-                double? average = !string.IsNullOrEmpty(headerRow.Cells[8].TextContent) ? Double.Parse(headerRow.Cells[8].TextContent, new CultureInfo("hu-HU")) : (double?)null;
-                double? cumAverage = !string.IsNullOrEmpty(headerRow.Cells[9].TextContent) ? Double.Parse(headerRow.Cells[9].TextContent, new CultureInfo("hu-HU")) : (double?)null;
+                int? creditsAccpomlished = !string.IsNullOrEmpty(headerRow.Cells[4].TextContent) ? Int32.Parse(headerRow.Cells[4].TextContent) : (int?) null;
+                int? creditsTaken = !string.IsNullOrEmpty(headerRow.Cells[5].TextContent) ? Int32.Parse(headerRow.Cells[5].TextContent) : (int?) null;
+                int? totalCreditsAccpomlished = !string.IsNullOrEmpty(headerRow.Cells[6].TextContent) ? Int32.Parse(headerRow.Cells[6].TextContent) : (int?) null;
+                int? totalCreditsTaken = !string.IsNullOrEmpty(headerRow.Cells[7].TextContent) ? Int32.Parse(headerRow.Cells[7].TextContent) : (int?) null;
+                double? average = !string.IsNullOrEmpty(headerRow.Cells[8].TextContent) ? Double.Parse(headerRow.Cells[8].TextContent, new CultureInfo("hu-HU")) : (double?) null;
+                double? cumAverage = !string.IsNullOrEmpty(headerRow.Cells[9].TextContent) ? Double.Parse(headerRow.Cells[9].TextContent, new CultureInfo("hu-HU")) : (double?) null;
                 results.Add(new SemesterData(semester, status, financialStatus, creditsAccpomlished, creditsTaken, totalCreditsAccpomlished, totalCreditsTaken, average, cumAverage));
             }
             return results;
@@ -305,7 +315,6 @@ namespace NeptunLight.DataAccess
             IDocument periodsPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=1301");
             IEnumerable<IElement> semesterOptions = periodsPage.GetElementById("upFilter_cmbTerms").Children.Where(opt => opt.GetAttribute("value") != "-1");
             foreach (IElement option in semesterOptions.Take(8))
-            {
                 try
                 {
                     Semester semester = Semester.Parse(option.TextContent);
@@ -339,8 +348,26 @@ namespace NeptunLight.DataAccess
                 {
                     throw new NetworkException("Error loading periods", ex);
                 }
-            }
 
+            return result;
+        }
+
+        private static IList<MailHeader> ParseMailHeaderTable(IHtmlTableElement table)
+        {
+            List<MailHeader> result = new List<MailHeader>();
+            foreach (IHtmlTableRowElement row in table.Bodies[0].Rows)
+                try
+                {
+                    DateTime receiveTime = DateTime.ParseExact(row.Cells[7].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo);
+                    string sender = row.Cells[4].TextContent;
+                    string title = row.Cells[6].TextContent;
+                    long trid = Int64.Parse(row.Id.Substring(4));
+                    result.Add(new MailHeader(receiveTime, sender, title) {TrId = trid});
+                }
+                catch (Exception)
+                {
+                    // skip unparsable stuff
+                }
             return result;
         }
     }

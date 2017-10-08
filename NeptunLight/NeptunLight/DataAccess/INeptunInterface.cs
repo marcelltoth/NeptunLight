@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using NeptunLight.Models;
 
 namespace NeptunLight.DataAccess
@@ -8,8 +9,10 @@ namespace NeptunLight.DataAccess
     public interface INeptunInterface
     {
         Uri BaseUri { get; set; }
+        [NotNull]
         string Username { get; set; }
 
+        [NotNull]
         string Password { get; set; }
 
         Task LoginAsync();

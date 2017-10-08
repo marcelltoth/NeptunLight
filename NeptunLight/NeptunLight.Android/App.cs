@@ -1,22 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
 using Android.App;
-using Android.Content;
-using Android.OS;
 using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Autofac;
-using NeptunLight.DataAccess;
 using NeptunLight.Droid.Services;
-using NeptunLight.Models;
 using NeptunLight.Services;
-using NeptunLight.ViewModels;
-using ReactiveUI;
 
 namespace NeptunLight.Droid
 {
@@ -43,6 +30,10 @@ namespace NeptunLight.Droid
 
             builder.RegisterType<MailContentCache>()
                    .As<IMailContentCache>()
+                   .SingleInstance();
+
+            builder.RegisterType<PrimitiveStorage>()
+                   .As<IPrimitiveStorage>()
                    .SingleInstance();
 
             builder.Register(context => MainActivity)

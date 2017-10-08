@@ -127,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Services\PrimitiveStorage.cs" />
     <Compile Include="Utils\TabListAdapter.cs" />
     <Compile Include="Views\CalendarPage.cs" />
     <Compile Include="Views\CoursesPage.cs" />

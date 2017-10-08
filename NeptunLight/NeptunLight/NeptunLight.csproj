@@ -55,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IMailContentCache.cs" />
     <Compile Include="Services\INavigator.cs" />
+    <Compile Include="Services\IPrimitiveStorage.cs" />
     <Compile Include="ViewModels\CalendarPageViewModel.cs" />
     <Compile Include="ViewModels\CoursesPageViewModel.cs" />
     <Compile Include="ViewModels\CoursesTabViewModel.cs" />
