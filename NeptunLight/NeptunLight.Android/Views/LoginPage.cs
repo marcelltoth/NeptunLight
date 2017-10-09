@@ -13,9 +13,9 @@ namespace NeptunLight.Droid.Views
 {
     public class LoginPage : ReactiveFragment<LoginPageViewModel>
     {
+        public ViewGroup LoginPanel { get; set; }
         public EditText LoginField { get; set; }
         public EditText PasswordField { get; set; }
-        public TextView ErrorText { get; set; }
         public Button LoginButton { get; set; }
         public Spinner InstituteSelector { get; set; }
 
@@ -31,15 +31,47 @@ namespace NeptunLight.Droid.Views
 
             this.Bind(ViewModel, x => x.Password, x => x.PasswordField.Text);
 
-            this.Bind(ViewModel, x => x.LoginError, x => x.ErrorText.Text);
-
             this.BindCommand(ViewModel, x => x.Login, x => x.LoginButton);
 
             this.WhenAnyValue(x => x.ViewModel.AvaialbleInstitutes).Subscribe(v => { InstituteSelector.Adapter = new InstituteAdapter(inflater, v.ToList()); });
 
             this.WhenAnyValue(x => x.InstituteSelector.SelectedItemPosition).Select(x => ((InstituteAdapter) InstituteSelector.Adapter)[x]).BindTo(this, x => x.ViewModel.SelectedInstitute);
 
+            this.WhenAnyValue(x => x.ViewModel.LoginError).Skip(1).Where(err => !String.IsNullOrEmpty(err)).Subscribe(err =>
+            {
+                Toast.MakeText(Activity, err, ToastLength.Long).Show();
+            });
+
             return layout;
+        }
+
+        public override void OnResume()
+        {
+            base.OnResume();
+
+            bool resized = false;
+            LoginPanel.ViewTreeObserver.GlobalLayout += (o, args) =>
+            {
+                if (resized)
+                    return;
+                resized = true;
+                // only do this once, otherwise it gets recursive
+
+                ViewGroup.LayoutParams layout = LoginPanel.LayoutParameters;
+                int originalHeight = LoginPanel.Height;
+                int originalWidth = LoginPanel.Width;
+                double finalHeight = originalHeight;
+                const double RATIO = 1193 / 842d;
+                if (originalWidth > originalHeight / RATIO) // too wide
+                    layout.Width = (int)(originalHeight / RATIO);
+                else // too tall
+                {
+                    layout.Height = (int)(originalWidth * RATIO);
+                    finalHeight = layout.Height;
+                }
+                LoginPanel.LayoutParameters = layout;
+                LoginPanel.SetPadding(LoginPanel.PaddingLeft, (int)(finalHeight * 0.22), LoginPanel.PaddingRight, LoginPanel.PaddingBottom);
+            };
         }
 
         private class InstituteAdapter : BaseAdapter<Institute>

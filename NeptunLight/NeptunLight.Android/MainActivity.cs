@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Android.App;
-using Android.Content;
-using Android.Runtime;
+using Android.Content.PM;
 using Android.Views;
-using Android.Widget;
 using Android.OS;
+using Android.Support.V4.App;
+using Android.Support.V7.App;
 using Autofac;
-using NeptunLight.Droid.Views;
 using NeptunLight.Services;
 using NeptunLight.ViewModels;
 using ReactiveUI;
+using Fragment = Android.App.Fragment;
+using FragmentTransaction = Android.App.FragmentTransaction;
 
 namespace NeptunLight.Droid
 {
-	[Activity (Label = "NeptunLight.Android", MainLauncher = true, Icon = "@drawable/icon")]
+	[Activity (Label = "NeptunLight.Android", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/Theme.AppCompat.Light.NoActionBar", ScreenOrientation = ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden)]
 	public class MainActivity : Activity, INavigator
 	{
 	    private readonly Dictionary<Type, PageViewModel> _pageViewModelCache = new Dictionary<Type, PageViewModel>();

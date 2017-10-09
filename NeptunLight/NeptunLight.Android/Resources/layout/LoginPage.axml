@@ -1,30 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/InstituteSelector" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/LoginField"
-        android:hint="Neptun kód" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/PasswordField"
-        android:hint="Jelszó" 
-        android:inputType="textPassword"/>
-    <Button
-        android:text="Belépés"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/LoginButton" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/errorText" />
-</LinearLayout>
+<FrameLayout xmlns:p1="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    p1:layout_width="match_parent"
+    p1:layout_height="match_parent"
+    p1:id="@+id/frameLayout1"
+    p1:background="#ff222222">
+    <ImageView
+        p1:src="@drawable/login_background"
+        p1:layout_width="match_parent"
+        p1:layout_height="match_parent"
+        p1:id="@+id/backgroundImage"
+        p1:scaleType="centerCrop" />
+    <LinearLayout
+        p1:orientation="vertical"
+        p1:minWidth="25px"
+        p1:minHeight="25px"
+        p1:layout_width="match_parent"
+        p1:layout_height="match_parent"
+        p1:layout_marginTop="50dp"
+        p1:layout_marginBottom="40dp">
+        <TextView
+            p1:text="Neptun Lite"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/textView1"
+            p1:textAlignment="center"
+            p1:gravity="center_horizontal"
+            p1:layout_marginBottom="20dp"
+            p1:textSize="24dp"
+            p1:textColor="#ffffffff" />
+        <FrameLayout
+            p1:layout_width="match_parent"
+            p1:layout_height="match_parent">
+            <LinearLayout
+                p1:orientation="vertical"
+                p1:id="@+id/loginPanel"
+                p1:background="@drawable/login_box"
+                p1:layout_gravity="center"
+                p1:layout_width="match_parent"
+                p1:layout_height="wrap_content"
+                p1:paddingTop="50dp"
+                p1:paddingRight="40dp"
+                p1:paddingLeft="40dp"
+                p1:paddingBottom="40dp">
+                <Spinner
+                    p1:layout_width="match_parent"
+                    p1:layout_height="wrap_content"
+                    p1:id="@+id/InstituteSelector" />
+                <EditText
+                    p1:layout_width="match_parent"
+                    p1:layout_height="wrap_content"
+                    p1:id="@+id/LoginField"
+                    p1:hint="Neptun kód"
+                    p1:textAllCaps="true"
+                    p1:textSize="16dp"
+                    p1:layout_marginTop="25dp" />
+                <EditText
+                    p1:layout_width="match_parent"
+                    p1:layout_height="wrap_content"
+                    p1:id="@+id/PasswordField"
+                    p1:hint="Jelszó"
+                    p1:inputType="textPassword"
+                    p1:textSize="16dp"
+                    p1:layout_marginTop="10dp" />
+                <Button
+                    p1:text="Belépés"
+                    p1:layout_width="match_parent"
+                    p1:layout_height="wrap_content"
+                    p1:id="@+id/LoginButton"
+                    p1:layout_marginTop="35dp"
+                    p1:background="#ffb74d" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</FrameLayout>
