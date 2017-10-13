@@ -36,17 +36,8 @@ namespace NeptunLight.Droid.Views
             base.OnStart();
 
 
-            this.WhenAnyValue(x => x.ViewModel.Messages).Subscribe(items =>
-            {
-                var messageListAdapter = new ListAdapter<MessageViewModel>(_layoutInflater, items, Resource.Layout.MessageListItem, (itemView, model) =>
-                {
-                    itemView.FindViewById<TextView>(Resource.Id.titleTextView).Text = model.Subject;
-                    itemView.FindViewById<TextView>(Resource.Id.senderTextView).Text = model.Sender;
-                    itemView.FindViewById<TextView>(Resource.Id.letterBox).Text = model.SenderCode;
-                });
-                MessageList.Adapter = messageListAdapter;
-                MessageList.Events().ItemClick.Select(args => messageListAdapter[args.Position]).InvokeCommand(this, x => x.ViewModel.OpenMessage);
-            });
+            ViewModel.Messages.Changed.Throttle(TimeSpan.FromSeconds(1)).Subscribe(items => { RefreshAdapter(); });
+            RefreshAdapter();
 
             this.WhenAnyValue(x => x.ViewModel).Subscribe(vm =>
             {
@@ -62,6 +53,18 @@ namespace NeptunLight.Droid.Views
             });
             
             this.OneWayBind(ViewModel, x => x.IsRefreshing, x => x.SwipeRefresh.Refreshing);
+        }
+
+        private void RefreshAdapter()
+        {
+            var messageListAdapter = new ListAdapter<MessageViewModel>(_layoutInflater, ViewModel.Messages, Resource.Layout.MessageListItem, (itemView, model) =>
+            {
+                itemView.FindViewById<TextView>(Resource.Id.titleTextView).Text = model.Subject;
+                itemView.FindViewById<TextView>(Resource.Id.senderTextView).Text = model.Sender;
+                itemView.FindViewById<TextView>(Resource.Id.letterBox).Text = model.SenderCode;
+            });
+            MessageList.Adapter = messageListAdapter;
+            MessageList.Events().ItemClick.Select(args => messageListAdapter[args.Position]).InvokeCommand(this, x => x.ViewModel.OpenMessage);
         }
 
         public void OnRefresh()

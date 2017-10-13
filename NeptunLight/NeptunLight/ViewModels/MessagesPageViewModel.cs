@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Linq;
 using NeptunLight.DataAccess;
 using NeptunLight.Models;
 using NeptunLight.Services;
@@ -13,8 +15,7 @@ namespace NeptunLight.ViewModels
     {
         private IDataStorage DataStorage { get; }
 
-        private readonly ObservableAsPropertyHelper<IEnumerable<MessageViewModel>> _messages;
-        public IEnumerable<MessageViewModel> Messages => _messages.Value;
+        public IReactiveDerivedList<MessageViewModel> Messages { get; }
 
         private readonly ObservableAsPropertyHelper<bool> _isRefreshing;
         public bool IsRefreshing => _isRefreshing.Value;
@@ -22,7 +23,7 @@ namespace NeptunLight.ViewModels
         public MessagesPageViewModel(IDataStorage data, INeptunInterface dataAccess, Func<Mail, MessageViewModel> messageVmFac, INavigator navigator)
         {
             DataStorage = data;
-            this.WhenAny(x => x.DataStorage.CurrentData.Messages, messages => messages.Value.Take(100).Select(messageVmFac).ToList()).ToProperty(this, x => x.Messages, out _messages);
+            Messages = DataStorage.CurrentData.Messages.CreateDerivedCollection(messageVmFac);
 
             OpenMessage = ReactiveCommand.Create<MessageViewModel, Unit>(vm =>
             {
@@ -32,8 +33,13 @@ namespace NeptunLight.ViewModels
 
             RefreshMessages = ReactiveCommand.CreateFromTask(async () =>
             {
-                data.CurrentData.Messages = await dataAccess.RefreshMessagesAsnyc();
-                await data.SaveDataAsync();
+                DataStorage.CurrentData.Messages.Clear();
+                await dataAccess.RefreshMessages().Do(mail => DataStorage.CurrentData.Messages.Add(mail)
+                                                       , ex =>
+                                                       {
+                                                           // TODO: handle error
+                                                       },
+                                                       async () => { await DataStorage.SaveDataAsync(); });
             });
 
             RefreshMessages.IsExecuting.ToProperty(this, x => x.IsRefreshing, out _isRefreshing);

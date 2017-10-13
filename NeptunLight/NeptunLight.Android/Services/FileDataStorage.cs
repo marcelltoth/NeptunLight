@@ -72,15 +72,16 @@ namespace NeptunLight.Droid.Services
 
             public NeptunData ToNeptunData()
             {
-                return new NeptunData()
+                NeptunData data = new NeptunData()
                 {
                     Calendar = Calendar,
-                    Messages = Messages,
                     SubjectsPerSemester =  SubjectsPerSemester.ToDictionary(kvp => Semester.Parse(kvp.Key), kvp => (IReadOnlyCollection<Subject>)kvp.Value),
                     ExamsPerSemester = ExamsPerSemester.ToDictionary(kvp => Semester.Parse(kvp.Key), kvp => (IReadOnlyCollection<Exam>)kvp.Value),
                     SemesterInfo = SemesterInfo,
                     Periods = Periods
                 };
+                data.Messages.AddRange(Messages);
+                return data;
             }
 
             public List<Mail> Messages { get; set; }

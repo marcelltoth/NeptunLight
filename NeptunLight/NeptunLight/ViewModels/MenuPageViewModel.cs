@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using NeptunLight.DataAccess;
 using NeptunLight.Models;
@@ -35,10 +36,12 @@ namespace NeptunLight.ViewModels
                     LoadingDialogText = "Időszakok betöltése...";
                     storage.CurrentData.Periods = await client.RefreshPeriodsAsnyc();
                     LoadingDialogText = "Üzenetek betöltése... (első alkalommal több percet is igénybe vehet)";
-                    storage.CurrentData.Messages = await client.RefreshMessagesAsnyc(new Progress<MessageLoadingProgress>(progress =>
+                    IList<Mail> messages = await client.RefreshMessages(new Progress<MessageLoadingProgress>(progress =>
                     {
                         LoadingDialogText = $"Üzenetek betöltése ({progress.Current} / {progress.Total})... (első alkalommal több percet is igénybe vehet)";
-                    }));
+                    })).ToList();
+                    storage.CurrentData.Messages.Clear();
+                    storage.CurrentData.Messages.AddRange(messages);
 
                     LoadingDialogText = "A szinkronizáció sikeres.";
                     await storage.SaveDataAsync();
