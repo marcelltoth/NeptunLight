@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using AngleSharp.Dom;
 using AngleSharp.Parser.Html;
@@ -51,9 +52,9 @@ namespace NeptunLight.DataAccess
             }
         }
 
-        public async Task<string> GetRawAsnyc(string url)
+        public async Task<string> GetRawAsnyc(string url, CancellationToken ct = default(CancellationToken))
         {
-            using (HttpResponseMessage response = await HttpClient.GetAsync(url))
+            using (HttpResponseMessage response = await HttpClient.GetAsync(url, ct))
             {
                 if (!response.IsSuccessStatusCode)
                     throw new NetworkException();
@@ -62,28 +63,28 @@ namespace NeptunLight.DataAccess
             }
         }
 
-        public async Task<Stream> GetRawStreamAsnyc(string url)
+        public async Task<Stream> GetRawStreamAsnyc(string url, CancellationToken ct = default(CancellationToken))
         {
-            HttpResponseMessage response = await HttpClient.GetAsync(url);
+            HttpResponseMessage response = await HttpClient.GetAsync(url, ct);
             if (!response.IsSuccessStatusCode)
                 throw new NetworkException();
 
             return await response.Content.ReadAsStreamAsync();
         }
 
-        public async Task<IDocument> GetDocumentAsnyc(string url)
+        public async Task<IDocument> GetDocumentAsnyc(string url, CancellationToken ct = default(CancellationToken))
         {
-            using (HttpResponseMessage response = await HttpClient.GetAsync(url))
+            using (HttpResponseMessage response = await HttpClient.GetAsync(url, ct))
             {
                 if (!response.IsSuccessStatusCode)
                     throw new NetworkException();
 
                 HtmlParser parser = new HtmlParser();
-                return await parser.ParseAsync(await ReadResponseAsync(response));
+                return await parser.ParseAsync(await ReadResponseAsync(response), ct);
             }
         }
 
-        public async Task<IDocument> PostFormAsnyc(string url, IDocument form, ICollection<KeyValuePair<string, string>> overrides, bool keepOriginalHeaders = true)
+        public async Task<IDocument> PostFormAsnyc(string url, IDocument form, ICollection<KeyValuePair<string, string>> overrides, bool keepOriginalHeaders = true, CancellationToken ct = default(CancellationToken))
         {
             IEnumerable<KeyValuePair<string, string>> paramCollection = overrides;
             if (keepOriginalHeaders)
@@ -95,25 +96,25 @@ namespace NeptunLight.DataAccess
                 postContent.Headers.TryAddWithoutValidation("X-Requested-With", "XMLHttpRequest");
                 postContent.Headers.TryAddWithoutValidation("X-MicrosoftAjax", "Delta=true");
                 postContent.Headers.TryAddWithoutValidation("Accept", "*/*");
-                using (HttpResponseMessage response = await HttpClient.PostAsync(url, postContent))
+                using (HttpResponseMessage response = await HttpClient.PostAsync(url, postContent, ct))
                 {
                     if (!response.IsSuccessStatusCode)
                         throw new NetworkException();
 
                     HtmlParser parser = new HtmlParser();
-                    return await parser.ParseAsync(await ReadResponseAsync(response));
+                    return await parser.ParseAsync(await ReadResponseAsync(response), ct);
                 }
             }
         }
 
-        public async Task<string> PostFormRawAsnyc(string url, IDocument form, IEnumerable<KeyValuePair<string, string>> overrides)
+        public async Task<string> PostFormRawAsnyc(string url, IDocument form, IEnumerable<KeyValuePair<string, string>> overrides, CancellationToken ct = default(CancellationToken))
         {
             IEnumerable<KeyValuePair<string, string>> paramCollection = form.GetPostbackData()
                                                                             .Where(kvp => overrides.All(overrideKvp => overrideKvp.Key != kvp.Key))
                                                                             .Concat(overrides);
             using (HttpContent postContent = new FormUrlEncodedContent(paramCollection))
             {
-                using (HttpResponseMessage response = await HttpClient.PostAsync(url, postContent))
+                using (HttpResponseMessage response = await HttpClient.PostAsync(url, postContent, ct))
                 {
                     if (!response.IsSuccessStatusCode)
                         throw new NetworkException();
@@ -146,9 +147,9 @@ namespace NeptunLight.DataAccess
             }
         }
 
-        public async Task<JObject> GetJsonObjectAsnyc(string url)
+        public async Task<JObject> GetJsonObjectAsnyc(string url, CancellationToken ct = default(CancellationToken))
         {
-            using (HttpResponseMessage response = await HttpClient.GetAsync(url))
+            using (HttpResponseMessage response = await HttpClient.GetAsync(url, ct))
             {
                 if (!response.IsSuccessStatusCode)
                     throw new NetworkException();
@@ -157,9 +158,9 @@ namespace NeptunLight.DataAccess
             }
         }
 
-        public async Task<JObject> PostJsonObjectAsnyc(string url, string json)
+        public async Task<JObject> PostJsonObjectAsnyc(string url, string json, CancellationToken ct = default(CancellationToken))
         {
-            using (HttpResponseMessage response = await HttpClient.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json")))
+            using (HttpResponseMessage response = await HttpClient.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"), ct))
             {
                 if (!response.IsSuccessStatusCode)
                     throw new NetworkException();

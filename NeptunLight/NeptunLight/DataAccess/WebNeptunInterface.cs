@@ -97,18 +97,23 @@ namespace NeptunLight.DataAccess
 
         public IObservable<Mail> RefreshMessages(IProgress<MessageLoadingProgress> progress = null)
         {
-            return Observable.Create<Mail>(async (observer, stream) =>
+            return Observable.Create<Mail>(async (observer, ct) =>
             {
                 await LoginAsync();
-                IDocument inboxPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=inbox");
-                string rawMessages = await _client.GetRawAsnyc("HandleRequest.ashx?RequestType=GetData&GridID=c_messages_gridMessages&pageindex=1&pagesize=500&sort1=SendDate%20DESC&sort2=&fixedheader=false&searchcol=&searchtext=&searchexpanded=false&allsubrowsexpanded=False&selectedid=undefined&functionname=&level=");
+                IDocument inboxPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=inbox", ct);
+                string rawMessages = await _client.GetRawAsnyc("HandleRequest.ashx?RequestType=GetData&GridID=c_messages_gridMessages&pageindex=1&pagesize=500&sort1=SendDate%20DESC&sort2=&fixedheader=false&searchcol=&searchtext=&searchexpanded=false&allsubrowsexpanded=False&selectedid=undefined&functionname=&level=", ct);
                 HtmlParser parser = new HtmlParser();
-                IDocument rawMessagesDocument = await parser.ParseAsync(rawMessages);
+                IDocument rawMessagesDocument = await parser.ParseAsync(rawMessages, ct);
                 IHtmlTableElement messageHeaderTable = (IHtmlTableElement)rawMessagesDocument.GetElementById("c_messages_gridMessages_bodytable");
 
                 IList<MailHeader> mailHeaders = ParseMailHeaderTable(messageHeaderTable);
                 for (int i = 0; i < Math.Min(mailHeaders.Count, 300); i++)
                 {
+                    if (ct.IsCancellationRequested)
+                    {
+                        observer.OnCompleted();
+                        return;
+                    }
                     MailHeader mailHeader = mailHeaders[i];
 
                     progress?.Report(new MessageLoadingProgress(i + 1, mailHeaders.Count));
@@ -126,7 +131,7 @@ namespace NeptunLight.DataAccess
                     }
 
                     // load the mail itself
-                    await Task.Delay(50);
+                    await Task.Delay(50, ct);
                     IDocument popupDocument = await _client.PostFormAsnyc(
                         "main.aspx?ismenuclick=true&ctrl=inbox",
                         inboxPage,
@@ -135,7 +140,7 @@ namespace NeptunLight.DataAccess
                         new KeyValuePair<string, string>("__EVENTTARGET", "upFunction$c_messages$upMain$upGrid$gridMessages"),
                         new KeyValuePair<string, string>("__EVENTARGUMENT", $"commandname=Subject;commandsource=select;id={mailHeader.TrId};level=1")
                         },
-                        false);
+                        false, ct);
 
                     string content = popupDocument.GetElementById("Readmessage1_lblMessage").InnerHtml;
                     Mail ret2 = new Mail(mailHeader, content);

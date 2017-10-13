@@ -37,9 +37,12 @@ namespace NeptunLight.ViewModels
                 await dataAccess.RefreshMessages().Do(mail => DataStorage.CurrentData.Messages.Add(mail)
                                                        , ex =>
                                                        {
-                                                           // TODO: handle error
+                                                           Debug.WriteLine("Error" + ex.ToString());
                                                        },
-                                                       async () => { await DataStorage.SaveDataAsync(); });
+                                                      async () =>
+                                                      {
+                                                          await DataStorage.SaveDataAsync();
+                                                      });
             });
 
             RefreshMessages.IsExecuting.ToProperty(this, x => x.IsRefreshing, out _isRefreshing);

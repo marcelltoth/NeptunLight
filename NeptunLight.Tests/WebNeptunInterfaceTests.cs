@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NeptunLight.DataAccess;
 using NeptunLight.Models;
@@ -44,7 +45,7 @@ namespace NeptunLight.Tests
         public async void Messages_MoreThan200()
         {
             INeptunInterface client = CreateInterface();
-            var messages = await client.RefreshMessagesAsnyc();
+            IList<Mail> messages = await client.RefreshMessages().ToList();
             Assert.InRange(messages.Count, 201, Int32.MaxValue);
         }
 

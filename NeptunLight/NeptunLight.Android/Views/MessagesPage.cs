@@ -36,7 +36,9 @@ namespace NeptunLight.Droid.Views
             base.OnStart();
 
 
-            ViewModel.Messages.Changed.Throttle(TimeSpan.FromSeconds(1)).Subscribe(items => { RefreshAdapter(); });
+            ViewModel.Messages.Changed
+                .ObserveOn(Application.SynchronizationContext)
+                .Subscribe(items => { RefreshAdapter(); });
             RefreshAdapter();
 
             this.WhenAnyValue(x => x.ViewModel).Subscribe(vm =>
