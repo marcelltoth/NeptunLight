@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
+using JetBrains.Annotations;
 using NeptunLight.Models;
 using NeptunLight.Services;
 using Newtonsoft.Json;
@@ -55,12 +56,14 @@ namespace NeptunLight.Droid.Services
             });
         }
 
+        [UsedImplicitly(ImplicitUseTargetFlags.Members)]
         private class NeptunDataProxy
         {
             public static NeptunDataProxy FromNeptunData(NeptunData d)
             {
                 return new NeptunDataProxy
                 {
+                    BasicData = d.BasicData,
                     Calendar = d.Calendar.ToList(),
                     Messages = d.Messages.ToList(),
                     SubjectsPerSemester = d.SubjectsPerSemester.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value.ToList()),
@@ -74,6 +77,7 @@ namespace NeptunLight.Droid.Services
             {
                 NeptunData data = new NeptunData()
                 {
+                    BasicData = BasicData,
                     Calendar = Calendar,
                     SubjectsPerSemester =  SubjectsPerSemester.ToDictionary(kvp => Semester.Parse(kvp.Key), kvp => (IReadOnlyCollection<Subject>)kvp.Value),
                     ExamsPerSemester = ExamsPerSemester.ToDictionary(kvp => Semester.Parse(kvp.Key), kvp => (IReadOnlyCollection<Exam>)kvp.Value),
@@ -83,6 +87,8 @@ namespace NeptunLight.Droid.Services
                 data.Messages.AddRange(Messages);
                 return data;
             }
+
+            public BasicNeptunData BasicData { get; set; }
 
             public List<Mail> Messages { get; set; }
 

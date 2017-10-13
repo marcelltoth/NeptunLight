@@ -22,6 +22,9 @@ namespace NeptunLight.Models
         private IReadOnlyDictionary<Semester, IReadOnlyCollection<Subject>> _subjectsPerSemester = new Dictionary<Semester, IReadOnlyCollection<Subject>>();
 
         [NotNull]
+        public BasicNeptunData BasicData { get; set; } = new BasicNeptunData();
+
+        [NotNull]
         public IReactiveList<Mail> Messages { get; } = new ReactiveList<Mail>();
 
         [NotNull]

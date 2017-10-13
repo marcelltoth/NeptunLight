@@ -18,6 +18,7 @@ namespace NeptunLight.DataAccess
 
         Task LoginAsync();
 
+        Task<BasicNeptunData> RefreshBasicDataAsync();
         IObservable<Mail> RefreshMessages(IProgress<MessageLoadingProgress> progress = null);
         Task<IReadOnlyCollection<CalendarEvent>> RefreshCalendarAsnyc();
         Task<IReadOnlyDictionary<Semester, IReadOnlyCollection<Subject>>> RefreshSubjectsAsnyc();

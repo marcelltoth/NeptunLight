@@ -23,27 +23,28 @@ namespace NeptunLight.ViewModels
 
                     LoadingDialogShown = true;
                     LoadingDialogText = "Belépés...";
-                    await client.LoginAsync();
-                    storage.CurrentData = new NeptunData();
+                    NeptunData loadedData = new NeptunData();
+                    loadedData.BasicData = await client.RefreshBasicDataAsync();
                     LoadingDialogText = "Féléves adatok betöltése...";
-                    storage.CurrentData.SemesterInfo = await client.RefreshSemestersAsnyc();
+                    loadedData.SemesterInfo = await client.RefreshSemestersAsnyc();
                     LoadingDialogText = "Felvett tantárgyak betöltése...";
-                    storage.CurrentData.SubjectsPerSemester = await client.RefreshSubjectsAsnyc();
+                    loadedData.SubjectsPerSemester = await client.RefreshSubjectsAsnyc();
                     LoadingDialogText = "Felvett vizsgák betöltése...";
-                    storage.CurrentData.ExamsPerSemester = await client.RefreshExamsAsnyc();
+                    loadedData.ExamsPerSemester = await client.RefreshExamsAsnyc();
                     LoadingDialogText = "Naptár betöltése...";
-                    storage.CurrentData.Calendar = await client.RefreshCalendarAsnyc();
+                    loadedData.Calendar = await client.RefreshCalendarAsnyc();
                     LoadingDialogText = "Időszakok betöltése...";
-                    storage.CurrentData.Periods = await client.RefreshPeriodsAsnyc();
+                    loadedData.Periods = await client.RefreshPeriodsAsnyc();
                     LoadingDialogText = "Üzenetek betöltése... (első alkalommal több percet is igénybe vehet)";
                     IList<Mail> messages = await client.RefreshMessages(new Progress<MessageLoadingProgress>(progress =>
                     {
                         LoadingDialogText = $"Üzenetek betöltése ({progress.Current} / {progress.Total})... (első alkalommal több percet is igénybe vehet)";
                     })).ToList();
-                    storage.CurrentData.Messages.Clear();
-                    storage.CurrentData.Messages.AddRange(messages);
+                    loadedData.Messages.Clear();
+                    loadedData.Messages.AddRange(messages);
 
                     LoadingDialogText = "A szinkronizáció sikeres.";
+                    storage.CurrentData = loadedData;
                     await storage.SaveDataAsync();
                     LoadingDialogShown = false;
                 }

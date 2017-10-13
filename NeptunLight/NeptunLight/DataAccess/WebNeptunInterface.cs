@@ -95,6 +95,20 @@ namespace NeptunLight.DataAccess
             }
         }
 
+        public async Task<BasicNeptunData> RefreshBasicDataAsync()
+        {
+            await LoginAsync();
+            IDocument mainPage = await _client.GetDocumentAsnyc("main.aspx");
+            string[] topNameParts = mainPage.GetElementById("upTraining_topname").TextContent.Split('-');
+            string trainingName = mainPage.GetElementById("lblTrainingName").TextContent.Split('-').First().Trim();
+            return new BasicNeptunData()
+            {
+                Major = trainingName,
+                Name = topNameParts.First().Trim(),
+                NeptunCode = topNameParts.Last().Trim()
+            };
+        }
+
         public IObservable<Mail> RefreshMessages(IProgress<MessageLoadingProgress> progress = null)
         {
             return Observable.Create<Mail>(async (observer, ct) =>

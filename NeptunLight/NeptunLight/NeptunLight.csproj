@@ -33,6 +33,7 @@
   <ItemGroup>
     <Compile Include="AutofacModuleDefinition.cs" />
     <Compile Include="Helpers\DocumentExtensions.cs" />
+    <Compile Include="Models\BasicNeptunData.cs" />
     <Compile Include="Models\CalendarEvent.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Exam.cs" />
