@@ -20,12 +20,12 @@ namespace NeptunLight.Droid.Views
             set => this.RaiseAndSetIfChanged(ref _loadingDialog, value);
         }
 
-        public Button MessagesButton { get; set; }
-        public Button CalendarButton { get; set; }
-        public Button CoursesButton { get; set; }
-        public Button ExamsButton { get; set; }
-        public Button SemestersButton { get; set; }
-        public Button PeriodsButton { get; set; }
+        public MenuButton MessagesButton { get; set; }
+        public MenuButton CalendarButton { get; set; }
+        public MenuButton CoursesButton { get; set; }
+        public MenuButton ExamsButton { get; set; }
+        public MenuButton SemestersButton { get; set; }
+        public MenuButton PeriodsButton { get; set; }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="#fffcfcfc">
+    android:background="#f3f3f3">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,41 +44,62 @@
         android:layout_height="match_parent"
         app:rowCount="3"
         app:columnCount="2">
-        <Button
+        <NeptunLight.Droid.MenuButton
             android:id="@+id/messagesButton"
             android:text="Üzenetek"
+            android:src="@drawable/menu_mail"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            app:layout_gravity="fill" />
-        <Button
+            app:layout_gravity="fill"
+            android:background="#fcfcfc"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp" />
+        <NeptunLight.Droid.MenuButton
             android:id="@+id/calendarButton"
             android:text="Órarend"
+            android:src="@drawable/menu_calendar"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            app:layout_gravity="fill" />
-        <Button
+            app:layout_gravity="fill"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp" />
+        <NeptunLight.Droid.MenuButton
             android:id="@+id/coursesButton"
             android:text="Kurzusok"
+            android:src="@drawable/menu_courses"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            app:layout_gravity="fill" />
-        <Button
+            app:layout_gravity="fill"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp" />
+        <NeptunLight.Droid.MenuButton
             android:id="@+id/examsButton"
             android:text="Vizsgák"
+            android:src="@drawable/menu_exams"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            app:layout_gravity="fill" />
-        <Button
+            app:layout_gravity="fill"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+        <NeptunLight.Droid.MenuButton
             android:id="@+id/semestersButton"
             android:text="Félévek"
+            android:src="@drawable/menu_semesters"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            app:layout_gravity="fill" />
-        <Button
+            app:layout_gravity="fill"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp" />
+        <NeptunLight.Droid.MenuButton
             android:id="@+id/periodsButton"
             android:text="Időszakok"
+            android:src="@drawable/menu_periods"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            app:layout_gravity="fill" />
+            app:layout_gravity="fill"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp" />
     </android.support.v7.widget.GridLayout>
 </LinearLayout>

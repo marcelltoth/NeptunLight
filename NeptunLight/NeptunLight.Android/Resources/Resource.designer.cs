@@ -1836,13 +1836,34 @@ namespace NeptunLight.Droid
 			public const int login_box = 2130837589;
 			
 			// aapt resource value: 0x7f020056
-			public const int message_title_box = 2130837590;
-			
-			// aapt resource value: 0x7f020058
-			public const int notification_template_icon_bg = 2130837592;
+			public const int menu_button_background = 2130837590;
 			
 			// aapt resource value: 0x7f020057
-			public const int profile_picture = 2130837591;
+			public const int menu_calendar = 2130837591;
+			
+			// aapt resource value: 0x7f020058
+			public const int menu_courses = 2130837592;
+			
+			// aapt resource value: 0x7f020059
+			public const int menu_exams = 2130837593;
+			
+			// aapt resource value: 0x7f02005a
+			public const int menu_mail = 2130837594;
+			
+			// aapt resource value: 0x7f02005b
+			public const int menu_periods = 2130837595;
+			
+			// aapt resource value: 0x7f02005c
+			public const int menu_semesters = 2130837596;
+			
+			// aapt resource value: 0x7f02005d
+			public const int message_title_box = 2130837597;
+			
+			// aapt resource value: 0x7f02005f
+			public const int notification_template_icon_bg = 2130837599;
+			
+			// aapt resource value: 0x7f02005e
+			public const int profile_picture = 2130837598;
 			
 			static Drawable()
 			{
