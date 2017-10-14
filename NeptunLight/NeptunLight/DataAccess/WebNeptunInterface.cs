@@ -121,7 +121,8 @@ namespace NeptunLight.DataAccess
                 IHtmlTableElement messageHeaderTable = (IHtmlTableElement)rawMessagesDocument.GetElementById("c_messages_gridMessages_bodytable");
 
                 IList<MailHeader> mailHeaders = ParseMailHeaderTable(messageHeaderTable);
-                for (int i = 0; i < Math.Min(mailHeaders.Count, 300); i++)
+                int messagesToLoad = Math.Min(mailHeaders.Count, 300);
+                for (int i = 0; i < messagesToLoad; i++)
                 {
                     if (ct.IsCancellationRequested)
                     {
@@ -130,39 +131,42 @@ namespace NeptunLight.DataAccess
                     }
                     MailHeader mailHeader = mailHeaders[i];
 
-                    progress?.Report(new MessageLoadingProgress(i + 1, mailHeaders.Count));
+                    progress?.Report(new MessageLoadingProgress(i + 1, messagesToLoad));
 
-                    
-                    if (_mailContentCache != null)
+                    await Task.Run(async () =>
                     {
-                        // try to load the message body from the cache
-                        Mail ret = await _mailContentCache.TryRetrieveAsync(mailHeader);
-                        if (ret != null)
+                        if (_mailContentCache != null)
                         {
-                            observer.OnNext(ret);
-                            continue;
+                            // try to load the message body from the cache
+                            Mail ret = await _mailContentCache.TryRetrieveAsync(mailHeader);
+                            if (ret != null)
+                            {
+                                observer.OnNext(ret);
+                                return;
+                            }
                         }
-                    }
 
-                    // load the mail itself
-                    await Task.Delay(50, ct);
-                    IDocument popupDocument = await _client.PostFormAsnyc(
-                        "main.aspx?ismenuclick=true&ctrl=inbox",
-                        inboxPage,
-                        new[]
-                        {
-                        new KeyValuePair<string, string>("__EVENTTARGET", "upFunction$c_messages$upMain$upGrid$gridMessages"),
-                        new KeyValuePair<string, string>("__EVENTARGUMENT", $"commandname=Subject;commandsource=select;id={mailHeader.TrId};level=1")
-                        },
-                        false, ct);
+                        // load the mail itself
+                        await Task.Delay(50, ct);
+                        IDocument popupDocument = await _client.PostFormAsnyc(
+                            "main.aspx?ismenuclick=true&ctrl=inbox",
+                            inboxPage,
+                            new[]
+                            {
+                                new KeyValuePair<string, string>("__EVENTTARGET", "upFunction$c_messages$upMain$upGrid$gridMessages"),
+                                new KeyValuePair<string, string>("__EVENTARGUMENT", $"commandname=Subject;commandsource=select;id={mailHeader.TrId};level=1")
+                            },
+                            false, ct);
 
-                    string content = popupDocument.GetElementById("Readmessage1_lblMessage").InnerHtml;
-                    Mail ret2 = new Mail(mailHeader, content);
+                        string content = popupDocument.GetElementById("Readmessage1_lblMessage").InnerHtml;
+                        Mail ret2 = new Mail(mailHeader, content);
 
-                    if (_mailContentCache != null)
-                        await _mailContentCache.StoreAsync(mailHeader, ret2);
+                        if (_mailContentCache != null)
+                            await _mailContentCache.StoreAsync(mailHeader, ret2);
 
-                    observer.OnNext(ret2);
+                        observer.OnNext(ret2);
+                    }, ct);
+                    
                 }
             });
             
