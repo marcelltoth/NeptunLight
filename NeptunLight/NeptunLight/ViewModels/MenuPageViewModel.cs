@@ -53,7 +53,7 @@ namespace NeptunLight.ViewModels
             EnsureDataAccessible.ThrownExceptions.Subscribe(_ =>
             {
                 LoadingDialogShown = false;
-                navigator.NavigateTo<LoginPageViewModel>();
+                navigator.NavigateTo<LoginPageViewModel>(false);
             });
 
             IObservable<bool> menuAvailable = EnsureDataAccessible.IsExecuting.Select(x => !x);

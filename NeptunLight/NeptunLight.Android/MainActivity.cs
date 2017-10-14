@@ -49,7 +49,11 @@ namespace NeptunLight.Droid
 
 		    FragmentManager.Events().BackStackChanged.Subscribe(args =>
 		    {
-		        Title = ((PageViewModel) ((IViewFor) FragmentManager.FindFragmentByTag("ACTIVE")).ViewModel).Title;
+		        Fragment activeFragment = FragmentManager.FindFragmentByTag("ACTIVE");
+		        if (activeFragment != null)
+		            Title = ((PageViewModel) ((IViewFor) activeFragment).ViewModel).Title;
+		        else
+		            Finish();
 		    });
             
 		    NavigateTo<MenuPageViewModel>(false);
@@ -70,7 +74,7 @@ namespace NeptunLight.Droid
                 _pageViewModelCache[destinationVm] = vm;
             }
 
-            NavigateTo(vm);
+            NavigateTo(vm, addToStack);
 	    }
 
 	    public void NavigateTo(PageViewModel destinationVm, bool addToStack = true)

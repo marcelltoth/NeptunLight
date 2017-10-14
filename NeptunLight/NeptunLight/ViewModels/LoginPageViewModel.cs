@@ -30,7 +30,7 @@ namespace NeptunLight.ViewModels
                                                        neptunInterface.Password = Password;
                                                        neptunInterface.BaseUri = SelectedInstitute.RootUrl;
                                                        await neptunInterface.LoginAsync();
-                                                       navigator.NavigateTo<MenuPageViewModel>();
+                                                       navigator.NavigateTo<MenuPageViewModel>(false);
                                                    },
                                                    this.WhenAny(
                                                        x => x.LoginCode,
