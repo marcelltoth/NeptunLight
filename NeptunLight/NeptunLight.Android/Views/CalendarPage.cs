@@ -9,7 +9,7 @@ using ReactiveUI;
 
 namespace NeptunLight.Droid.Views
 {
-    public class CalendarPage : ReactiveFragment<CalendarPageViewModel>, MonthLoader.IMonthChangeListener
+    public class CalendarPage : ReactiveFragment<CalendarPageViewModel>, MonthLoader.IMonthChangeListener, IActionBarContentProvider
     {
         public WeekView WeekView { get; set; }
 

@@ -17,7 +17,7 @@ using FragmentTransaction = Android.App.FragmentTransaction;
 
 namespace NeptunLight.Droid
 {
-	[Activity (Label = "NeptunLight.Android", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/Theme.AppCompat.Light.NoActionBar", ScreenOrientation = ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden)]
+	[Activity (Label = "NeptunLight.Android", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/Theme.AppCompat.Light", ScreenOrientation = ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden)]
 	public class MainActivity : AppCompatActivity, INavigator
 	{
 	    private readonly Dictionary<Type, PageViewModel> _pageViewModelCache = new Dictionary<Type, PageViewModel>();
@@ -51,13 +51,41 @@ namespace NeptunLight.Droid
 		    {
 		        Fragment activeFragment = FragmentManager.FindFragmentByTag("ACTIVE");
 		        if (activeFragment != null)
+		        {
 		            Title = ((PageViewModel) ((IViewFor) activeFragment).ViewModel).Title;
-		        else
+		            ConfigureActionBar(activeFragment);
+		        }
+                else
 		            Finish();
 		    });
             
 		    NavigateTo<MenuPageViewModel>(false);
 		}
+
+	    private void ConfigureActionBar(Fragment activeFragment)
+	    {
+	        if (activeFragment is IActionBarContentProvider)
+	            SupportActionBar.Show();
+	        else
+	            SupportActionBar.Hide();
+
+            SupportActionBar.SetDisplayHomeAsUpEnabled(FragmentManager.BackStackEntryCount > 0);
+	    }
+
+	    public override bool OnSupportNavigateUp()
+	    {
+	        if (FragmentManager.BackStackEntryCount > 0)
+	        {
+	            FragmentManager.PopBackStack();
+	            return false;
+	        }
+	        else
+	        {
+	            Finish();
+	            return true;
+	        }
+        }
+
 	    public void NavigateTo<T>(bool addToStack = true) where T : PageViewModel
 	    {
             NavigateTo(typeof(T), addToStack);
@@ -92,11 +120,12 @@ namespace NeptunLight.Droid
 	        }
 	        transaction.Commit();
 	        Title = destinationVm.Title;
+	        ConfigureActionBar(fragment);
 	    }
 
 	    public void NavigateUp()
 	    {
-            if(FragmentManager.BackStackEntryCount > 1)
+            if(FragmentManager.BackStackEntryCount > 0)
 	            FragmentManager.PopBackStack();
         }
     }

@@ -90,6 +90,6 @@ namespace NeptunLight.ViewModels
         public ReactiveCommand GoToSemesters { get; }
         public ReactiveCommand GoToPeriods { get; }
 
-        public override string Title { get; } = "Neptun";
+        public override string Title { get; } = "Neptun Lite";
     }
 }
