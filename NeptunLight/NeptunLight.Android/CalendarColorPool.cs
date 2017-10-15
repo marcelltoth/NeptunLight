@@ -34,18 +34,18 @@ namespace NeptunLight.Droid
         private CalendarColorPool(Dictionary<string, Dictionary<string, (int mainIndex, int accentIndex)>> allocationTable)
         {
             _allocationTable = allocationTable;
-            Observable.Interval(TimeSpan.FromSeconds(5)).Subscribe(async _ =>
+            /*Observable.Interval(TimeSpan.FromSeconds(5)).Subscribe(async _ =>
             {
                 if (_dirty)
                 {
                     await SaveAsync();
                 }
-            });
+            });*/
         }
 
-        private static string FileLocation => Path.Combine(Application.Context.FilesDir.Path, "colorPool.json");
+        //private static string FileLocation => Path.Combine(Application.Context.FilesDir.Path, "colorPool.json");
 
-        private static bool _dirty = false;
+        //private static bool _dirty = false;
 
         private bool IsInUse(int mainIndex, int accentIndex)
         {
@@ -101,7 +101,7 @@ namespace NeptunLight.Droid
                         }
 
                         _allocationTable[subject][group] = (mainIndex, accentIndex);
-                        _dirty = true;
+                        //_dirty = true;
                     }
                     
                     (int finalMainIndex, int finalAccentIndex) = _allocationTable[subject][group];
@@ -113,17 +113,17 @@ namespace NeptunLight.Droid
         public static async Task<CalendarColorPool> LoadAsync()
         {
             if (_instance == null)
-                if (File.Exists(FileLocation))
+                /*if (File.Exists(FileLocation))
                     await Task.Run(() =>
                     {
                         string text = File.ReadAllText(FileLocation);
                         _instance = new CalendarColorPool(JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, (int mainIndex, int accentIndex)>>>(text));
                     });
-                else _instance = new CalendarColorPool(new Dictionary<string, Dictionary<string, (int mainIndex, int accentIndex)>>());
+                else*/ _instance = new CalendarColorPool(new Dictionary<string, Dictionary<string, (int mainIndex, int accentIndex)>>());
             return _instance;
         }
 
-        public async Task SaveAsync()
+        /*public async Task SaveAsync()
         {
             await Task.Run(() =>
             {
@@ -133,6 +133,6 @@ namespace NeptunLight.Droid
                     _dirty = false;
                 }
             });
-        }
+        }*/
     }
 }
