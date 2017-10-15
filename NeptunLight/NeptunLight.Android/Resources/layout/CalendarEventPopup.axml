@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#44222222">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/calendar_popup_box"
+        android:padding="15dp">
+        <TextView
+            android:id="@+id/eventTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:textSize="16sp"
+            android:text="This is a popup window."
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/eventGroupIcon"
+            android:src="@drawable/icon_4square"
+          android:layout_marginTop="8dp"
+            android:layout_width="15sp"
+            android:layout_height="15sp"
+            android:layout_below="@id/eventTitle" />
+        <TextView
+            android:id="@+id/eventGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/eventTitle"
+            android:layout_toRightOf="@id/eventGroupIcon"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="5dp"
+          android:layout_marginBottom="5dp"
+            android:textStyle="normal" />
+        <ImageView
+          android:id="@+id/eventInstructorIcon"
+          android:src="@drawable/icon_instructor"
+          android:layout_width="15sp"
+          android:layout_height="15sp"
+          android:layout_marginTop="8dp"
+          android:layout_below="@id/eventGroup" />
+        <TextView
+          android:id="@+id/eventInstructor"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/eventGroup"
+          android:layout_toRightOf="@id/eventInstructorIcon"
+          android:textSize="14sp"
+          android:layout_marginTop="4dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginBottom="5dp"
+          android:textStyle="normal" />
+        <ImageView
+            android:id="@+id/eventTimeIcon"
+            android:src="@drawable/icon_datetime"
+            android:layout_width="15sp"
+            android:layout_height="15sp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/eventInstructor" />
+        <TextView
+            android:id="@+id/eventStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/eventInstructor"
+            android:layout_toRightOf="@id/eventTimeIcon"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="5dp"
+            android:textStyle="italic" />
+        <TextView
+            android:id="@+id/eventEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/eventStartTime"
+            android:layout_toRightOf="@id/eventTimeIcon"
+            android:textSize="14sp"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="5dp"
+          android:layout_marginBottom="5dp"
+            android:textStyle="italic" />
+        <ImageView
+            android:id="@+id/eventLocationIcon"
+            android:src="@drawable/icon_location"
+            android:layout_width="15sp"
+            android:layout_height="15sp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/eventEndTime" />
+        <TextView
+            android:id="@+id/eventLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/eventEndTime"
+            android:layout_toRightOf="@id/eventLocationIcon"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="4dp"
+          android:layout_marginBottom="3dp"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+    </RelativeLayout>
+</RelativeLayout>
