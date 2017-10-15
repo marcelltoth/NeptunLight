@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="CalendarColorPool.cs" />
     <Compile Include="IActionBarContentProvider.cs" />
     <Compile Include="MenuButton.cs" />
     <Compile Include="Services\PrimitiveStorage.cs" />

@@ -7,17 +7,15 @@ namespace NeptunLight.ViewModels
 {
     public class CalendarPageViewModel : PageViewModel
     {
-        private IReadOnlyCollection<CalendarEvent> _events;
+        private IDataStorage DataStorage { get; }
 
-        public IReadOnlyCollection<CalendarEvent> Events
-        {
-            get => _events;
-            set => this.RaiseAndSetIfChanged(ref _events, value);
-        }
+        private readonly ObservableAsPropertyHelper<IReadOnlyCollection<CalendarEvent>> _events;
+        public IReadOnlyCollection<CalendarEvent> Events => _events.Value;
 
         public CalendarPageViewModel(IDataStorage dataStorage)
         {
-            Events = dataStorage.CurrentData.Calendar;
+            DataStorage = dataStorage;
+            this.WhenAnyValue(x => x.DataStorage.CurrentData.Calendar).ToProperty(this, x => x.Events, out _events);
         }
 
         public override string Title { get; } = "Órarend";
