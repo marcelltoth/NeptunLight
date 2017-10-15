@@ -48,7 +48,9 @@ namespace NeptunLight.Droid.Views
                     calendarEvent.StartDate.Year, calendarEvent.StartDate.Month, calendarEvent.StartDate.Day, calendarEvent.StartDate.Hour, calendarEvent.StartDate.Minute,
                                                  calendarEvent.EndDate.Year, calendarEvent.EndDate.Month, calendarEvent.EndDate.Day, calendarEvent.EndDate.Hour, calendarEvent.EndDate.Minute)
                 {
-                    Color = _colorPool[calendarEvent.Title, calendarEvent.Group]
+                    Color = _colorPool[calendarEvent.Title, calendarEvent.Group],
+                    Location = calendarEvent.Location,
+                    Name = $"{calendarEvent.Title} ({calendarEvent.Group})"
                 });
             }
             return nativeList;

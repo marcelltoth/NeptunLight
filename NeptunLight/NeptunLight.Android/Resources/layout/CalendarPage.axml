@@ -11,6 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:showNowLine="true"
-      app:hourHeight="40dp"
-        app:noOfVisibleDays="4" />
+        app:hourHeight="40dp"
+        app:noOfVisibleDays="5"
+        app:scrollDuration="100"
+        app:showDistinctWeekendColor="true"
+        app:showFirstDayOfWeekFirst="true"
+        app:eventTextSize="11dp" />
 </LinearLayout>

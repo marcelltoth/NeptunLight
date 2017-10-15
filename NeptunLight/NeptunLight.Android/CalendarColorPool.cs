@@ -31,27 +31,29 @@ namespace NeptunLight.Droid
 
         private readonly Dictionary<string, Dictionary<string, (int mainIndex, int accentIndex)>> _allocationTable;
 
+        private int _colorPoolPointer = 0;
+
         private CalendarColorPool(Dictionary<string, Dictionary<string, (int mainIndex, int accentIndex)>> allocationTable)
         {
             _allocationTable = allocationTable;
-            /*Observable.Interval(TimeSpan.FromSeconds(5)).Subscribe(async _ =>
+            Observable.Interval(TimeSpan.FromSeconds(5)).Subscribe(async _ =>
             {
                 if (_dirty)
                 {
                     await SaveAsync();
                 }
-            });*/
+            });
         }
 
-        //private static string FileLocation => Path.Combine(Application.Context.FilesDir.Path, "colorPool.json");
+        private static string FileLocation => Path.Combine(Application.Context.FilesDir.Path, "colorPool.json");
 
-        //private static bool _dirty = false;
+        private static bool _dirty = false;
 
-        private bool IsInUse(int mainIndex, int accentIndex)
+        private bool IsInUse(string subject, int accentIndex)
         {
             lock (_allocationTable)
             {
-                return _allocationTable.SelectMany(kvp => kvp.Value).Select(kvp => kvp.Value).Any(tpl => tpl.mainIndex == mainIndex && tpl.accentIndex == accentIndex);
+                return _allocationTable.ContainsKey(subject) && _allocationTable[subject].Select(kvp => kvp.Value).Any(tpl => tpl.accentIndex == accentIndex);
             }
         }
 
@@ -78,7 +80,7 @@ namespace NeptunLight.Droid
                             accentIndex = 0;
                             for (int i = 0; i < ColorPool[mainIndex].Length; i++)
                             {
-                                if (!IsInUse(mainIndex, i))
+                                if (!IsInUse(subject, i))
                                 {
                                     accentIndex = i;
                                     break;
@@ -88,15 +90,8 @@ namespace NeptunLight.Droid
                         else
                         {
                             // no entry for this group yet, find a main index
-                            mainIndex = 0;
-                            for (int i = 0; i < ColorPool.Length; i++)
-                            {
-                                if (!IsInUse(i, 0))
-                                {
-                                    mainIndex = i;
-                                    break;
-                                }
-                            }
+                            mainIndex = _colorPoolPointer % ColorPool.Length;
+                            _colorPoolPointer++;
                             accentIndex = 0;
                         }
 
@@ -113,17 +108,17 @@ namespace NeptunLight.Droid
         public static async Task<CalendarColorPool> LoadAsync()
         {
             if (_instance == null)
-                /*if (File.Exists(FileLocation))
+                if (File.Exists(FileLocation))
                     await Task.Run(() =>
                     {
                         string text = File.ReadAllText(FileLocation);
                         _instance = new CalendarColorPool(JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, (int mainIndex, int accentIndex)>>>(text));
                     });
-                else*/ _instance = new CalendarColorPool(new Dictionary<string, Dictionary<string, (int mainIndex, int accentIndex)>>());
+                else _instance = new CalendarColorPool(new Dictionary<string, Dictionary<string, (int mainIndex, int accentIndex)>>());
             return _instance;
         }
 
-        /*public async Task SaveAsync()
+        public async Task SaveAsync()
         {
             await Task.Run(() =>
             {
@@ -133,6 +128,6 @@ namespace NeptunLight.Droid
                     _dirty = false;
                 }
             });
-        }*/
+        }
     }
 }

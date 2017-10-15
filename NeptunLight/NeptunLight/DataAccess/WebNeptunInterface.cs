@@ -187,7 +187,9 @@ namespace NeptunLight.DataAccess
                 if (title.Contains("("))
                     title = title.Substring(0, summaryParts[0].IndexOf('(')).Trim();
                 string details = summaryParts[0].Replace(title, "").Trim();
-                return new CalendarEvent(ice.DTStart, ice.DTEnd, ice.Location, summaryParts.Last(), title, summaryParts[1], details, summaryParts.Length > 3 ? summaryParts[2] : null);
+                // iCal export is buggy, we have to add the offset twice
+                TimeSpan timeZoneOffset = DateTime.SpecifyKind(ice.DTStart, DateTimeKind.Utc).ToLocalTime() - DateTime.SpecifyKind(ice.DTStart, DateTimeKind.Local);
+                return new CalendarEvent(ice.DTStart.Add(timeZoneOffset).Add(timeZoneOffset), ice.DTEnd.Add(timeZoneOffset).Add(timeZoneOffset), ice.Location, summaryParts.Last(), title, summaryParts[1], details, summaryParts.Length > 3 ? summaryParts[2] : null);
             }).ToList();
         }
 
