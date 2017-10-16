@@ -147,6 +147,7 @@
     <Compile Include="CalendarColorPool.cs" />
     <Compile Include="IActionBarContentProvider.cs" />
     <Compile Include="MenuButton.cs" />
+    <Compile Include="MessageColorPool.cs" />
     <Compile Include="Services\PrimitiveStorage.cs" />
     <Compile Include="Utils\TabListAdapter.cs" />
     <Compile Include="Views\CalendarPage.cs" />

@@ -2,24 +2,27 @@
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Android.App;
+using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
+using JetBrains.Annotations;
 using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
 namespace NeptunLight.Droid.Views
 {
-    public class MessagesPage : ReactiveFragment<MessagesPageViewModel>, SwipeRefreshLayout.IOnRefreshListener
+    public class MessagesPage : ReactiveFragment<MessagesPageViewModel>, IActionBarContentProvider, SwipeRefreshLayout.IOnRefreshListener
     {
         private LayoutInflater _layoutInflater;
         public ListView MessageList { get; set; }
+        private IDisposable _messageClickSubscription;
 
         public SwipeRefreshLayout SwipeRefresh { get; set; }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override View OnCreateView([NotNull] LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {
             _layoutInflater = inflater;
             View layout = inflater.Inflate(Resource.Layout.MessagesPage, container, false);
@@ -63,10 +66,17 @@ namespace NeptunLight.Droid.Views
             {
                 itemView.FindViewById<TextView>(Resource.Id.titleTextView).Text = model.Subject;
                 itemView.FindViewById<TextView>(Resource.Id.senderTextView).Text = model.Sender;
-                itemView.FindViewById<TextView>(Resource.Id.letterBox).Text = model.SenderCode;
+                TextView letterBox = itemView.FindViewById<TextView>(Resource.Id.letterBox);
+                letterBox.Text = model.SenderCode;
+                GradientDrawable bgShape = (GradientDrawable) letterBox.Background;
+                bgShape.SetColor(MessageColorPool.Instance[model.Sender]);
             });
             MessageList.Adapter = messageListAdapter;
-            MessageList.Events().ItemClick.Select(args => messageListAdapter[args.Position]).InvokeCommand(this, x => x.ViewModel.OpenMessage);
+            _messageClickSubscription?.Dispose();
+            _messageClickSubscription = MessageList.Events().ItemClick.Select(args =>
+            {
+                return messageListAdapter[args.Position];
+            }).InvokeCommand(this, x => x.ViewModel.OpenMessage);
         }
 
         public void OnRefresh()
