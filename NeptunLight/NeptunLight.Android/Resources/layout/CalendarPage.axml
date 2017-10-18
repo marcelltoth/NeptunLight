@@ -17,5 +17,5 @@
         app:scrollDuration="100"
         app:showDistinctWeekendColor="true"
         app:showFirstDayOfWeekFirst="true"
-        app:eventTextSize="11dp" />
+        app:eventTextSize="11dp"/>
 </LinearLayout>

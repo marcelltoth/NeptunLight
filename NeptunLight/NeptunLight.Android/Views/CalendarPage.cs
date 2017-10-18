@@ -39,6 +39,7 @@ namespace NeptunLight.Droid.Views
 
             WeekView.MonthChangeListener = this;
             WeekView.EventClick += WeekView_EventClick;
+            WeekView.SetLimitTime(6,22);
 
             return _layoutRoot;
         }
