@@ -8,7 +8,7 @@ using ReactiveUI;
 
 namespace NeptunLight.Droid.Views
 {
-    public class SemestersPage : ReactiveFragment<SemestersPageViewModel>
+    public class SemestersPage : ReactiveFragment<SemestersPageViewModel>, IActionBarContentProvider
     {
         public ListView SemesterList { get; set; }
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
