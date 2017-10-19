@@ -20,7 +20,7 @@ namespace NeptunLight.ViewModels
         {
             DataStorage = dataStorage;
             this.WhenAnyValue(x => x.DataStorage.CurrentData.ExamsPerSemester)
-                .Select(examsDict => examsDict.Select(kvp => examsTabVmFac(kvp.Key)))
+                .Select(examsDict => examsDict.Select(kvp => examsTabVmFac(kvp.Key)).Where(evm => evm.Exams.Any()))
                 .ToProperty(this, x => x.Tabs, out _tabs);
         }
 
