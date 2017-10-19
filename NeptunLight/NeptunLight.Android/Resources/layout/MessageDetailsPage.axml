@@ -2,50 +2,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:text="Időpont"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView1"
-        android:textStyle="bold" />
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp">
+        <TextView
+            android:id="@+id/letterBox"
+            android:background="@drawable/message_title_box"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="20dp"
+            android:padding="10dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="-2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/senderTextView"
+                android:text="Sender"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp" />
+            <TextView
+                android:id="@+id/timeTextView"
+                android:text="Time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textSize="12sp"
+                android:textColor="#999" />
+        </LinearLayout>
+    </LinearLayout>
     <TextView
         android:text="Text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/dateTextView" />
-    <TextView
-        android:text="Feladó"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView1"
-        android:textStyle="bold" />
-    <TextView
-        android:text="Text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/senderTextView" />
-    <TextView
-        android:text="Tárgy"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView1"
-        android:textStyle="bold" />
-    <TextView
-        android:text="Text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/subjectTextView" />
-    <TextView
-        android:text="Üzenet"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView1"
-        android:textStyle="bold" />
+        android:id="@+id/subjectTextView"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"
+        android:textSize="16sp" />
     <TextView
         android:text="Text"
         android:layout_width="match_parent"

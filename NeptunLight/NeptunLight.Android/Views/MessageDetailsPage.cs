@@ -1,4 +1,5 @@
 ﻿using System;
+using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Text;
 using Android.Views;
@@ -8,12 +9,13 @@ using ReactiveUI;
 
 namespace NeptunLight.Droid.Views
 {
-    public class MessageDetailsPage : ReactiveFragment<MessageViewModel>
+    public class MessageDetailsPage : ReactiveFragment<MessageViewModel>, IActionBarContentProvider
     {
-        private TextView DateTextView { get; set; }
+        private TextView TimeTextView { get; set; }
         private TextView SenderTextView { get; set; }
         private TextView SubjectTextView { get; set; }
         private TextView ContentTextView { get; set; }
+        private TextView LetterBox { get; set; }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -21,9 +23,15 @@ namespace NeptunLight.Droid.Views
 
             this.WireUpControls(layout);
 
-            this.Bind(ViewModel, x => x.Date, x => x.DateTextView.Text);
-            this.Bind(ViewModel, x => x.Sender, x => x.SenderTextView.Text);
-            this.Bind(ViewModel, x => x.Subject, x => x.SubjectTextView.Text);
+            this.OneWayBind(ViewModel, x => x.Date, x => x.TimeTextView.Text, dt => dt.ToString("g"));
+            this.OneWayBind(ViewModel, x => x.Sender, x => x.SenderTextView.Text);
+            this.OneWayBind(ViewModel, x => x.Subject, x => x.SubjectTextView.Text);
+            this.OneWayBind(ViewModel, x => x.SenderCode, x => x.LetterBox.Text);
+            this.WhenAnyValue(x => x.ViewModel.Sender).Subscribe(s =>
+            {
+                GradientDrawable bgShape = (GradientDrawable)LetterBox.Background;
+                bgShape.SetColor(MessageColorPool.Instance[s]);
+            });
             this.WhenAnyValue(x => x.ViewModel.HtmlContent).Subscribe(html =>
             {
                 if (Android.OS.Build.VERSION.SdkInt >= BuildVersionCodes.N)
