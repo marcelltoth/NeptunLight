@@ -14,7 +14,7 @@ using ReactiveUI;
 
 namespace NeptunLight.Droid.Views
 {
-    public class MessagesPage : ReactiveFragment<MessagesPageViewModel>, IActionBarContentProvider, SwipeRefreshLayout.IOnRefreshListener
+    public class MessagesPage : ReactiveFragment<MessagesPageViewModel>, IActionBarProvider, SwipeRefreshLayout.IOnRefreshListener
     {
         private LayoutInflater _layoutInflater;
         public ListView MessageList { get; set; }

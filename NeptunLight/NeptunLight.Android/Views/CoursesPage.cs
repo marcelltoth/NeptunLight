@@ -11,7 +11,7 @@ using ReactiveUI;
 
 namespace NeptunLight.Droid.Views
 {
-    public class CoursesPage : ReactiveFragment<CoursesPageViewModel>, IActionBarContentProvider
+    public class CoursesPage : ReactiveFragment<CoursesPageViewModel>, IActionBarProvider
     {
         private ViewPager Pager { get; set; }
 

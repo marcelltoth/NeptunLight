@@ -12,6 +12,7 @@ using Autofac;
 using NeptunLight.Services;
 using NeptunLight.ViewModels;
 using ReactiveUI;
+using ActionBar = Android.Support.V7.App.ActionBar;
 using Fragment = Android.App.Fragment;
 using FragmentTransaction = Android.App.FragmentTransaction;
 
@@ -64,12 +65,15 @@ namespace NeptunLight.Droid
 
 	    private void ConfigureActionBar(Fragment activeFragment)
 	    {
-	        if (activeFragment is IActionBarContentProvider)
+	        if (activeFragment is IActionBarProvider)
 	            SupportActionBar.Show();
 	        else
 	            SupportActionBar.Hide();
 
             SupportActionBar.SetDisplayHomeAsUpEnabled(FragmentManager.BackStackEntryCount > 0);
+
+            // clean up after previous fragment
+            SupportActionBar.RemoveAllTabs();
 	    }
 
 	    public override bool OnSupportNavigateUp()

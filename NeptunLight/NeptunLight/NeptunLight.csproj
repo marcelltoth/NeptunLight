@@ -71,6 +71,8 @@
     <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\PeriodsPageViewModel.cs" />
     <Compile Include="ViewModels\PeriodViewModel.cs" />
+    <Compile Include="ViewModels\SemestersAveragesTabViewModel.cs" />
+    <Compile Include="ViewModels\SemestersCreditsTabViewModel.cs" />
     <Compile Include="ViewModels\SemestersPageViewModel.cs" />
     <Compile Include="ViewModels\SemesterViewModel.cs" />
     <Compile Include="ViewModels\SubjectViewModel.cs" />

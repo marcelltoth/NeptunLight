@@ -9,7 +9,7 @@ using ReactiveUI;
 
 namespace NeptunLight.Droid.Views
 {
-    public class PeriodsPage : ReactiveFragment<PeriodsPageViewModel>, IActionBarContentProvider
+    public class PeriodsPage : ReactiveFragment<PeriodsPageViewModel>, IActionBarProvider
     {
         public ListView PeriodList { get; set; }
 

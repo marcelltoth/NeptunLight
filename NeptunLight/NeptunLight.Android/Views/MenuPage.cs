@@ -10,7 +10,7 @@ using ReactiveUI;
 
 namespace NeptunLight.Droid.Views
 {
-    public class MenuPage : ReactiveFragment<MenuPageViewModel>, IActionBarContentProvider
+    public class MenuPage : ReactiveFragment<MenuPageViewModel>, IActionBarProvider
     {
         private ProgressDialog _loadingDialog;
 

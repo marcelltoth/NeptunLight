@@ -12,15 +12,14 @@ namespace NeptunLight.ViewModels
     {
         public override string Title { get; } = "Féléves adatok";
 
-        private readonly ObservableAsPropertyHelper<IReadOnlyList<SemesterViewModel>> _semesters;
-        public IReadOnlyList<SemesterViewModel> Semesters => _semesters.Value;
+        public SemestersCreditsTabViewModel CreditData { get; }
 
-        private IDataStorage DataStorage { get; }
+        public SemestersAveragesTabViewModel AveragesData { get; }
 
-        public SemestersPageViewModel(IDataStorage data, Func<SemesterData, SemesterViewModel> semesterVmFac)
+        public SemestersPageViewModel(SemestersCreditsTabViewModel creditData, SemestersAveragesTabViewModel averagesData)
         {
-            DataStorage = data;
-            this.WhenAnyValue(x => x.DataStorage.CurrentData.SemesterInfo).Select(semesters => semesters.Select(semesterVmFac).ToList()).ToProperty(this, x => x.Semesters, out _semesters);
+            CreditData = creditData;
+            AveragesData = averagesData;
         }
     }
 }

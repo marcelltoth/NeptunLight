@@ -1,6 +1,6 @@
 ﻿namespace NeptunLight.Droid
 {
-    public interface IActionBarContentProvider
+    public interface IActionBarProvider
     {
         
     }

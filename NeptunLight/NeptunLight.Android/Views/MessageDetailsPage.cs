@@ -10,7 +10,7 @@ using ReactiveUI;
 
 namespace NeptunLight.Droid.Views
 {
-    public class MessageDetailsPage : ReactiveFragment<MessageViewModel>, IActionBarContentProvider
+    public class MessageDetailsPage : ReactiveFragment<MessageViewModel>, IActionBarProvider
     {
         private TextView TimeTextView { get; set; }
         private TextView SenderTextView { get; set; }
