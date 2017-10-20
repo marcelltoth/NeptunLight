@@ -2,6 +2,7 @@
 using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Text;
+using Android.Text.Method;
 using Android.Views;
 using Android.Widget;
 using NeptunLight.ViewModels;
@@ -43,6 +44,7 @@ namespace NeptunLight.Droid.Views
                     ContentTextView.TextFormatted = Html.FromHtml(html);
                 }
             });
+            ContentTextView.MovementMethod = LinkMovementMethod.Instance;
 
             return layout;
         }
