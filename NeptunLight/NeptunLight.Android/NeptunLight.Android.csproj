@@ -177,7 +177,6 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FileDataStorage.cs" />
-    <Compile Include="Services\InstanceDataStorage.cs" />
     <Compile Include="Services\MailContentCache.cs" />
     <Compile Include="Utils\DateTimeExtensions.cs" />
     <Compile Include="Utils\ListAdapter.cs" />
