@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Android.App;
 using Android.Content;
 using NeptunLight.Services;
 
@@ -7,7 +8,7 @@ namespace NeptunLight.Droid.Services
 {
     public class PrimitiveStorage : IPrimitiveStorage
     {
-        private static ISharedPreferences Prefs => App.MainActivity.GetPreferences(FileCreationMode.Private);
+        private static ISharedPreferences Prefs => Application.Context.GetSharedPreferences("userPrimitives", FileCreationMode.Private);
 
 
         public void ClearValue(string key)

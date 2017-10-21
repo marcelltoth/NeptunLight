@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.Views;
 using Android.OS;
 using Android.Support.V7.App;
+using Android.Widget;
 using Autofac;
 using JetBrains.Annotations;
 using NeptunLight.Services;
@@ -61,6 +63,8 @@ namespace NeptunLight.Droid
 		    });
             
 		    NavigateTo<MenuPageViewModel>(false);
+
+		    StartService(new Intent(BaseContext, typeof(RefreshService)));
 		}
 
 	    private void ConfigureActionBar(Fragment activeFragment)
@@ -102,7 +106,7 @@ namespace NeptunLight.Droid
             // Only instanciate one root view model once.
             if(!_pageViewModelCache.TryGetValue(destinationVm, out vm))
             {
-                vm = (PageViewModel)App.Container.Value.Resolve(destinationVm);
+                vm = (PageViewModel)App.Container.Resolve(destinationVm);
                 _pageViewModelCache[destinationVm] = vm;
             }
 

@@ -20,7 +20,7 @@ namespace NeptunLight
             // data access classes
             builder.RegisterType<WebNeptunInterface>()
                    .As<INeptunInterface>()
-                   .SingleInstance();
+                   .InstancePerDependency();
             builder.RegisterType<StaticData>()
                    .AsImplementedInterfaces()
                    .SingleInstance();

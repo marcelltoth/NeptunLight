@@ -10,13 +10,7 @@ namespace NeptunLight.Droid
     [Application]
     public class App : Application
     {
-        protected App(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
-        {
-        }
-
-        public static MainActivity MainActivity { get; set; }
-
-        public static readonly Lazy<IContainer> Container = new Lazy<IContainer>(() =>
+        private static readonly Lazy<IContainer> _container = new Lazy<IContainer>(() =>
         {
             ContainerBuilder builder = new ContainerBuilder();
 
@@ -41,5 +35,13 @@ namespace NeptunLight.Droid
 
             return builder.Build();
         });
+
+        protected App(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
+        {
+        }
+
+        public static MainActivity MainActivity { get; set; }
+
+        public static IContainer Container => _container.Value;
     }
 }
