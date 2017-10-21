@@ -23,7 +23,7 @@ namespace NeptunLight.Droid.Views
 
             this.WhenAnyValue(x => x.ViewModel.Tabs).Subscribe(tabs =>
             {
-                Pager.Adapter = new TabAdapter(FragmentManager, tabs);
+                Pager.Adapter = new TabAdapter(ChildFragmentManager, tabs);
             });
 
             return layout;

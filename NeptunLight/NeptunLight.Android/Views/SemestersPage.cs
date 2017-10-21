@@ -1,16 +1,13 @@
 ﻿using System;
 using Android.App;
 using Android.OS;
-using Android.Runtime;
 using Android.Support.V13.App;
 using Android.Support.V4.View;
 using Android.Views;
-using Android.Widget;
 using Java.Lang;
-using NeptunLight.Droid.Utils;
+using JetBrains.Annotations;
 using NeptunLight.ViewModels;
 using ReactiveUI;
-using ActionBar = Android.Support.V7.App.ActionBar;
 
 namespace NeptunLight.Droid.Views
 {
@@ -18,13 +15,17 @@ namespace NeptunLight.Droid.Views
     {
         public ViewPager ViewPager { get; set; }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override View OnCreateView([NotNull] LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {
             View layout = inflater.Inflate(Resource.Layout.SemestersPage, container, false);
 
             this.WireUpControls(layout);
 
-            this.WhenAny(x => x.ViewModel.CreditData, x => x.ViewModel.AveragesData, (cVm, aVm) => new TabsPagerAdapter(FragmentManager, cVm.Value, aVm.Value)).BindTo(this, x => x.ViewPager.Adapter);
+            this.WhenAny(x => x.ViewModel.CreditData, x => x.ViewModel.AveragesData, (cVm, aVm) => new TabsPagerAdapter(ChildFragmentManager, cVm.Value, aVm.Value)).Subscribe(adapter =>
+            {
+                this.ViewPager.Adapter = adapter;
+                ViewPager.Adapter.NotifyDataSetChanged();
+            });
 
             return layout;
         }
@@ -33,9 +34,11 @@ namespace NeptunLight.Droid.Views
         {
             private readonly SemestersCreditsTab _creditsTab;
             private readonly SemestersAveragesTab _averagesTab;
+            private SemestersCreditsTabViewModel _semestersCreditsTabViewModel;
 
             public TabsPagerAdapter(FragmentManager fm, SemestersCreditsTabViewModel creditsTabViewModel, SemestersAveragesTabViewModel averagesTabViewModel) : base(fm)
             {
+                _semestersCreditsTabViewModel = creditsTabViewModel;
                 _creditsTab = new SemestersCreditsTab();
                 _creditsTab.ViewModel = creditsTabViewModel;
                 _averagesTab = new SemestersAveragesTab();
@@ -48,7 +51,7 @@ namespace NeptunLight.Droid.Views
                 switch (position)
                 {
                     case 0:
-                        return _creditsTab;
+                        return new SemestersCreditsTab() {ViewModel = _semestersCreditsTabViewModel };
                     case 1:
                         return _averagesTab;
                     default:
