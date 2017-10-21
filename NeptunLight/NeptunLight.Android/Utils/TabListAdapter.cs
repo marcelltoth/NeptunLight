@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Android.App;
 using Android.Support.V13.App;
-using Java.Lang;
-using NeptunLight.Droid.Views;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 

@@ -6,13 +6,12 @@ using Android.App;
 using Android.Content.PM;
 using Android.Views;
 using Android.OS;
-using Android.Support.V4.App;
 using Android.Support.V7.App;
 using Autofac;
+using JetBrains.Annotations;
 using NeptunLight.Services;
 using NeptunLight.ViewModels;
 using ReactiveUI;
-using ActionBar = Android.Support.V7.App.ActionBar;
 using Fragment = Android.App.Fragment;
 using FragmentTransaction = Android.App.FragmentTransaction;
 
@@ -22,23 +21,24 @@ namespace NeptunLight.Droid
 	public class MainActivity : AppCompatActivity, INavigator
 	{
 	    private readonly Dictionary<Type, PageViewModel> _pageViewModelCache = new Dictionary<Type, PageViewModel>();
-	    private static readonly Dictionary<Type, Type> VmToFragment;
+	    private static readonly Dictionary<Type, Type> _vmToFragment;
 
 	    private View _fragmentHolder;
 
 	    static MainActivity()
 	    {
 	        string targetNamespace = $"{nameof(NeptunLight)}.{nameof(Droid)}.{nameof(Views)}";
-	        VmToFragment = Assembly.GetExecutingAssembly().DefinedTypes.Where(ti => ti.Namespace == targetNamespace && typeof(ReactiveFragment).IsAssignableFrom(ti))
+	        _vmToFragment = Assembly.GetExecutingAssembly().DefinedTypes.Where(ti => ti.Namespace == targetNamespace && typeof(ReactiveFragment).IsAssignableFrom(ti))
+	                                // ReSharper disable once PossibleNullReferenceException
 	                .ToDictionary(ti => ti.BaseType.GenericTypeArguments[0], ti => ti.AsType());
 	    }
 
-	    protected override void OnSaveInstanceState(Bundle outState)
+	    protected override void OnSaveInstanceState([CanBeNull] Bundle outState)
 	    {
             // workaround
 	    }
 
-	    protected override void OnCreate (Bundle bundle)
+	    protected override void OnCreate ([CanBeNull] Bundle bundle)
 		{
             base.OnCreate(bundle);
 
@@ -113,7 +113,7 @@ namespace NeptunLight.Droid
 	    {
 	        _fragmentHolder.RequestFocus();
 
-            Fragment fragment = (Fragment)Activator.CreateInstance(VmToFragment[destinationVm.GetType()]);
+            Fragment fragment = (Fragment)Activator.CreateInstance(_vmToFragment[destinationVm.GetType()]);
 	        ((IViewFor) fragment).ViewModel = destinationVm;
 
             FragmentTransaction transaction = FragmentManager.BeginTransaction();

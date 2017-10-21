@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using JetBrains.Annotations;
 using NeptunLight.Models;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -19,7 +20,7 @@ namespace NeptunLight.Droid.Views
         public Button LoginButton { get; set; }
         public Spinner InstituteSelector { get; set; }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override View OnCreateView(LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {
             // Use this to return your custom view for this Fragment
             View layout = inflater.Inflate(Resource.Layout.LoginPage, container, false);
@@ -61,12 +62,12 @@ namespace NeptunLight.Droid.Views
                 int originalHeight = LoginPanel.Height;
                 int originalWidth = LoginPanel.Width;
                 double finalHeight = originalHeight;
-                const double RATIO = 1193 / 842d;
-                if (originalWidth > originalHeight / RATIO) // too wide
-                    layout.Width = (int)(originalHeight / RATIO);
+                const double ratio = 1193 / 842d;
+                if (originalWidth > originalHeight / ratio) // too wide
+                    layout.Width = (int)(originalHeight / ratio);
                 else // too tall
                 {
-                    layout.Height = (int)(originalWidth * RATIO);
+                    layout.Height = (int)(originalWidth * ratio);
                     finalHeight = layout.Height;
                 }
                 LoginPanel.LayoutParameters = layout;
@@ -95,7 +96,7 @@ namespace NeptunLight.Droid.Views
                 return position;
             }
 
-            public override View GetView(int position, View convertView, ViewGroup parent)
+            public override View GetView(int position, [CanBeNull] View convertView, [CanBeNull] ViewGroup parent)
             {
                 View view = convertView ?? _inflater.Inflate(
                                 Android.Resource.Layout.SimpleListItem1, parent, false);

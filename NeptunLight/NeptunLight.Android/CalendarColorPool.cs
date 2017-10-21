@@ -15,7 +15,7 @@ namespace NeptunLight.Droid
     {
         private static CalendarColorPool _instance;
 
-        private static readonly Color[][] ColorPool =
+        private static readonly Color[][] _colorPool =
         {
             new[] {Color.ParseColor("#42a5f5"), Color.ParseColor("#bbdefb"), Color.ParseColor("#82b1ff"), Color.ParseColor("#2196f3")}, // blue
             new[] {Color.ParseColor("#cddc39"), Color.ParseColor("#aeea00"), Color.ParseColor("#dce775"), Color.ParseColor("#c0ca33") }, // lime
@@ -78,7 +78,7 @@ namespace NeptunLight.Droid
                             // there is another entry for this group, find a new accent
                             mainIndex = _allocationTable[subject].First().Value.mainIndex;
                             accentIndex = 0;
-                            for (int i = 0; i < ColorPool[mainIndex].Length; i++)
+                            for (int i = 0; i < _colorPool[mainIndex].Length; i++)
                             {
                                 if (!IsInUse(subject, i))
                                 {
@@ -90,7 +90,7 @@ namespace NeptunLight.Droid
                         else
                         {
                             // no entry for this group yet, find a main index
-                            mainIndex = _colorPoolPointer % ColorPool.Length;
+                            mainIndex = _colorPoolPointer % _colorPool.Length;
                             _colorPoolPointer++;
                             accentIndex = 0;
                         }
@@ -100,7 +100,7 @@ namespace NeptunLight.Droid
                     }
                     
                     (int finalMainIndex, int finalAccentIndex) = _allocationTable[subject][group];
-                    return ColorPool[finalMainIndex][finalAccentIndex];
+                    return _colorPool[finalMainIndex][finalAccentIndex];
                 }
             }
         }

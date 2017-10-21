@@ -73,10 +73,7 @@ namespace NeptunLight.Droid.Views
             });
             MessageList.Adapter = messageListAdapter;
             _messageClickSubscription?.Dispose();
-            _messageClickSubscription = MessageList.Events().ItemClick.Select(args =>
-            {
-                return messageListAdapter[args.Position];
-            }).InvokeCommand(this, x => x.ViewModel.OpenMessage);
+            _messageClickSubscription = MessageList.Events().ItemClick.Select(args => messageListAdapter[args.Position]).InvokeCommand(this, x => x.ViewModel.OpenMessage);
         }
 
         public void OnRefresh()

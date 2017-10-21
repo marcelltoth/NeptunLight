@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using NeptunLight.DataAccess;
 using NeptunLight.Models;
 using NeptunLight.Services;

@@ -3,6 +3,7 @@ using System.Globalization;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using JetBrains.Annotations;
 using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -13,7 +14,7 @@ namespace NeptunLight.Droid.Views
     {
         public ListView PeriodList { get; set; }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override View OnCreateView(LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {
             View layout = inflater.Inflate(Resource.Layout.PeriodsPage, container, false);
 

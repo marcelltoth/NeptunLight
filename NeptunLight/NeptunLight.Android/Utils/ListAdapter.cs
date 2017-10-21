@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Android.Views;
 using Android.Widget;
+using JetBrains.Annotations;
 
 namespace NeptunLight.Droid.Utils
 {
@@ -15,7 +15,7 @@ namespace NeptunLight.Droid.Utils
         private readonly int _layoutId;
         private readonly ViewBinder<T> _bindView;
 
-        public ListAdapter(LayoutInflater inflater, IEnumerable<T> items, int layoutId, ViewBinder<T> bindView)
+        public ListAdapter(LayoutInflater inflater, [CanBeNull] IEnumerable<T> items, int layoutId, ViewBinder<T> bindView)
         {
             _items = items?.ToList() ?? new List<T>();
             _layoutId = layoutId;
@@ -28,7 +28,7 @@ namespace NeptunLight.Droid.Utils
             return position;
         }
 
-        public override View GetView(int position, View convertView, ViewGroup parent)
+        public override View GetView(int position, [CanBeNull] View convertView, [CanBeNull] ViewGroup parent)
         {
             View itemLayout = convertView ?? _inflater.Inflate(_layoutId, parent, false);
             _bindView(itemLayout, _items[position]);

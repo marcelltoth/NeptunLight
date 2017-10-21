@@ -42,7 +42,7 @@ namespace NeptunLight.DataAccess
 
         public string Username
         {
-            get { return _username ?? (_primitiveStorage != null && _primitiveStorage.ContainsKey(USERNAME_SETTING_KEY) ? _primitiveStorage.GetString(USERNAME_SETTING_KEY) : String.Empty); }
+            get => _username ?? (_primitiveStorage != null && _primitiveStorage.ContainsKey(USERNAME_SETTING_KEY) ? _primitiveStorage.GetString(USERNAME_SETTING_KEY) : String.Empty);
             set
             {
                 _username = value;
@@ -52,7 +52,7 @@ namespace NeptunLight.DataAccess
 
         public string Password
         {
-            get { return _password ?? (_primitiveStorage != null && _primitiveStorage.ContainsKey(PASSWORD_SETTING_KEY) ? _primitiveStorage.GetString(PASSWORD_SETTING_KEY) : String.Empty); }
+            get => _password ?? (_primitiveStorage != null && _primitiveStorage.ContainsKey(PASSWORD_SETTING_KEY) ? _primitiveStorage.GetString(PASSWORD_SETTING_KEY) : String.Empty);
             set
             {
                 _password = value;
@@ -62,7 +62,7 @@ namespace NeptunLight.DataAccess
 
         public Uri BaseUri
         {
-            get { return _baseUri ?? new Uri(_primitiveStorage != null && _primitiveStorage.ContainsKey(BASE_URL_SETTING_KEY) ? _primitiveStorage.GetString(BASE_URL_SETTING_KEY) : String.Empty); }
+            get => _baseUri ?? new Uri(_primitiveStorage != null && _primitiveStorage.ContainsKey(BASE_URL_SETTING_KEY) ? _primitiveStorage.GetString(BASE_URL_SETTING_KEY) : String.Empty);
             set
             {
                 _baseUri = value;

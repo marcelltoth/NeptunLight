@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Android.App;
 using Android.OS;
-using Android.Support.V13.App;
 using Android.Support.V4.View;
 using Android.Views;
 using Java.Lang;
+using JetBrains.Annotations;
 using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -15,11 +14,11 @@ namespace NeptunLight.Droid.Views
 {
     public class ExamsPage : ReactiveFragment<ExamsPageViewModel>, IActionBarProvider
     {
-        private ViewPager Pager { get; set; }
+        private ViewPager Pager { get; [UsedImplicitly] set; }
 
         private TabAdapter PagerAdapter { get; set; }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override View OnCreateView(LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {
             View layout = inflater.Inflate(Resource.Layout.ExamsPage, container, false);
 

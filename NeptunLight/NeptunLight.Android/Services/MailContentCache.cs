@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
+using JetBrains.Annotations;
 using NeptunLight.Models;
 using NeptunLight.Services;
 using Newtonsoft.Json;
@@ -49,6 +50,7 @@ namespace NeptunLight.Droid.Services
             await SaveFile();
         }
 
+        [ItemCanBeNull]
         public async Task<Mail> TryRetrieveAsync(MailHeader key)
         {
             if (_cacheObj == null)

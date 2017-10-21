@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Reactive;
-using System.Windows.Input;
 using Android.App;
 using Android.OS;
 using Android.Views;
-using Android.Widget;
+using JetBrains.Annotations;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
@@ -27,7 +25,7 @@ namespace NeptunLight.Droid.Views
         public MenuButton SemestersButton { get; set; }
         public MenuButton PeriodsButton { get; set; }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override View OnCreateView(LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {
             View layout = inflater.Inflate(Resource.Layout.MenuPage, container, false);
 

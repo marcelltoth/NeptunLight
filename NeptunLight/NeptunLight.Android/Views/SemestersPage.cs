@@ -23,7 +23,7 @@ namespace NeptunLight.Droid.Views
 
             this.WhenAny(x => x.ViewModel.CreditData, x => x.ViewModel.AveragesData, (cVm, aVm) => new TabsPagerAdapter(ChildFragmentManager, cVm.Value, aVm.Value)).Subscribe(adapter =>
             {
-                this.ViewPager.Adapter = adapter;
+                ViewPager.Adapter = adapter;
                 ViewPager.Adapter.NotifyDataSetChanged();
             });
 
@@ -34,11 +34,9 @@ namespace NeptunLight.Droid.Views
         {
             private readonly SemestersCreditsTab _creditsTab;
             private readonly SemestersAveragesTab _averagesTab;
-            private SemestersCreditsTabViewModel _semestersCreditsTabViewModel;
 
             public TabsPagerAdapter(FragmentManager fm, SemestersCreditsTabViewModel creditsTabViewModel, SemestersAveragesTabViewModel averagesTabViewModel) : base(fm)
             {
-                _semestersCreditsTabViewModel = creditsTabViewModel;
                 _creditsTab = new SemestersCreditsTab();
                 _creditsTab.ViewModel = creditsTabViewModel;
                 _averagesTab = new SemestersAveragesTab();
@@ -51,7 +49,7 @@ namespace NeptunLight.Droid.Views
                 switch (position)
                 {
                     case 0:
-                        return new SemestersCreditsTab() {ViewModel = _semestersCreditsTabViewModel };
+                        return _creditsTab;
                     case 1:
                         return _averagesTab;
                     default:

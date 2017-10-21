@@ -5,6 +5,7 @@ using Android.OS;
 using Android.Support.V4.View;
 using Android.Views;
 using Java.Lang;
+using JetBrains.Annotations;
 using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -13,9 +14,9 @@ namespace NeptunLight.Droid.Views
 {
     public class CoursesPage : ReactiveFragment<CoursesPageViewModel>, IActionBarProvider
     {
-        private ViewPager Pager { get; set; }
+        private ViewPager Pager { get; [UsedImplicitly] set; }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override View OnCreateView(LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {
             View layout = inflater.Inflate(Resource.Layout.CoursesPage, container, false);
 

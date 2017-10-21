@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using Java.Lang;
+using JetBrains.Annotations;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
@@ -13,7 +14,7 @@ namespace NeptunLight.Droid.Views
     {
         public ExpandableListView ExpandableList { get; set; }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override View OnCreateView(LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {
             View layout = inflater.Inflate(Resource.Layout.CoursesTab, container, false);
 
@@ -35,6 +36,7 @@ namespace NeptunLight.Droid.Views
                 _items = items.ToList();
             }
 
+            [CanBeNull]
             public override Object GetChild(int groupPosition, int childPosition)
             {
                 return null;
@@ -50,7 +52,7 @@ namespace NeptunLight.Droid.Views
                 return _items[groupPosition].Courses.Count;
             }
 
-            public override View GetChildView(int groupPosition, int childPosition, bool isLastChild, View convertView, ViewGroup parent)
+            public override View GetChildView(int groupPosition, int childPosition, bool isLastChild, [CanBeNull] View convertView, [CanBeNull] ViewGroup parent)
             {
                 View layout = convertView ?? _inflater.Inflate(Resource.Layout.CoursesListItem, parent, false);
                 CourseViewModel item = _items[groupPosition].Courses[childPosition];
@@ -61,6 +63,7 @@ namespace NeptunLight.Droid.Views
                 return layout;
             }
 
+            [CanBeNull]
             public override Object GetGroup(int groupPosition)
             {
                 return null;
@@ -71,7 +74,7 @@ namespace NeptunLight.Droid.Views
                 return groupPosition;
             }
 
-            public override View GetGroupView(int groupPosition, bool isExpanded, View convertView, ViewGroup parent)
+            public override View GetGroupView(int groupPosition, bool isExpanded, [CanBeNull] View convertView, [CanBeNull] ViewGroup parent)
             {
                 View layout = convertView ?? _inflater.Inflate(Resource.Layout.CoursesListGroup, parent, false);
                 SubjectViewModel item = _items[groupPosition];

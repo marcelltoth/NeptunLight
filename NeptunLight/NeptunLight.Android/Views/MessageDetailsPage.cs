@@ -5,6 +5,7 @@ using Android.Text;
 using Android.Text.Method;
 using Android.Views;
 using Android.Widget;
+using JetBrains.Annotations;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
@@ -12,13 +13,13 @@ namespace NeptunLight.Droid.Views
 {
     public class MessageDetailsPage : ReactiveFragment<MessageViewModel>, IActionBarProvider
     {
-        private TextView TimeTextView { get; set; }
-        private TextView SenderTextView { get; set; }
-        private TextView SubjectTextView { get; set; }
-        private TextView ContentTextView { get; set; }
-        private TextView LetterBox { get; set; }
+        private TextView TimeTextView { get; [UsedImplicitly] set; }
+        private TextView SenderTextView { get; [UsedImplicitly] set; }
+        private TextView SubjectTextView { get; [UsedImplicitly] set; }
+        private TextView ContentTextView { get; [UsedImplicitly] set; }
+        private TextView LetterBox { get; [UsedImplicitly] set; }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override View OnCreateView(LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {
             View layout = inflater.Inflate(Resource.Layout.MessageDetailsPage, container, false);
 
@@ -35,14 +36,9 @@ namespace NeptunLight.Droid.Views
             });
             this.WhenAnyValue(x => x.ViewModel.HtmlContent).Subscribe(html =>
             {
-                if (Android.OS.Build.VERSION.SdkInt >= BuildVersionCodes.N)
-                {
-                    ContentTextView.TextFormatted = Html.FromHtml(html, FromHtmlOptions.ModeLegacy);
-                }
-                else
-                {
-                    ContentTextView.TextFormatted = Html.FromHtml(html);
-                }
+#pragma warning disable 618 // obsolete symbol
+                ContentTextView.TextFormatted = Build.VERSION.SdkInt >= BuildVersionCodes.N ? Html.FromHtml(html, FromHtmlOptions.ModeLegacy) : Html.FromHtml(html);
+#pragma warning restore 618
             });
             ContentTextView.MovementMethod = LinkMovementMethod.Instance;
 

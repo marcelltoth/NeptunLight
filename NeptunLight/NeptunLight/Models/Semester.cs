@@ -108,11 +108,11 @@ namespace NeptunLight.Models
             return Name;
         }
 
-        private static readonly Regex Parser = new Regex(@"([0-9]{4})\/[0-9]{2}\/([12])");
+        private static readonly Regex _parser = new Regex(@"([0-9]{4})\/[0-9]{2}\/([12])");
 
         public static Semester Parse(string s)
         {
-            Match result = Parser.Match(s);
+            Match result = _parser.Match(s);
             if (!result.Success)
                 throw new FormatException("Unable to parse semester.");
 

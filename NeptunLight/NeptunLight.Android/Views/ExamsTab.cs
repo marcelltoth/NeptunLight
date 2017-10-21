@@ -3,6 +3,7 @@ using System.Globalization;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using JetBrains.Annotations;
 using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -11,9 +12,10 @@ namespace NeptunLight.Droid.Views
 {
     public class ExamsTab : ReactiveFragment<ExamsTabViewModel>
     {
-        private ListView ExamList { get; set; }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        private ListView ExamList { get; [UsedImplicitly] set; }
+
+        public override View OnCreateView(LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {
             View layout = inflater.Inflate(Resource.Layout.ExamsTab, container, false);
 
