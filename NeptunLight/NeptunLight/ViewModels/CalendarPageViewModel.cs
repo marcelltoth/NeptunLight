@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reactive.Linq;
 using NeptunLight.Models;
 using NeptunLight.Services;
 using ReactiveUI;
@@ -15,7 +16,7 @@ namespace NeptunLight.ViewModels
         public CalendarPageViewModel(IDataStorage dataStorage)
         {
             DataStorage = dataStorage;
-            this.WhenAnyValue(x => x.DataStorage.CurrentData.Calendar).ToProperty(this, x => x.Events, out _events);
+            this.WhenAnyValue(x => x.DataStorage.CurrentData.Calendar).ObserveOn(RxApp.MainThreadScheduler).ToProperty(this, x => x.Events, out _events);
         }
 
         public override string Title { get; } = "Órarend";

@@ -20,6 +20,7 @@ namespace NeptunLight.ViewModels
         {
             DataStorage = dataStorage;
             this.WhenAnyValue(x => x.DataStorage.CurrentData.SubjectsPerSemester)
+                .ObserveOn(RxApp.MainThreadScheduler)
                 .Select(coursesDict => coursesDict.Select(kvp => coursesTabVmFac(kvp.Key)).ToList())
                 .ToProperty(this, x => x.Tabs, out _tabs);
         }

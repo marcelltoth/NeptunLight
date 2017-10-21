@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using NeptunLight.DataAccess;
 using NeptunLight.Models;
 using NeptunLight.Services;
@@ -22,7 +23,8 @@ namespace NeptunLight.ViewModels
         public MessagesPageViewModel(IDataStorage data, INeptunInterface dataAccess, Func<Mail, MessageViewModel> messageVmFac, INavigator navigator)
         {
             DataStorage = data;
-            this.WhenAnyValue(x => x.DataStorage.CurrentData.Messages).Select(msgList => msgList.CreateDerivedCollection(messageVmFac)).ToProperty(this, x => x.Messages, out _messages);
+            this.WhenAnyValue(x => x.DataStorage.CurrentData.Messages).ObserveOn(RxApp.MainThreadScheduler).Select(msgList => msgList.CreateDerivedCollection(messageVmFac)).ToProperty(this, x => x.Messages, out _messages);
+
 
             OpenMessage = ReactiveCommand.Create<MessageViewModel, Unit>(vm =>
             {

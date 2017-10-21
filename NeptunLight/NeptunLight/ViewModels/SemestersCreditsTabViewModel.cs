@@ -14,13 +14,13 @@ namespace NeptunLight.ViewModels
         public SemestersCreditsTabViewModel(IDataStorage dataSource)
         {
             DataSource = dataSource;
-            this.WhenAnyValue(x => x.DataSource.CurrentData.SemesterInfo).Select(sInf =>
+            this.WhenAnyValue(x => x.DataSource.CurrentData.SemesterInfo).ObserveOn(RxApp.MainThreadScheduler).Select(sInf =>
                                                                                      sInf.OrderBy(sd => sd.Semester)
                                                                                          .Select(sd => new BarDataPoint(sd.CreditsTaken ?? 0, sd.CreditsAccomplished ?? 0))
                                                                                          .ToList()
                 ).ToProperty(this, x => x.BarChartData, out _barChartData);
 
-            this.WhenAnyValue(x => x.DataSource.CurrentData.SemesterInfo).Select(sInf =>
+            this.WhenAnyValue(x => x.DataSource.CurrentData.SemesterInfo).ObserveOn(RxApp.MainThreadScheduler).Select(sInf =>
             {
                 List<LineDataPoint> lineData = new List<LineDataPoint>() { new LineDataPoint(0, false) };
                 int totalAccomplished = 0;
