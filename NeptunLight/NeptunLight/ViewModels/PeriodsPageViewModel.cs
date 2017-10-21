@@ -15,7 +15,7 @@ namespace NeptunLight.ViewModels
         public PeriodsPageViewModel(IDataStorage dataStorage, Func<Period, PeriodViewModel> periodVmFac)
         {
             DataStorage = dataStorage;
-            this.WhenAnyValue(x => x.DataStorage.CurrentData.Periods).Select(x => x.Select(periodVmFac)).ToProperty(this, x => x.Periods, out _periods);
+            this.WhenAnyValue(x => x.DataStorage.CurrentData.Periods).Select(x => x.Select(periodVmFac).OrderBy(pVm => pVm.StartTime)).ToProperty(this, x => x.Periods, out _periods);
         }
 
         public IEnumerable<PeriodViewModel> Periods => _periods.Value;

@@ -25,8 +25,8 @@ namespace NeptunLight.Droid.Views
                 {
                     itemView.FindViewById<TextView>(Resource.Id.categoryTextView).Text = model.Type;
                     itemView.FindViewById<TextView>(Resource.Id.titleTextView).Text = model.Name;
-                    itemView.FindViewById<TextView>(Resource.Id.startDateTextView).Text = model.StartTime.ToString(CultureInfo.CurrentCulture);
-                    itemView.FindViewById<TextView>(Resource.Id.endDateTextView).Text = model.EndTime.ToString(CultureInfo.CurrentCulture);
+                    itemView.FindViewById<TextView>(Resource.Id.startDateTextView).Text = model.StartTime.ToString("g", CultureInfo.CurrentCulture);
+                    itemView.FindViewById<TextView>(Resource.Id.endDateTextView).Text = model.EndTime.ToString("g", CultureInfo.CurrentCulture);
                 });
             });
 
