@@ -6,7 +6,6 @@ using System.Timers;
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Widget;
 using Autofac;
 using JetBrains.Annotations;
 using NeptunLight.DataAccess;
@@ -64,7 +63,7 @@ namespace NeptunLight.Droid
             }
             catch (Exception ex)
             {
-                Android.Util.Log.Info("NEPTUN", "Error:" + ex.ToString());
+                Android.Util.Log.Info("NEPTUN", "Error:" + ex);
                 // error refreshing, fail silently
             }
 
