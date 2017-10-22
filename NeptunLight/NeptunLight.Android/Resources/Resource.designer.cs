@@ -2824,8 +2824,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f0800c2
 			public const int backgroundImage = 2131230914;
 			
-			// aapt resource value: 0x7f0800f0
-			public const int barChart = 2131230960;
+			// aapt resource value: 0x7f0800f1
+			public const int barChart = 2131230961;
 			
 			// aapt resource value: 0x7f080022
 			public const int basic = 2131230754;
@@ -3076,8 +3076,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f080018
 			public const int line3 = 2131230744;
 			
-			// aapt resource value: 0x7f0800f1
-			public const int lineChart = 2131230961;
+			// aapt resource value: 0x7f0800f0
+			public const int lineChart = 2131230960;
 			
 			// aapt resource value: 0x7f080037
 			public const int listMode = 2131230775;
@@ -3724,16 +3724,19 @@ namespace NeptunLight.Droid
 			public const int select_dialog_singlechoice_material = 2130903115;
 			
 			// aapt resource value: 0x7f03004c
-			public const int SemestersCreditsTab = 2130903116;
+			public const int SemestersAveragesTab = 2130903116;
 			
 			// aapt resource value: 0x7f03004d
-			public const int SemestersPage = 2130903117;
+			public const int SemestersCreditsTab = 2130903117;
 			
 			// aapt resource value: 0x7f03004e
-			public const int support_simple_spinner_dropdown_item = 2130903118;
+			public const int SemestersPage = 2130903118;
 			
 			// aapt resource value: 0x7f03004f
-			public const int tooltip = 2130903119;
+			public const int support_simple_spinner_dropdown_item = 2130903119;
+			
+			// aapt resource value: 0x7f030050
+			public const int tooltip = 2130903120;
 			
 			static Layout()
 			{
