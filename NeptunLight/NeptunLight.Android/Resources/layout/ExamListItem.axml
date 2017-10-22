@@ -3,7 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/colorbox"
+              android:background="@drawable/exams_item_background"
               android:padding="8dp"
               android:paddingLeft="12dp">
     <TextView
