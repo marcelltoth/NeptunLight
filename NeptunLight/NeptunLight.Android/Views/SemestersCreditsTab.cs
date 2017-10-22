@@ -33,6 +33,7 @@ namespace NeptunLight.Droid.Views
             LimitLine targetLine = new LimitLine(30) { LineColor = Color.ParseColor("#2962ff"), LineWidth = 1f };
             targetLine.EnableDashedLine(20f, 8f, 0);
             BarChart.AxisLeft.AddLimitLine(targetLine);
+            BarChart.AxisLeft.ValueFormatter = new DefaultAxisValueFormatter(0);
             BarChart.XAxis.AxisMinimum = 0.5f;
             BarChart.XAxis.Granularity = 1f;
             BarChart.XAxis.GranularityEnabled = true;
@@ -54,8 +55,8 @@ namespace NeptunLight.Droid.Views
                     entriesTaken.Add(new BarEntry(i + 0.5f, bcd[i].Taken));
                     entriesAccomplished.Add(new BarEntry(i + 0.5f, bcd[i].Accomplished));
                 }
-                BarDataSet setTaken = new BarDataSet(entriesTaken, "Felvett") { Color = Color.ParseColor("#90caf9"), ValueTextSize = 10f};
-                BarDataSet setAccomplished = new BarDataSet(entriesAccomplished, "Teljesített") { Color = Color.ParseColor("#1e88e5"), ValueTextSize = 10f };
+                BarDataSet setTaken = new BarDataSet(entriesTaken, "Felvett") { Color = Color.ParseColor("#90caf9"), ValueTextSize = 10f, ValueFormatter = new DefaultValueFormatter(0) };
+                BarDataSet setAccomplished = new BarDataSet(entriesAccomplished, "Teljesített") { Color = Color.ParseColor("#1e88e5"), ValueTextSize = 10f, ValueFormatter = new DefaultValueFormatter(0) };
                 BarData barData = new BarData(setTaken, setAccomplished);
                 barData.BarWidth = barWidth;
                 BarChart.Data = barData;
@@ -73,9 +74,10 @@ namespace NeptunLight.Droid.Views
             LineChart.XAxis.AxisMinimum = -0.1f;
             LineChart.XAxis.Granularity = 1f;
             LineChart.XAxis.GranularityEnabled = true;
+            LineChart.XAxis.ValueFormatter = new SemesterValueFormater();
+            LineChart.AxisLeft.ValueFormatter = new DefaultAxisValueFormatter(0);
             LineChart.SetTouchEnabled(false);
             LineChart.Description.Enabled = false;
-            LineChart.XAxis.ValueFormatter = new SemesterValueFormater();
             this.WhenAnyValue(x => x.ViewModel.LineChartData).Subscribe(lcd =>
             {
                 List<Entry> entriesActual = new List<Entry>();
@@ -85,7 +87,7 @@ namespace NeptunLight.Droid.Views
                     entriesActual.Add(new Entry(i, lcd[i].CumulativeCredits));
                     entriesTrend.Add(new Entry(i, 30*i));
                 }
-                LineDataSet setActual = new LineDataSet(entriesActual, "Megszerzett") {Color = Color.ParseColor("#673ab7"), LineWidth = 2f, CircleRadius = 5f, CircleHoleRadius = 3.5f, ValueTextSize = 10f};
+                LineDataSet setActual = new LineDataSet(entriesActual, "Megszerzett") {Color = Color.ParseColor("#673ab7"), LineWidth = 2f, CircleRadius = 5f, CircleHoleRadius = 3.5f, ValueTextSize = 10f, ValueFormatter = new DefaultValueFormatter(0) };
                 LineDataSet setTrend = new LineDataSet(entriesTrend, "Cél") {Color = Color.ParseColor("#66666666"), LineWidth = 1.5f };
                 setTrend.EnableDashedLine(10f, 5f, 0);
                 setTrend.SetDrawCircles(false);
@@ -109,5 +111,7 @@ namespace NeptunLight.Droid.Views
                 return $"{value}.";
             }
         }
+
+        
     }
 }
