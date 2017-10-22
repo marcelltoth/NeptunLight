@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -29,6 +31,31 @@ namespace NeptunLight.Droid.Views
                     itemView.FindViewById<TextView>(Resource.Id.dateTextView).Text = model.StartTime.ToString(CultureInfo.CurrentCulture);
                     itemView.FindViewById<TextView>(Resource.Id.locationTextView).Text = model.Location;
                     itemView.FindViewById<TextView>(Resource.Id.resultTextView).Text = model.Result;
+                    if (itemView.Background is LayerDrawable background)
+                    {
+                        GradientDrawable leftColor = (GradientDrawable)background.GetDrawable(1);
+                        switch (model.ResultLevel)
+                        {
+                            case 5:
+                                leftColor.SetColor(Color.ParseColor("#4caf50"));
+                                break;
+                            case 4:
+                                leftColor.SetColor(Color.ParseColor("#66bb6a"));
+                                break;
+                            case 3:
+                                leftColor.SetColor(Color.ParseColor("#81c784"));
+                                break;
+                            case 2:
+                                leftColor.SetColor(Color.ParseColor("#a5d6a7"));
+                                break;
+                            case 1:
+                                leftColor.SetColor(Color.ParseColor("#f44336"));
+                                break;
+                            default:
+                                leftColor.SetColor(Color.ParseColor("#ff9100"));
+                                break;
+                        }
+                    }
                 });
             });
 

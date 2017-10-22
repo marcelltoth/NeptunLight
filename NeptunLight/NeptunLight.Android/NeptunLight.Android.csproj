@@ -250,7 +250,7 @@
     <AndroidResource Include="Resources\layout\SemestersCreditsTab.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\periods_listitem_background.axml">
+    <AndroidResource Include="Resources\drawable\colorbox.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
