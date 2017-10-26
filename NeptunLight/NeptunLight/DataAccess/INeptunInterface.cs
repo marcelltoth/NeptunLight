@@ -25,4 +25,11 @@ namespace NeptunLight.DataAccess
         Task<IReadOnlyCollection<SemesterData>> RefreshSemestersAsnyc();
         Task<IReadOnlyCollection<Period>> RefreshPeriodsAsnyc();
     }
+
+    public static class NeptunInterfaceExtensions{
+    public static bool HasCredentials(this INeptunInterface iF)
+        {
+            return !string.IsNullOrEmpty(iF.Username) && !string.IsNullOrEmpty(iF.Password) && iF.BaseUri != default(Uri);
+        }
+    }
 }

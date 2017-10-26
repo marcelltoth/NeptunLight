@@ -20,40 +20,8 @@ namespace NeptunLight.ViewModels
                 if (storage.CurrentData == null)
                 {
                     // need to refresh
-
-                    LoadingDialogShown = true;
-                    LoadingDialogText = "Belépés...";
-                    NeptunData loadedData = new NeptunData();
-                    loadedData.BasicData = await client.RefreshBasicDataAsync();
-                    LoadingDialogText = "Féléves adatok betöltése...";
-                    loadedData.SemesterInfo = await client.RefreshSemestersAsnyc();
-                    LoadingDialogText = "Felvett tantárgyak betöltése...";
-                    loadedData.SubjectsPerSemester = await client.RefreshSubjectsAsnyc();
-                    LoadingDialogText = "Felvett vizsgák betöltése...";
-                    loadedData.ExamsPerSemester = await client.RefreshExamsAsnyc();
-                    LoadingDialogText = "Naptár betöltése...";
-                    loadedData.Calendar = await client.RefreshCalendarAsnyc();
-                    LoadingDialogText = "Időszakok betöltése...";
-                    loadedData.Periods = await client.RefreshPeriodsAsnyc();
-                    LoadingDialogText = "Üzenetek betöltése... (első alkalommal több percet is igénybe vehet)";
-                    IList<Mail> messages = await client.RefreshMessages(new Progress<MessageLoadingProgress>(progress =>
-                    {
-                        LoadingDialogText = $"Üzenetek betöltése ({progress.Current} / {progress.Total})... (első alkalommal több percet is igénybe vehet)";
-                    })).ToList();
-                    loadedData.Messages.Clear();
-                    loadedData.Messages.AddRange(messages);
-
-                    LoadingDialogText = "A szinkronizáció sikeres.";
-                    storage.CurrentData = loadedData;
-                    await storage.SaveDataAsync();
-                    LoadingDialogShown = false;
+                    navigator.NavigateTo<InitialSyncPageViewModel>(false);
                 }
-            });
-
-            EnsureDataAccessible.ThrownExceptions.Subscribe(_ =>
-            {
-                LoadingDialogShown = false;
-                navigator.NavigateTo<LoginPageViewModel>(false);
             });
 
             IObservable<bool> menuAvailable = EnsureDataAccessible.IsExecuting.Select(x => !x);
@@ -64,22 +32,7 @@ namespace NeptunLight.ViewModels
             GoToSemesters = ReactiveCommand.Create(() => navigator.NavigateTo<SemestersPageViewModel>(), menuAvailable);
             GoToPeriods = ReactiveCommand.Create(() => navigator.NavigateTo<PeriodsPageViewModel>(), menuAvailable);
         }
-
-        private bool _loadingDialogShown;
-
-        public bool LoadingDialogShown
-        {
-            get => _loadingDialogShown;
-            set => this.RaiseAndSetIfChanged(ref _loadingDialogShown, value);
-        }
-
-        private string _loadingDialogText;
-
-        public string LoadingDialogText
-        {
-            get => _loadingDialogText;
-            set => this.RaiseAndSetIfChanged(ref _loadingDialogText, value);
-        }
+        
 
         public ReactiveCommand EnsureDataAccessible { get; }
 

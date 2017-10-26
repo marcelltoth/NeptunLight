@@ -64,6 +64,7 @@
     <Compile Include="ViewModels\ExamsPageViewModel.cs" />
     <Compile Include="ViewModels\ExamsTabViewModel.cs" />
     <Compile Include="ViewModels\ExamViewModel.cs" />
+    <Compile Include="ViewModels\InitialSyncPageViewModel.cs" />
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\MenuPageViewModel.cs" />
     <Compile Include="ViewModels\MessagesPageViewModel.cs" />

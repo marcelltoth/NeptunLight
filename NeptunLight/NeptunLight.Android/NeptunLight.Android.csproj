@@ -170,6 +170,7 @@
     <Compile Include="Views\CoursesTab.cs" />
     <Compile Include="Views\ExamsPage.cs" />
     <Compile Include="Views\ExamsTab.cs" />
+    <Compile Include="Views\InitialSyncPage.cs" />
     <Compile Include="Views\LoginPage.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Views\MenuPage.cs" />
@@ -259,6 +260,12 @@
     <AndroidResource Include="Resources\drawable\periods_item_background.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\InitialSyncPage.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\start_button_shape.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">
@@ -315,6 +322,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon_tag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\icon_checkmark.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
