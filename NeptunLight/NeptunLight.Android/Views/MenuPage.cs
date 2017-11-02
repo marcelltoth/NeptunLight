@@ -1,6 +1,4 @@
-﻿using System;
-using Android.App;
-using Android.OS;
+﻿using Android.OS;
 using Android.Views;
 using JetBrains.Annotations;
 using NeptunLight.ViewModels;
@@ -10,13 +8,6 @@ namespace NeptunLight.Droid.Views
 {
     public class MenuPage : ReactiveFragment<MenuPageViewModel>, IActionBarProvider
     {
-        private ProgressDialog _loadingDialog;
-
-        public ProgressDialog LoadingDialog
-        {
-            get => _loadingDialog;
-            set => this.RaiseAndSetIfChanged(ref _loadingDialog, value);
-        }
 
         public MenuButton MessagesButton { get; set; }
         public MenuButton CalendarButton { get; set; }
@@ -31,20 +22,7 @@ namespace NeptunLight.Droid.Views
 
             Activated.InvokeCommand(this, x=> x.ViewModel.EnsureDataAccessible);
             this.WireUpControls(layout);
-
-            LoadingDialog = new ProgressDialog(Activity);
-            LoadingDialog.SetCancelable(false);
-            LoadingDialog.SetTitle("Szinkronizáció");
-
-            this.WhenAnyValue(x => x.ViewModel.LoadingDialogText).Subscribe(text => LoadingDialog.SetMessage(text));
-            this.WhenAnyValue(x => x.ViewModel.LoadingDialogShown).Subscribe(shown =>
-            {
-                if(shown)
-                    LoadingDialog.Show();
-                else
-                    LoadingDialog.Dismiss();
-            });
-
+            
             this.BindCommand(ViewModel, x => x.GoToMessages, x => x.MessagesButton);
             this.BindCommand(ViewModel, x => x.GoToCalendar, x => x.CalendarButton);
             this.BindCommand(ViewModel, x => x.GoToCourses, x => x.CoursesButton);

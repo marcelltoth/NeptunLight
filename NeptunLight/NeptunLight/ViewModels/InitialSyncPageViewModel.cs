@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive;
 using System.Reactive.Linq;
 using NeptunLight.DataAccess;
 using NeptunLight.Models;
@@ -19,10 +20,23 @@ namespace NeptunLight.ViewModels
 
         public InitialSyncPageViewModel(IDataStorage storage, INeptunInterface client, INavigator navigator)
         {
-            if (!client.HasCredentials())
+            EnsureCredentials = ReactiveCommand.CreateFromTask(async () =>
             {
-                navigator.NavigateTo<LoginPageViewModel>();
-            }
+                if (!client.HasCredentials())
+                    navigator.NavigateTo<LoginPageViewModel>(false);
+                try
+                {
+                    await client.LoginAsync();
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    navigator.NavigateTo<LoginPageViewModel>(false);
+                }
+                catch (NetworkException)
+                {
+                    
+                }
+            });
 
             PerformSync = ReactiveCommand.CreateFromTask(async () =>
             {
@@ -45,10 +59,10 @@ namespace NeptunLight.ViewModels
                 LoadPeriodsStatus = RefreshStepState.Refreshing;
                 loadedData.Periods = await client.RefreshPeriodsAsnyc();
                 LoadPeriodsStatus = RefreshStepState.Done;
+                LoadMessagesStatus = RefreshStepState.Refreshing;
 
                 IList<Mail> messages = await client.RefreshMessages(new Progress<MessageLoadingProgress>(progress =>
                 {
-                    LoadMessagesStatus = RefreshStepState.Refreshing;
                     MessageSyncProgress = progress.Current;
                     MessagesTotal = progress.Total;
                 })).ToList();
@@ -64,10 +78,11 @@ namespace NeptunLight.ViewModels
 
         public override string Title { get; } = "Első szinkronizáció";
 
-        private ReactiveCommand PerformSync { get; }
+        public ReactiveCommand PerformSync { get; }
 
         public IObservable<bool> IsSyncing => PerformSync.IsExecuting.StartWith(false);
 
+        public ReactiveCommand<Unit, Unit> EnsureCredentials { get; }
 
         #region Step statuses
 

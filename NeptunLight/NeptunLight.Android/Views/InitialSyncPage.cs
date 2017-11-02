@@ -1,4 +1,7 @@
-﻿using Android.OS;
+﻿using System;
+using System.Reactive.Linq;
+using Android.Graphics;
+using Android.OS;
 using Android.Views;
 using Android.Widget;
 using JetBrains.Annotations;
@@ -14,18 +17,103 @@ namespace NeptunLight.Droid.Views
 
         public Button StartButton { get; set; }
 
+        public ImageView BasicDataCompleted { get; set; }
+        public TextView BasicDataFetching { get; set; }
+
+        public ImageView SemesterDataCompleted { get; set; }
+        public TextView SemesterDataFetching { get; set; }
+
+        public ImageView SubjectsCompleted { get; set; }
+        public TextView SubjectsFetching { get; set; }
+
+        public ImageView ExamsCompleted { get; set; }
+        public TextView ExamsFetching { get; set; }
+
+        public ImageView CalendarCompleted { get; set; }
+        public TextView CalendarFetching { get; set; }
+
+        public ImageView PeriodsCompleted { get; set; }
+        public TextView PeriodsFetching { get; set; }
+
+        public ImageView MessagesCompleted { get; set; }
+        public TextView MessagesFetching { get; set; }
+
+        private Color StatusToColor(InitialSyncPageViewModel.RefreshStepState status)
+        {
+            switch (status)
+            {
+                case InitialSyncPageViewModel.RefreshStepState.Waiting:
+                    return Color.LightGray;
+                case InitialSyncPageViewModel.RefreshStepState.Refreshing:
+                    return Color.DarkGray;
+                case InitialSyncPageViewModel.RefreshStepState.Done:
+                    return Color.Black;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(status), status, null);
+            }
+        }
+
         public override View OnCreateView(LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {
             View layout = inflater.Inflate(Resource.Layout.InitialSyncPage, container, false);
 
             this.WireUpControls(layout);
 
-            StartButton.Alpha = 1;
-            StatusPanel.Alpha = 0;
+            this.WhenAnyObservable(x => x.ViewModel.IsSyncing).Subscribe(syncing =>
+            {
+                StatusPanel.Alpha = syncing ? 1 : 0;
+                StartButton.Alpha = syncing ? 0 : 1;
+            });
 
-            this.BindCommand(ViewModel, x => x.)
+            this.BindCommand(ViewModel, x => x.PerformSync, x => x.StartButton);
+
+            this.WhenAnyValue(x => x.ViewModel.LoadBasicDataStatus).Select(s => s == InitialSyncPageViewModel.RefreshStepState.Done ? 1 : 0)
+                .BindTo(this, x => x.BasicDataCompleted.Alpha);
+            this.WhenAnyValue(x => x.ViewModel.LoadBasicDataStatus).Select(StatusToColor)
+                .Subscribe(color => BasicDataFetching.SetTextColor(color));
+
+            this.WhenAnyValue(x => x.ViewModel.LoadSemesterDataStatus).Select(s => s == InitialSyncPageViewModel.RefreshStepState.Done ? 1 : 0)
+                .BindTo(this, x => x.SemesterDataCompleted.Alpha);
+            this.WhenAnyValue(x => x.ViewModel.LoadSemesterDataStatus).Select(StatusToColor)
+                .Subscribe(color => SemesterDataFetching.SetTextColor(color));
+
+            this.WhenAnyValue(x => x.ViewModel.LoadCoursesStatus).Select(s => s == InitialSyncPageViewModel.RefreshStepState.Done ? 1 : 0)
+                .BindTo(this, x => x.SubjectsCompleted.Alpha);
+            this.WhenAnyValue(x => x.ViewModel.LoadCoursesStatus).Select(StatusToColor)
+                .Subscribe(color => SubjectsFetching.SetTextColor(color));
+
+            this.WhenAnyValue(x => x.ViewModel.LoadExamsStatus).Select(s => s == InitialSyncPageViewModel.RefreshStepState.Done ? 1 : 0)
+                .BindTo(this, x => x.ExamsCompleted.Alpha);
+            this.WhenAnyValue(x => x.ViewModel.LoadExamsStatus).Select(StatusToColor)
+                .Subscribe(color => ExamsFetching.SetTextColor(color));
+
+            this.WhenAnyValue(x => x.ViewModel.LoadCalendarStatus).Select(s => s == InitialSyncPageViewModel.RefreshStepState.Done ? 1 : 0)
+                .BindTo(this, x => x.CalendarCompleted.Alpha);
+            this.WhenAnyValue(x => x.ViewModel.LoadCalendarStatus).Select(StatusToColor)
+                .Subscribe(color => CalendarFetching.SetTextColor(color));
+
+            this.WhenAnyValue(x => x.ViewModel.LoadPeriodsStatus).Select(s => s == InitialSyncPageViewModel.RefreshStepState.Done ? 1 : 0)
+                .BindTo(this, x => x.PeriodsCompleted.Alpha);
+            this.WhenAnyValue(x => x.ViewModel.LoadPeriodsStatus).Select(StatusToColor)
+                .Subscribe(color => PeriodsFetching.SetTextColor(color));
+
+            this.WhenAnyValue(x => x.ViewModel.LoadMessagesStatus).Select(s => s == InitialSyncPageViewModel.RefreshStepState.Done ? 1 : 0)
+                .BindTo(this, x => x.MessagesCompleted.Alpha);
+            this.WhenAnyValue(x => x.ViewModel.LoadMessagesStatus).Select(StatusToColor)
+                .Subscribe(color => MessagesFetching.SetTextColor(color));
+            this.WhenAnyValue(x => x.ViewModel.MessageSyncProgress, x=> x.ViewModel.MessagesTotal)
+                .SkipWhile(t => t.Item1 == -1).Subscribe(t =>
+                {
+                    MessagesFetching.SetText($"Üzenetek szinkronizálása... ({t.Item1}/{t.Item2})", TextView.BufferType.Normal);
+                });
 
             return layout;
+        }
+
+        public override void OnResume()
+        {
+            base.OnResume();
+            ViewModel.EnsureCredentials.Execute();
         }
     }
 }
