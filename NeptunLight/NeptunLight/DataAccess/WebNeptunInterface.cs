@@ -217,7 +217,7 @@ namespace NeptunLight.DataAccess
                 await Task.Delay(200);
                 IDocument coursesPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=0302");
                 await Task.Delay(100);
-                IElement optionToSelect = coursesPage.GetElementById("cmb_cmb").Children.FirstOrDefault(e => e.TextContent == semester.Name);
+                IElement optionToSelect = coursesPage.GetElementById("cmb_cmb").Children.FirstOrDefault(e => e.TextContent.StartsWith(semester.Name));
                 if (optionToSelect == null)
                     continue;
                 IDocument semesterCourseData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0302", coursesPage, new[] {new KeyValuePair<string, string>("upFilter$cmb$m_cmb", optionToSelect.GetAttribute("value"))});
