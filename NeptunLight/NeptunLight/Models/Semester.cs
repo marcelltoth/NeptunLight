@@ -88,6 +88,13 @@ namespace NeptunLight.Models
 
         public int UniqueId => PrimaryYear * 10 + SemesterNumber;
 
+        /// <summary>
+        ///     In the future,  99% that no useful data will be be available regarding this semester.
+        /// </summary>
+        /// <remarks>
+        ///     Before April, same year for 1st semesters.
+        ///     Before October for 2nd semesters.
+        /// </remarks>
         public bool IsFarFuture
         {
             get

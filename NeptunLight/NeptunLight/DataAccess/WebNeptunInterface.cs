@@ -273,8 +273,6 @@ namespace NeptunLight.DataAccess
                 IDocument semesterExamData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0402", examsPage, new[] {new KeyValuePair<string, string>("upFilter$cmbTerms", option.GetAttribute("value"))});
                 IHtmlTableElement subjectDataTable = (IHtmlTableElement) semesterExamData.GetElementById("h_signedexams_gridExamList_bodytable");
 
-                if (subjectDataTable == null || subjectDataTable.Bodies.Length == 0)
-                    continue;
                 foreach (IHtmlTableRowElement dataRow in subjectDataTable.Bodies[0].Rows)
                 {
                     if (dataRow.ClassList.Contains("NoMatch"))
