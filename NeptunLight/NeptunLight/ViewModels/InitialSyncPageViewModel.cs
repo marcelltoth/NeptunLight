@@ -22,46 +22,54 @@ namespace NeptunLight.ViewModels
         {
             PerformSync = ReactiveCommand.CreateFromTask(async () =>
             {
-                LoadBasicDataStatus = RefreshStepState.Waiting;
-                LoadSemesterDataStatus = RefreshStepState.Waiting;
-                LoadCoursesStatus = RefreshStepState.Waiting;
-                LoadExamsStatus = RefreshStepState.Waiting;
-                LoadCalendarStatus = RefreshStepState.Waiting;
-                LoadPeriodsStatus = RefreshStepState.Waiting;
-                LoadMessagesStatus = RefreshStepState.Waiting;
-                MessageSyncProgress = -1;
-
-                LoadBasicDataStatus = RefreshStepState.Refreshing;
-                NeptunData loadedData = new NeptunData();
-                loadedData.BasicData = await client.RefreshBasicDataAsync();
-                LoadBasicDataStatus = RefreshStepState.Done;
-                LoadSemesterDataStatus = RefreshStepState.Refreshing;
-                loadedData.SemesterInfo = await client.RefreshSemestersAsnyc();
-                LoadSemesterDataStatus = RefreshStepState.Done;
-                LoadCoursesStatus = RefreshStepState.Refreshing;
-                loadedData.SubjectsPerSemester = await client.RefreshSubjectsAsnyc();
-                LoadCoursesStatus = RefreshStepState.Done;
-                LoadExamsStatus = RefreshStepState.Refreshing;
-                loadedData.ExamsPerSemester = await client.RefreshExamsAsnyc();
-                LoadExamsStatus = RefreshStepState.Done;
-                LoadCalendarStatus = RefreshStepState.Refreshing;
-                loadedData.Calendar = await client.RefreshCalendarAsnyc();
-                LoadCalendarStatus = RefreshStepState.Done;
-                LoadPeriodsStatus = RefreshStepState.Refreshing;
-                loadedData.Periods = await client.RefreshPeriodsAsnyc();
-                LoadPeriodsStatus = RefreshStepState.Done;
-                LoadMessagesStatus = RefreshStepState.Refreshing;
-
-                IList<Mail> messages = await client.RefreshMessages(new Progress<MessageLoadingProgress>(progress =>
+                try
                 {
-                    MessageSyncProgress = progress.Current;
-                    MessagesTotal = progress.Total;
-                })).ToList();
-                loadedData.Messages.Clear();
-                loadedData.Messages.AddRange(messages);
-                LoadMessagesStatus = RefreshStepState.Done;
+                    LoadBasicDataStatus = RefreshStepState.Waiting;
+                    LoadSemesterDataStatus = RefreshStepState.Waiting;
+                    LoadCoursesStatus = RefreshStepState.Waiting;
+                    LoadExamsStatus = RefreshStepState.Waiting;
+                    LoadCalendarStatus = RefreshStepState.Waiting;
+                    LoadPeriodsStatus = RefreshStepState.Waiting;
+                    LoadMessagesStatus = RefreshStepState.Waiting;
+                    MessageSyncProgress = -1;
 
-                storage.CurrentData = loadedData;
+                    LoadBasicDataStatus = RefreshStepState.Refreshing;
+                    NeptunData loadedData = new NeptunData();
+                    loadedData.BasicData = await client.RefreshBasicDataAsync();
+                    LoadBasicDataStatus = RefreshStepState.Done;
+                    LoadSemesterDataStatus = RefreshStepState.Refreshing;
+                    loadedData.SemesterInfo = await client.RefreshSemestersAsnyc();
+                    LoadSemesterDataStatus = RefreshStepState.Done;
+                    LoadCoursesStatus = RefreshStepState.Refreshing;
+                    loadedData.SubjectsPerSemester = await client.RefreshSubjectsAsnyc();
+                    LoadCoursesStatus = RefreshStepState.Done;
+                    LoadExamsStatus = RefreshStepState.Refreshing;
+                    loadedData.ExamsPerSemester = await client.RefreshExamsAsnyc();
+                    LoadExamsStatus = RefreshStepState.Done;
+                    LoadCalendarStatus = RefreshStepState.Refreshing;
+                    loadedData.Calendar = await client.RefreshCalendarAsnyc();
+                    LoadCalendarStatus = RefreshStepState.Done;
+                    LoadPeriodsStatus = RefreshStepState.Refreshing;
+                    loadedData.Periods = await client.RefreshPeriodsAsnyc();
+                    LoadPeriodsStatus = RefreshStepState.Done;
+                    LoadMessagesStatus = RefreshStepState.Refreshing;
+
+                    IList<Mail> messages = await client.RefreshMessages(new Progress<MessageLoadingProgress>(progress =>
+                    {
+                        MessageSyncProgress = progress.Current;
+                        MessagesTotal = progress.Total;
+                    })).ToList();
+                    loadedData.Messages.Clear();
+                    loadedData.Messages.AddRange(messages);
+                    LoadMessagesStatus = RefreshStepState.Done;
+
+                    storage.CurrentData = loadedData;
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    navigator.NavigateTo<LoginPageViewModel>(false);
+                    return;
+                }
                 await storage.SaveDataAsync();
                 navigator.NavigateTo<MenuPageViewModel>(false);
             });

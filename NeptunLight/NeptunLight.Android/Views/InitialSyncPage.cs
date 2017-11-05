@@ -73,7 +73,8 @@ namespace NeptunLight.Droid.Views
                 .Merge(this.WhenAnyObservable(x => x.ViewModel.PerformSync.ThrownExceptions))
                 .Subscribe(ex =>
                 {
-                    Toast.MakeText(Context, "Kommunikációs hiba, ellenőrizd az internetkapcsolatodat.", ToastLength.Short).Show();
+                    if (Context != null)
+                        Toast.MakeText(Context, "Kommunikációs hiba, ellenőrizd az internetkapcsolatodat.", ToastLength.Short).Show();
                 });
 
             this.WhenAnyValue(x => x.ViewModel.LoadBasicDataStatus).Select(s => s == InitialSyncPageViewModel.RefreshStepState.Done ? 1 : 0)

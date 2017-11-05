@@ -40,7 +40,8 @@ namespace NeptunLight.Droid.Views
 
             this.WhenAnyValue(x => x.ViewModel.LoginError).Skip(1).Where(err => !String.IsNullOrEmpty(err)).Subscribe(err =>
             {
-                Toast.MakeText(Activity, err, ToastLength.Long).Show();
+                if(Context != null)
+                    Toast.MakeText(Context, err, ToastLength.Short).Show();
             });
 
             return layout;

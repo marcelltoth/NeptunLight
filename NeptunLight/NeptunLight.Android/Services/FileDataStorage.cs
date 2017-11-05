@@ -40,7 +40,10 @@ namespace NeptunLight.Droid.Services
         {
             await Task.Run(() =>
             {
-                File.WriteAllText(FileLocation, JsonConvert.SerializeObject(NeptunDataProxy.FromNeptunData(CurrentData)));
+                if (CurrentData != null)
+                    File.WriteAllText(FileLocation, JsonConvert.SerializeObject(NeptunDataProxy.FromNeptunData(CurrentData)));
+                else
+                    File.Delete(FileLocation);
             });
         }
 

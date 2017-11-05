@@ -15,11 +15,13 @@
       android:key="REFRESH_WIFI_ONLY"
       android:defaultValue="false"/>
     <Preference
+      android:key="refresh_button"
       android:title="Frissítés most"/>
   </PreferenceCategory>
   <PreferenceCategory
     android:title="Fiók">
     <Preference
+      android:key="logout_button"
       android:title="Kilépés"
       android:summary="Alaphelyzetbe állítja az alkalmazást, minden beállítást és szinkronizált adatot töröl"/>
   </PreferenceCategory>
