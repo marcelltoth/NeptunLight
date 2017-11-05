@@ -6,10 +6,14 @@
       android:title="Frissítési gyakoriság"
       android:summary="Milyen gyakran frissüljenek az adatok automatikusan" 
       android:entries="@array/updateIntervalNames"
-      android:entryValues="@array/updateIntervalNames"/>
+      android:entryValues="@array/updateIntervalValues"
+      android:key="REFRESH_INTERVAL_S"
+      android:defaultValue="86400" />
     <CheckBoxPreference
       android:title="Frissítés csak Wifi kapcsolattal"
-      android:summary="Egy frissítés körülbelül 1-2MB adatforgalmat igényel"/>
+      android:summary="Egy frissítés körülbelül 1-2MB adatforgalmat igényel"
+      android:key="REFRESH_WIFI_ONLY"
+      android:defaultValue="false"/>
     <Preference
       android:title="Frissítés most"/>
   </PreferenceCategory>

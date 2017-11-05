@@ -7,6 +7,7 @@ using Android.Content;
 using Android.Content.PM;
 using Android.Views;
 using Android.OS;
+using Android.Preferences;
 using Android.Support.V7.App;
 using Autofac;
 using JetBrains.Annotations;
@@ -42,6 +43,9 @@ namespace NeptunLight.Droid
 	    protected override void OnCreate ([CanBeNull] Bundle bundle)
 		{
             base.OnCreate(bundle);
+
+            PreferenceManager.SetDefaultValues(this, Resource.Layout.SettingsPage, false);
+
 
 		    App.MainActivity = this;
 
