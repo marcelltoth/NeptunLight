@@ -24,16 +24,23 @@ namespace NeptunLight.Droid
         [NotNull]
         private static ISharedPreferences Prefs => Application.Context.GetSharedPreferences("userPrimitives", FileCreationMode.Private);
 
-        private readonly Timer _timer = new Timer() {Enabled = false};
+        private readonly Timer _timer = new Timer() {Enabled = false, Interval = 2*3600*1000};
 
         public RefreshService()
         {
             _timer.Elapsed += TimerTick;
         }
 
-        private async void TimerTick(object sender, ElapsedEventArgs e)
+        private async void TimerTick([CanBeNull] object sender, [CanBeNull] ElapsedEventArgs e)
         {
-            await PerformUpdate();
+            if (Prefs.Contains(LAST_REFRESH_TIME_PREF_KEY))
+            {
+                TimeSpan timeDiff = DateTime.Now - new DateTime(Prefs.GetLong(LAST_REFRESH_TIME_PREF_KEY, 0));
+                if (timeDiff.TotalSeconds > Prefs.GetInt(REFRESH_INTERVAL_PREF_KEY, DEFAULT_REFRESH_INTERVAL_S))
+                {
+                    await PerformUpdate();
+                }
+            }
         }
 
         private async Task PerformUpdate()
@@ -70,27 +77,14 @@ namespace NeptunLight.Droid
             _timer.Start();
         }
 
-        public override async void OnCreate()
+        public override void OnCreate()
         {
             base.OnCreate();
-            UpdateTimerInterval();
             _timer.Start();
             Android.Util.Log.Info("NEPTUN", "created");
 
             // start an update immediately if too much time has passed already
-            if (Prefs.Contains(LAST_REFRESH_TIME_PREF_KEY))
-            {
-                TimeSpan timeDiff = DateTime.Now - new DateTime(Prefs.GetLong(LAST_REFRESH_TIME_PREF_KEY, 0));
-                if (timeDiff.TotalSeconds > Prefs.GetInt(REFRESH_INTERVAL_PREF_KEY, DEFAULT_REFRESH_INTERVAL_S))
-                {
-                    await PerformUpdate();
-                }
-            }
-        }
-
-        private void UpdateTimerInterval()
-        {
-            _timer.Interval = Prefs.GetInt(REFRESH_INTERVAL_PREF_KEY, DEFAULT_REFRESH_INTERVAL_S) * 1000;
+            TimerTick(null, null);
         }
 
         public override void OnDestroy()
