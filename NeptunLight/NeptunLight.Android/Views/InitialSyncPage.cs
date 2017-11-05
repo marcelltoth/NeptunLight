@@ -67,6 +67,13 @@ namespace NeptunLight.Droid.Views
 
             this.BindCommand(ViewModel, x => x.PerformSync, x => x.StartButton);
 
+            this.WhenAnyObservable(x => x.ViewModel.EnsureCredentials.ThrownExceptions)
+                .Merge(this.WhenAnyObservable(x => x.ViewModel.PerformSync.ThrownExceptions))
+                .Subscribe(ex =>
+                {
+                    Toast.MakeText(Context, "Kommunikációs hiba, ellenőrizd az internetkapcsolatodat.", ToastLength.Short).Show();
+                });
+
             this.WhenAnyValue(x => x.ViewModel.LoadBasicDataStatus).Select(s => s == InitialSyncPageViewModel.RefreshStepState.Done ? 1 : 0)
                 .BindTo(this, x => x.BasicDataCompleted.Alpha);
             this.WhenAnyValue(x => x.ViewModel.LoadBasicDataStatus).Select(StatusToColor)

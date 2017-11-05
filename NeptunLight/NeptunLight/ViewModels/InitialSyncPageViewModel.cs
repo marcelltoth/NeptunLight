@@ -32,14 +32,19 @@ namespace NeptunLight.ViewModels
                 {
                     navigator.NavigateTo<LoginPageViewModel>(false);
                 }
-                catch (NetworkException)
-                {
-                    
-                }
             });
 
             PerformSync = ReactiveCommand.CreateFromTask(async () =>
             {
+                LoadBasicDataStatus = RefreshStepState.Waiting;
+                LoadSemesterDataStatus = RefreshStepState.Waiting;
+                LoadCoursesStatus = RefreshStepState.Waiting;
+                LoadExamsStatus = RefreshStepState.Waiting;
+                LoadCalendarStatus = RefreshStepState.Waiting;
+                LoadPeriodsStatus = RefreshStepState.Waiting;
+                LoadMessagesStatus = RefreshStepState.Waiting;
+                MessageSyncProgress = -1;
+
                 LoadBasicDataStatus = RefreshStepState.Refreshing;
                 NeptunData loadedData = new NeptunData();
                 loadedData.BasicData = await client.RefreshBasicDataAsync();
@@ -142,7 +147,7 @@ namespace NeptunLight.ViewModels
             set => this.RaiseAndSetIfChanged(ref _loadMessagesStatus, value);
         }
 
-        private int _messageSyncProgress = -1;
+        private int _messageSyncProgress;
 
         public int MessageSyncProgress
         {
