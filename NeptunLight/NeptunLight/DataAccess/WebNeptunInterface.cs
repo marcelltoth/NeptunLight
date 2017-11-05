@@ -121,7 +121,7 @@ namespace NeptunLight.DataAccess
                 IHtmlTableElement messageHeaderTable = (IHtmlTableElement)rawMessagesDocument.GetElementById("c_messages_gridMessages_bodytable");
 
                 IList<MailHeader> mailHeaders = ParseMailHeaderTable(messageHeaderTable);
-                int messagesToLoad = Math.Min(mailHeaders.Count, 300);
+                int messagesToLoad = Math.Min(mailHeaders.Count, 100);
                 for (int i = 0; i < messagesToLoad; i++)
                 {
                     if (ct.IsCancellationRequested)
