@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="A legelső szinkronizáció általában 2-5 percig tart és ~5-10MB adatforgalmat vesz igénybe. Indításhoz kattints a START gombra."
+        android:text="A legelső szinkronizáció általában 1-3 percig tart és ~4-8MB adatforgalmat vesz igénybe. Indításhoz kattints a START gombra."
         android:textAlignment="textStart"
         android:layout_marginTop="10dp"
         android:paddingLeft="10dp"

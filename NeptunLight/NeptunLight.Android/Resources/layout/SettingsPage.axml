@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <PreferenceCategory
+    android:title="Frissítés">
+    <ListPreference
+      android:title="Frissítési gyakoriság"
+      android:summary="Milyen gyakran frissüljenek az adatok automatikusan" 
+      android:entries="@array/updateIntervalNames"
+      android:entryValues="@array/updateIntervalNames"/>
+    <CheckBoxPreference
+      android:title="Frissítés csak Wifi kapcsolattal"
+      android:summary="Egy frissítés körülbelül 1-2MB adatforgalmat igényel"/>
+    <Preference
+      android:title="Frissítés most"/>
+  </PreferenceCategory>
+  <PreferenceCategory
+    android:title="Fiók">
+    <Preference
+      android:title="Kijelentkezés"
+      android:summary="Kilép, és minden szinkronizált adatot töröl"/>
+  </PreferenceCategory>
+</PreferenceScreen>

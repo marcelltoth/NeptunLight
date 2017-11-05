@@ -167,6 +167,7 @@
     <Compile Include="MessageColorPool.cs" />
     <Compile Include="RefreshService.cs" />
     <Compile Include="Services\PrimitiveStorage.cs" />
+    <Compile Include="SettingsActivity.cs" />
     <Compile Include="Utils\TabListAdapter.cs" />
     <Compile Include="Views\CalendarPage.cs" />
     <Compile Include="Views\CoursesPage.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Views\SemestersAveragesTab.cs" />
     <Compile Include="Views\SemestersCreditsTab.cs" />
     <Compile Include="Views\SemestersPage.cs" />
+    <Compile Include="Views\SettingsPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -269,6 +271,12 @@
     <AndroidResource Include="Resources\drawable\start_button_shape.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\SettingsPage.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\values\array.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">
@@ -328,6 +336,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon_checkmark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\icon_settings.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

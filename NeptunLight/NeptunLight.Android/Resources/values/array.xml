@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="updateIntervalNames">
+    <item>3 óra</item>
+    <item>6 óra</item>
+    <item>12 óra</item>
+    <item>1 nap</item>
+    <item>3 nap</item>
+  </string-array>
+  <string-array name="updateIntervalValues">
+    <item>10800</item>
+    <item>21600</item>
+    <item>43200</item>
+    <item>86400</item>
+    <item>259200</item>
+  </string-array>
+</resources>
