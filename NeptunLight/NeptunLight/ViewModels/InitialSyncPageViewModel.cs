@@ -20,20 +20,6 @@ namespace NeptunLight.ViewModels
 
         public InitialSyncPageViewModel(IDataStorage storage, INeptunInterface client, INavigator navigator)
         {
-            EnsureCredentials = ReactiveCommand.CreateFromTask(async () =>
-            {
-                if (!client.HasCredentials())
-                    navigator.NavigateTo<LoginPageViewModel>(false);
-                try
-                {
-                    await client.LoginAsync();
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    navigator.NavigateTo<LoginPageViewModel>(false);
-                }
-            });
-
             PerformSync = ReactiveCommand.CreateFromTask(async () =>
             {
                 LoadBasicDataStatus = RefreshStepState.Waiting;
@@ -79,6 +65,20 @@ namespace NeptunLight.ViewModels
                 await storage.SaveDataAsync();
                 navigator.NavigateTo<MenuPageViewModel>(false);
             });
+
+            EnsureCredentials = ReactiveCommand.CreateFromTask(async () =>
+            {
+                if (!client.HasCredentials())
+                    navigator.NavigateTo<LoginPageViewModel>(false);
+                try
+                {
+                    await client.LoginAsync();
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    navigator.NavigateTo<LoginPageViewModel>(false);
+                }
+            }, IsSyncing.Select(x => !x));
         }
 
         public override string Title { get; } = "Első szinkronizáció";

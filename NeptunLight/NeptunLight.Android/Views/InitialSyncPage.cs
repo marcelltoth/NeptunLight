@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using Android.Graphics;
 using Android.OS;
 using Android.Views;
@@ -124,7 +126,7 @@ namespace NeptunLight.Droid.Views
         public override void OnResume()
         {
             base.OnResume();
-            ViewModel.EnsureCredentials.Execute();
+            Observable.Return(Unit.Default).InvokeCommand(ViewModel.EnsureCredentials);
         }
     }
 }
