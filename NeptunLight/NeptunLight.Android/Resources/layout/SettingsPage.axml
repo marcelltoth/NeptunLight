@@ -20,7 +20,7 @@
   <PreferenceCategory
     android:title="Fiók">
     <Preference
-      android:title="Kijelentkezés"
-      android:summary="Kilép, és minden szinkronizált adatot töröl"/>
+      android:title="Kilépés"
+      android:summary="Alaphelyzetbe állítja az alkalmazást, minden beállítást és szinkronizált adatot töröl"/>
   </PreferenceCategory>
 </PreferenceScreen>

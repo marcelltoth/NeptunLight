@@ -8,6 +8,7 @@ using Android.App;
 using Android.Content;
 using Android.Net;
 using Android.OS;
+using Android.Preferences;
 using Autofac;
 using JetBrains.Annotations;
 using NeptunLight.DataAccess;
@@ -25,7 +26,7 @@ namespace NeptunLight.Droid
         public const int DEFAULT_REFRESH_INTERVAL_S = 3600 * 12;
 
         [NotNull]
-        private static ISharedPreferences Prefs => Application.Context.GetSharedPreferences("userPrimitives", FileCreationMode.Private);
+        private static ISharedPreferences Prefs => PreferenceManager.GetDefaultSharedPreferences(Application.Context);
 
         private readonly Timer _timer = new Timer() {Enabled = false, Interval = 2*3600*1000};
 
@@ -46,7 +47,7 @@ namespace NeptunLight.Droid
                     if (Prefs.GetBoolean(REFRESH_WIFI_ONLY_KEY, false))
                     {
                         // check if there is wifi connection, abort if not
-                        ConnectivityManager connnManager = (ConnectivityManager)GetSystemService(Context.ConnectivityService);
+                        ConnectivityManager connnManager = (ConnectivityManager)GetSystemService(ConnectivityService);
                         if (connnManager.GetAllNetworks().All(net =>
                         {
                             NetworkInfo info = connnManager.GetNetworkInfo(net);
