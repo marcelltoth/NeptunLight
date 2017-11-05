@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using Android.App;
 using Android.Content;
+using Android.Net;
 using Android.OS;
 using Autofac;
 using JetBrains.Annotations;
@@ -17,9 +19,10 @@ namespace NeptunLight.Droid
     [Service]
     public class RefreshService : Service
     {
-        private const string LAST_REFRESH_TIME_PREF_KEY = "LAST_REFRESH_TIME";
-        private const string REFRESH_INTERVAL_PREF_KEY = "REFRESH_INTERVAL_S";
-        private const int DEFAULT_REFRESH_INTERVAL_S = 3600 * 12;
+        public const string REFRESH_WIFI_ONLY_KEY = "REFRESH_WIFI_ONLY";
+        public const string LAST_REFRESH_TIME_PREF_KEY = "LAST_REFRESH_TIME";
+        public const string REFRESH_INTERVAL_PREF_KEY = "REFRESH_INTERVAL_S";
+        public const int DEFAULT_REFRESH_INTERVAL_S = 3600 * 12;
 
         [NotNull]
         private static ISharedPreferences Prefs => Application.Context.GetSharedPreferences("userPrimitives", FileCreationMode.Private);
@@ -38,6 +41,21 @@ namespace NeptunLight.Droid
                 TimeSpan timeDiff = DateTime.Now - new DateTime(Prefs.GetLong(LAST_REFRESH_TIME_PREF_KEY, 0));
                 if (timeDiff.TotalSeconds > Prefs.GetInt(REFRESH_INTERVAL_PREF_KEY, DEFAULT_REFRESH_INTERVAL_S))
                 {
+                    // we should update 
+
+                    if (Prefs.GetBoolean(REFRESH_WIFI_ONLY_KEY, false))
+                    {
+                        // check if there is wifi connection, abort if not
+                        ConnectivityManager connnManager = (ConnectivityManager)GetSystemService(Context.ConnectivityService);
+                        if (connnManager.GetAllNetworks().All(net =>
+                        {
+                            NetworkInfo info = connnManager.GetNetworkInfo(net);
+                            return info.Type != ConnectivityType.Wifi || !info.IsConnected;
+                        }))
+                        {
+                            return;
+                        }
+                    }
                     await PerformUpdate();
                 }
             }
