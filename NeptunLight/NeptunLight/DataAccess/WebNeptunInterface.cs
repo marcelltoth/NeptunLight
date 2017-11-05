@@ -101,7 +101,7 @@ namespace NeptunLight.DataAccess
             IDocument mainPage = await _client.GetDocumentAsnyc("main.aspx");
             string[] topNameParts = mainPage.GetElementById("upTraining_topname").TextContent.Split('-');
             string trainingName = mainPage.GetElementById("lblTrainingName").TextContent.Split('-').First().Trim();
-            return new BasicNeptunData()
+            return new BasicNeptunData
             {
                 Major = trainingName,
                 Name = topNameParts.First().Trim(),
@@ -118,7 +118,7 @@ namespace NeptunLight.DataAccess
                 string rawMessages = await _client.GetRawAsnyc("HandleRequest.ashx?RequestType=GetData&GridID=c_messages_gridMessages&pageindex=1&pagesize=500&sort1=SendDate%20DESC&sort2=&fixedheader=false&searchcol=&searchtext=&searchexpanded=false&allsubrowsexpanded=False&selectedid=undefined&functionname=&level=", ct);
                 HtmlParser parser = new HtmlParser();
                 IDocument rawMessagesDocument = await parser.ParseAsync(rawMessages, ct);
-                IHtmlTableElement messageHeaderTable = (IHtmlTableElement)rawMessagesDocument.GetElementById("c_messages_gridMessages_bodytable");
+                IHtmlTableElement messageHeaderTable = (IHtmlTableElement) rawMessagesDocument.GetElementById("c_messages_gridMessages_bodytable");
 
                 IList<MailHeader> mailHeaders = ParseMailHeaderTable(messageHeaderTable);
                 int messagesToLoad = Math.Min(mailHeaders.Count, 100);
@@ -166,10 +166,8 @@ namespace NeptunLight.DataAccess
 
                         observer.OnNext(ret2);
                     }, ct);
-                    
                 }
             });
-            
         }
 
         public async Task<IReadOnlyCollection<CalendarEvent>> RefreshCalendarAsnyc()
@@ -179,7 +177,10 @@ namespace NeptunLight.DataAccess
             string majorId = exportPage.GetElementById("calexport_cmbTraining").Children[0].GetAttribute("value");
             await _client.PostJsonObjectAsnyc("main.aspx/GetICS", $"{{\"ID\":\"1_1_0_1_0_0_1\",\"fromDate\":\"{DateTime.Today.AddYears(-1):yyyy.MM.dd}\",\"toDate\":\"{DateTime.Today.AddYears(1):yyyy.MM.dd}\",\"trainingId\":\"{majorId}\"}}");
             string ics = await _client.GetRawAsnyc($"CommonControls/SaveFileDialog.aspx?id=1_1_0_1_0_0_1&Func=exportcalendar&from={DateTime.Today.AddYears(-1):yyyy.MM.dd}&to={DateTime.Today.AddYears(1):yyyy.MM.dd}&trainingid={majorId}");
-            IEnumerable<iCalVEvent> events = await Task.Run(() => { return iCalSerializer.Deserialize(ics.Split('\n').Select(line => line.TrimEnd('\r'))).Cast<iCalVEvent>(); });
+            IEnumerable<iCalVEvent> events = await Task.Run(() =>
+            {
+                return iCalSerializer.Deserialize(ics.Split('\n').Select(line => line.TrimEnd('\r'))).Cast<iCalVEvent>();
+            });
             return events.Select(ice =>
             {
                 string[] summaryParts = ice.Summary.Split(new[] {" - "}, StringSplitOptions.None);
@@ -272,6 +273,8 @@ namespace NeptunLight.DataAccess
                 IDocument semesterExamData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0402", examsPage, new[] {new KeyValuePair<string, string>("upFilter$cmbTerms", option.GetAttribute("value"))});
                 IHtmlTableElement subjectDataTable = (IHtmlTableElement) semesterExamData.GetElementById("h_signedexams_gridExamList_bodytable");
 
+                if (subjectDataTable == null || subjectDataTable.Bodies.Length == 0)
+                    continue;
                 foreach (IHtmlTableRowElement dataRow in subjectDataTable.Bodies[0].Rows)
                 {
                     if (dataRow.ClassList.Contains("NoMatch"))

@@ -108,10 +108,14 @@ namespace NeptunLight.Droid.Views
                 .BindTo(this, x => x.MessagesCompleted.Alpha);
             this.WhenAnyValue(x => x.ViewModel.LoadMessagesStatus).Select(StatusToColor)
                 .Subscribe(color => MessagesFetching.SetTextColor(color));
-            this.WhenAnyValue(x => x.ViewModel.MessageSyncProgress, x=> x.ViewModel.MessagesTotal)
-                .SkipWhile(t => t.Item1 == -1).Subscribe(t =>
+            this.WhenAnyValue(x => x.ViewModel.MessageSyncProgress, x => x.ViewModel.MessagesTotal)
+                .Subscribe(t =>
                 {
-                    MessagesFetching.SetText($"Üzenetek szinkronizálása... ({t.Item1}/{t.Item2})", TextView.BufferType.Normal);
+                    MessagesFetching.SetText(
+                        t.Item1 != -1
+                            ? $"Üzenetek szinkronizálása... ({t.Item1}/{t.Item2})"
+                            : "Üzenetek szinkronizálása...",
+                        TextView.BufferType.Normal);
                 });
 
             return layout;
