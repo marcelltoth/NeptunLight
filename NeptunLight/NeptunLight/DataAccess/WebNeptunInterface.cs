@@ -177,6 +177,8 @@ namespace NeptunLight.DataAccess
             string majorId = exportPage.GetElementById("calexport_cmbTraining").Children[0].GetAttribute("value");
             await _client.PostJsonObjectAsnyc("main.aspx/GetICS", $"{{\"ID\":\"1_1_0_1_0_0_1\",\"fromDate\":\"{DateTime.Today.AddYears(-1):yyyy.MM.dd}\",\"toDate\":\"{DateTime.Today.AddYears(1):yyyy.MM.dd}\",\"trainingId\":\"{majorId}\"}}");
             string ics = await _client.GetRawAsnyc($"CommonControls/SaveFileDialog.aspx?id=1_1_0_1_0_0_1&Func=exportcalendar&from={DateTime.Today.AddYears(-1):yyyy.MM.dd}&to={DateTime.Today.AddYears(1):yyyy.MM.dd}&trainingid={majorId}");
+            if(!ics.StartsWith("BEGIN:VCALENDAR")) // in case of an error - for example  the selected range does not contain any events - we will get a html result instead.
+                return new List<CalendarEvent>(); 
             IEnumerable<iCalVEvent> events = await Task.Run(() =>
             {
                 return iCalSerializer.Deserialize(ics.Split('\n').Select(line => line.TrimEnd('\r'))).Cast<iCalVEvent>();
