@@ -226,6 +226,8 @@ namespace NeptunLight.DataAccess
 
                 foreach (IHtmlTableRowElement dataRow in subjectDataTable.Bodies[0].Rows)
                 {
+                    if (dataRow.ClassList.Contains("NoMatch"))
+                        continue;
                     string subjectCode = dataRow.Cells[1].TextContent;
                     string subjectName = dataRow.Cells[2].TextContent;
                     int creditCount = Int32.Parse(dataRow.Cells[3].TextContent);
