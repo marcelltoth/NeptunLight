@@ -36,7 +36,10 @@ namespace NeptunLight.Droid.Views
 
             this.WhenAnyValue(x => x.ViewModel.AvaialbleInstitutes).Subscribe(v => { InstituteSelector.Adapter = new InstituteAdapter(inflater, v.ToList()); });
 
-            this.WhenAnyValue(x => x.InstituteSelector.SelectedItemPosition).Select(x => ((InstituteAdapter) InstituteSelector.Adapter)[x]).BindTo(this, x => x.ViewModel.SelectedInstitute);
+            InstituteSelector.ItemSelected += (sender, args) =>
+            {
+                ViewModel.SelectedInstitute = ((InstituteAdapter) InstituteSelector.Adapter)[args.Position];
+            };
 
             this.WhenAnyValue(x => x.ViewModel.LoginError).Skip(1).Where(err => !String.IsNullOrEmpty(err)).Subscribe(err =>
             {
