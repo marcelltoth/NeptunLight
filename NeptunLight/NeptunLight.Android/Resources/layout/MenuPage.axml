@@ -26,7 +26,6 @@
             android:textStyle="bold"
             android:textSize="22sp"
             android:layout_marginBottom="5dp"
-            android:text="Tóth Marcell"
             android:textColor="#223" />
         <TextView
             android:layout_height="wrap_content"
@@ -36,8 +35,7 @@
             android:textStyle="normal"
             android:textColor="#889"
             android:textSize="14sp"
-            android:layout_marginBottom="5dp"
-            android:text="JSBG2I" />
+            android:layout_marginBottom="5dp" />
         <ImageButton
             android:id="@+id/settingsButton"
             android:src="@drawable/icon_settings"

@@ -54,6 +54,7 @@
                     p1:hint="Neptun kód"
                     p1:textAllCaps="true"
                     p1:textSize="16dp"
+                    p1:inputType="textNoSuggestions"
                     p1:layout_marginTop="25dp" />
                 <EditText
                     p1:layout_width="match_parent"

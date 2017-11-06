@@ -11,7 +11,7 @@ namespace NeptunLight.ViewModels
     public class LoginPageViewModel : PageViewModel
     {
         private IReadOnlyList<Institute> _avaialbleInstitutes;
-        private string _loginCode = "JSBG2I";
+        private string _loginCode;
 
         private string _loginError;
 
