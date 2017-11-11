@@ -10,6 +10,8 @@ namespace NeptunLight.Droid.Views
 {
     public class MenuPage : ReactiveFragment<MenuPageViewModel>, IActionBarProvider
     {
+        public TextView NameLabel { get; set; }
+        public TextView InfoLabel { get; set; }
 
         public MenuButton MessagesButton { get; set; }
         public MenuButton CalendarButton { get; set; }
@@ -33,6 +35,9 @@ namespace NeptunLight.Droid.Views
             this.BindCommand(ViewModel, x => x.GoToExams, x => x.ExamsButton);
             this.BindCommand(ViewModel, x => x.GoToSemesters, x => x.SemestersButton);
             this.BindCommand(ViewModel, x => x.GoToPeriods, x => x.PeriodsButton);
+
+            this.OneWayBind(ViewModel, x => x.Name, x => x.NameLabel.Text);
+            this.OneWayBind(ViewModel, x => x.InfoLine, x => x.InfoLabel.Text);
 
             SettingsButton.Click += (sender, args) =>
             {

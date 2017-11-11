@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Xml.Linq;
 using NeptunLight.DataAccess;
 using NeptunLight.Models;
 using NeptunLight.Services;
@@ -31,9 +32,16 @@ namespace NeptunLight.ViewModels
             GoToExams = ReactiveCommand.Create(() => navigator.NavigateTo<ExamsPageViewModel>(), menuAvailable);
             GoToSemesters = ReactiveCommand.Create(() => navigator.NavigateTo<SemestersPageViewModel>(), menuAvailable);
             GoToPeriods = ReactiveCommand.Create(() => navigator.NavigateTo<PeriodsPageViewModel>(), menuAvailable);
-            
+
+            storage.WhenAnyValue(x => x.CurrentData.BasicData.Name).ToProperty(this, x => x.Name, out _name);
+            storage.WhenAnyValue(x => x.CurrentData.BasicData.NeptunCode, x => x.CurrentData.BasicData.Major).Select(t => $"{t.Item1} - {t.Item2}").ToProperty(this, x => x.InfoLine, out _infoLine);
         }
-        
+
+        private readonly ObservableAsPropertyHelper<string> _name;
+        public string Name => _name.Value;
+
+        private readonly ObservableAsPropertyHelper<string> _infoLine;
+        public string InfoLine => _infoLine.Value;
 
         public ReactiveCommand EnsureDataAccessible { get; }
 

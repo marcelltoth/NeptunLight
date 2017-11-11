@@ -19,7 +19,7 @@
             android:layout_width="50dp"
             android:layout_marginRight="10dp" />
         <TextView
-            android:id="@+id/userName"
+            android:id="@+id/nameLabel"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_toRightOf="@id/profilePicture"
@@ -28,10 +28,11 @@
             android:layout_marginBottom="5dp"
             android:textColor="#223" />
         <TextView
+            android:id="@+id/infoLabel"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_toRightOf="@id/profilePicture"
-            android:layout_below="@id/userName"
+            android:layout_below="@id/nameLabel"
             android:textStyle="normal"
             android:textColor="#889"
             android:textSize="14sp"
