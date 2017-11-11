@@ -259,50 +259,57 @@ namespace NeptunLight.DataAccess
             IEnumerable<IElement> semesterOptions = examsPage.GetElementById("upFilter_cmbTerms").Children.Where(opt => opt.GetAttribute("value") != "-1");
             foreach (IElement option in semesterOptions.Take(8))
             {
-                Semester semester = Semester.Parse(option.TextContent);
-                if (semester.IsFarFuture)
-                    continue;
-
-                List<Exam> examList = new List<Exam>();
-
-                // load exam data in semester
-                await Task.Delay(200);
-                examsPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=0402");
-                await Task.Delay(100);
-                IDocument semesterExamData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0402", examsPage, new[] {new KeyValuePair<string, string>("upFilter$cmbTerms", option.GetAttribute("value"))});
-                IHtmlTableElement subjectDataTable = (IHtmlTableElement) semesterExamData.GetElementById("h_signedexams_gridExamList_bodytable");
-
-                foreach (IHtmlTableRowElement dataRow in subjectDataTable.Bodies[0].Rows)
+                try
                 {
-                    if (dataRow.ClassList.Contains("NoMatch"))
+                    Semester semester = Semester.Parse(option.TextContent);
+                    if (semester.IsFarFuture)
                         continue;
-                    string subject = dataRow.Cells[1].TextContent;
-                    string course = dataRow.Cells[3].TextContent;
-                    string type = dataRow.Cells[4].TextContent;
-                    string attemptType = dataRow.Cells[5].TextContent;
-                    DateTime startTime = DateTime.ParseExact(dataRow.Cells[6].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo);
-                    string location = dataRow.Cells[7].TextContent;
-                    IEnumerable<string> instructors = dataRow.Cells[8].TextContent.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim());
-                    string[] placeCountParts = dataRow.Cells[9].TextContent.Trim().Split(' ')[0].Split('/');
-                    int placesTaken = Int32.Parse(placeCountParts[0]);
-                    int placesTotal = placeCountParts.Length > 1 ? Int32.Parse(placeCountParts[1]) : 0;
-                    bool? shownUp = null;
-                    if (dataRow.Cells[11].Children.Any(e => string.Equals(e.TagName, "img", StringComparison.OrdinalIgnoreCase)))
+
+                    List<Exam> examList = new List<Exam>();
+
+                    // load exam data in semester
+                    await Task.Delay(200);
+                    examsPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=0402");
+                    await Task.Delay(100);
+                    IDocument semesterExamData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0402", examsPage, new[] {new KeyValuePair<string, string>("upFilter$cmbTerms", option.GetAttribute("value"))});
+                    IHtmlTableElement subjectDataTable = (IHtmlTableElement) semesterExamData.GetElementById("h_signedexams_gridExamList_bodytable");
+
+                    foreach (IHtmlTableRowElement dataRow in subjectDataTable.Bodies[0].Rows)
                     {
-                        string imageName = dataRow.Cells[11].Children.First(e => string.Equals(e.TagName, "img", StringComparison.OrdinalIgnoreCase)).GetAttribute("src").Split('/').Last();
-                        if (imageName.StartsWith("ok"))
-                            shownUp = true;
-                        else if (imageName.StartsWith("no"))
-                            shownUp = false;
+                        if (dataRow.ClassList.Contains("NoMatch"))
+                            continue;
+                        string subject = dataRow.Cells[1].TextContent;
+                        string course = dataRow.Cells[3].TextContent;
+                        string type = dataRow.Cells[4].TextContent;
+                        string attemptType = dataRow.Cells[5].TextContent;
+                        DateTime startTime = DateTime.ParseExact(dataRow.Cells[6].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo);
+                        string location = dataRow.Cells[7].TextContent;
+                        IEnumerable<string> instructors = dataRow.Cells[8].TextContent.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim());
+                        string[] placeCountParts = dataRow.Cells[9].TextContent.Trim().Split(' ')[0].Split('/');
+                        int placesTaken = Int32.Parse(placeCountParts[0]);
+                        int placesTotal = placeCountParts.Length > 1 ? Int32.Parse(placeCountParts[1]) : 0;
+                        bool? shownUp = null;
+                        if (dataRow.Cells[11].Children.Any(e => string.Equals(e.TagName, "img", StringComparison.OrdinalIgnoreCase)))
+                        {
+                            string imageName = dataRow.Cells[11].Children.First(e => string.Equals(e.TagName, "img", StringComparison.OrdinalIgnoreCase)).GetAttribute("src").Split('/').Last();
+                            if (imageName.StartsWith("ok"))
+                                shownUp = true;
+                            else if (imageName.StartsWith("no"))
+                                shownUp = false;
+                        }
+
+                        string examResult = dataRow.Cells[12].TextContent;
+                        string description = dataRow.Cells[13].TextContent;
+
+                        examList.Add(new Exam(subject, course, type, attemptType, startTime, location, instructors, placesTaken, placesTotal, shownUp, examResult, description));
                     }
 
-                    string examResult = dataRow.Cells[12].TextContent;
-                    string description = dataRow.Cells[13].TextContent;
-
-                    examList.Add(new Exam(subject, course, type, attemptType, startTime, location, instructors, placesTaken, placesTotal, shownUp, examResult, description));
+                    result.Add(semester, examList);
                 }
-
-                result.Add(semester, examList);
+                catch (Exception)
+                {
+                    // don't fail the whole sync if one semester load fails
+                }
             }
 
             return result;
