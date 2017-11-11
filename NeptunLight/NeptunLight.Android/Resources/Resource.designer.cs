@@ -2563,26 +2563,26 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
+			// aapt resource value: 0x7f020080
+			public const int avd_hide_password_1 = 2130837632;
+			
 			// aapt resource value: 0x7f020081
-			public const int avd_hide_password_1 = 2130837633;
+			public const int avd_hide_password_2 = 2130837633;
 			
 			// aapt resource value: 0x7f020082
-			public const int avd_hide_password_2 = 2130837634;
-			
-			// aapt resource value: 0x7f020083
-			public const int avd_hide_password_3 = 2130837635;
+			public const int avd_hide_password_3 = 2130837634;
 			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
 			
+			// aapt resource value: 0x7f020083
+			public const int avd_show_password_1 = 2130837635;
+			
 			// aapt resource value: 0x7f020084
-			public const int avd_show_password_1 = 2130837636;
+			public const int avd_show_password_2 = 2130837636;
 			
 			// aapt resource value: 0x7f020085
-			public const int avd_show_password_2 = 2130837637;
-			
-			// aapt resource value: 0x7f020086
-			public const int avd_show_password_3 = 2130837638;
+			public const int avd_show_password_3 = 2130837637;
 			
 			// aapt resource value: 0x7f020055
 			public const int calendar_popup_box = 2130837589;
@@ -2689,11 +2689,11 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f020077
 			public const int notification_icon_background = 2130837623;
 			
-			// aapt resource value: 0x7f02007f
-			public const int notification_template_icon_bg = 2130837631;
+			// aapt resource value: 0x7f02007e
+			public const int notification_template_icon_bg = 2130837630;
 			
-			// aapt resource value: 0x7f020080
-			public const int notification_template_icon_low_bg = 2130837632;
+			// aapt resource value: 0x7f02007f
+			public const int notification_template_icon_low_bg = 2130837631;
 			
 			// aapt resource value: 0x7f020078
 			public const int notification_tile_bg = 2130837624;
@@ -2708,13 +2708,10 @@ namespace NeptunLight.Droid
 			public const int profile_picture = 2130837627;
 			
 			// aapt resource value: 0x7f02007c
-			public const int start_button_shape = 2130837628;
+			public const int tooltip_frame_dark = 2130837628;
 			
 			// aapt resource value: 0x7f02007d
-			public const int tooltip_frame_dark = 2130837629;
-			
-			// aapt resource value: 0x7f02007e
-			public const int tooltip_frame_light = 2130837630;
+			public const int tooltip_frame_light = 2130837629;
 			
 			static Drawable()
 			{
@@ -2852,8 +2849,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f08005a
 			public const int auto = 2131230810;
 			
-			// aapt resource value: 0x7f0800d2
-			public const int backgroundImage = 2131230930;
+			// aapt resource value: 0x7f0800c2
+			public const int backgroundImage = 2131230914;
 			
 			// aapt resource value: 0x7f080102
 			public const int barChart = 2131230978;
@@ -2861,11 +2858,11 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f080022
 			public const int basic = 2131230754;
 			
-			// aapt resource value: 0x7f0800c3
-			public const int basicDataCompleted = 2131230915;
+			// aapt resource value: 0x7f0800c7
+			public const int basicDataCompleted = 2131230919;
 			
-			// aapt resource value: 0x7f0800c4
-			public const int basicDataFetching = 2131230916;
+			// aapt resource value: 0x7f0800c8
+			public const int basicDataFetching = 2131230920;
 			
 			// aapt resource value: 0x7f080048
 			public const int beginning = 2131230792;
@@ -2882,11 +2879,11 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f0800de
 			public const int calendarButton = 2131230942;
 			
-			// aapt resource value: 0x7f0800cb
-			public const int calendarCompleted = 2131230923;
+			// aapt resource value: 0x7f0800cf
+			public const int calendarCompleted = 2131230927;
 			
-			// aapt resource value: 0x7f0800cc
-			public const int calendarFetching = 2131230924;
+			// aapt resource value: 0x7f0800d0
+			public const int calendarFetching = 2131230928;
 			
 			// aapt resource value: 0x7f0800ee
 			public const int cancel_action = 2131230958;
@@ -3023,11 +3020,11 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f0800e0
 			public const int examsButton = 2131230944;
 			
-			// aapt resource value: 0x7f0800c9
-			public const int examsCompleted = 2131230921;
+			// aapt resource value: 0x7f0800cd
+			public const int examsCompleted = 2131230925;
 			
-			// aapt resource value: 0x7f0800ca
-			public const int examsFetching = 2131230922;
+			// aapt resource value: 0x7f0800ce
+			public const int examsFetching = 2131230926;
 			
 			// aapt resource value: 0x7f080057
 			public const int exitUntilCollapsed = 2131230807;
@@ -3059,8 +3056,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f0800d9
 			public const int fragmentHolder = 2131230937;
 			
-			// aapt resource value: 0x7f0800d1
-			public const int frameLayout1 = 2131230929;
+			// aapt resource value: 0x7f0800c1
+			public const int frameLayout1 = 2131230913;
 			
 			// aapt resource value: 0x7f080066
 			public const int friday = 2131230822;
@@ -3140,8 +3137,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f0800be
 			public const int locationTextView = 2131230910;
 			
-			// aapt resource value: 0x7f0800d4
-			public const int loginPanel = 2131230932;
+			// aapt resource value: 0x7f0800c4
+			public const int loginPanel = 2131230916;
 			
 			// aapt resource value: 0x7f080107
 			public const int masked = 2131230983;
@@ -3155,11 +3152,11 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f0800dd
 			public const int messagesButton = 2131230941;
 			
-			// aapt resource value: 0x7f0800cf
-			public const int messagesCompleted = 2131230927;
+			// aapt resource value: 0x7f0800d3
+			public const int messagesCompleted = 2131230931;
 			
-			// aapt resource value: 0x7f0800d0
-			public const int messagesFetching = 2131230928;
+			// aapt resource value: 0x7f0800d4
+			public const int messagesFetching = 2131230932;
 			
 			// aapt resource value: 0x7f080049
 			public const int middle = 2131230793;
@@ -3215,11 +3212,11 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f0800e2
 			public const int periodsButton = 2131230946;
 			
-			// aapt resource value: 0x7f0800cd
-			public const int periodsCompleted = 2131230925;
+			// aapt resource value: 0x7f0800d1
+			public const int periodsCompleted = 2131230929;
 			
-			// aapt resource value: 0x7f0800ce
-			public const int periodsFetching = 2131230926;
+			// aapt resource value: 0x7f0800d2
+			public const int periodsFetching = 2131230930;
 			
 			// aapt resource value: 0x7f08005c
 			public const int pin = 2131230812;
@@ -3311,11 +3308,11 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f08009d
 			public const int select_dialog_listview = 2131230877;
 			
-			// aapt resource value: 0x7f0800c5
-			public const int semesterDataCompleted = 2131230917;
+			// aapt resource value: 0x7f0800c9
+			public const int semesterDataCompleted = 2131230921;
 			
-			// aapt resource value: 0x7f0800c6
-			public const int semesterDataFetching = 2131230918;
+			// aapt resource value: 0x7f0800ca
+			public const int semesterDataFetching = 2131230922;
 			
 			// aapt resource value: 0x7f0800e1
 			public const int semestersButton = 2131230945;
@@ -3374,14 +3371,14 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f080035
 			public const int start = 2131230773;
 			
-			// aapt resource value: 0x7f0800c1
-			public const int startButton = 2131230913;
+			// aapt resource value: 0x7f0800c5
+			public const int startButton = 2131230917;
 			
 			// aapt resource value: 0x7f0800fe
 			public const int startDateTextView = 2131230974;
 			
-			// aapt resource value: 0x7f0800c2
-			public const int statusPanel = 2131230914;
+			// aapt resource value: 0x7f0800c6
+			public const int statusPanel = 2131230918;
 			
 			// aapt resource value: 0x7f0800ef
 			public const int status_bar_latest_event_content = 2131230959;
@@ -3389,11 +3386,11 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f0800bc
 			public const int subjectTextView = 2131230908;
 			
-			// aapt resource value: 0x7f0800c7
-			public const int subjectsCompleted = 2131230919;
+			// aapt resource value: 0x7f0800cb
+			public const int subjectsCompleted = 2131230923;
 			
-			// aapt resource value: 0x7f0800c8
-			public const int subjectsFetching = 2131230920;
+			// aapt resource value: 0x7f0800cc
+			public const int subjectsFetching = 2131230924;
 			
 			// aapt resource value: 0x7f080089
 			public const int submenuarrow = 2131230857;
@@ -3422,8 +3419,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f08007c
 			public const int textSpacerNoTitle = 2131230844;
 			
-			// aapt resource value: 0x7f0800d3
-			public const int textView1 = 2131230931;
+			// aapt resource value: 0x7f0800c3
+			public const int textView1 = 2131230915;
 			
 			// aapt resource value: 0x7f0800bb
 			public const int text_input_password_toggle = 2131230907;

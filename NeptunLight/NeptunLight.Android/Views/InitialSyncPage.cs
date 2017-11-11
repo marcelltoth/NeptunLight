@@ -15,6 +15,8 @@ namespace NeptunLight.Droid.Views
 {
     public class InitialSyncPage : ReactiveFragment<InitialSyncPageViewModel>
     {
+        public ViewGroup LoginPanel { get; set; }
+
         public GridLayout StatusPanel { get; set; }
 
         public Button StartButton { get; set; }
@@ -123,11 +125,35 @@ namespace NeptunLight.Droid.Views
 
             return layout;
         }
-
+        
         public override void OnResume()
         {
             base.OnResume();
             Observable.Return(Unit.Default).InvokeCommand(ViewModel.EnsureCredentials);
+
+            bool resized = false;
+            LoginPanel.ViewTreeObserver.GlobalLayout += (o, args) =>
+            {
+                if (resized)
+                    return;
+                resized = true;
+                // only do this once, otherwise it gets recursive
+
+                ViewGroup.LayoutParams layout = LoginPanel.LayoutParameters;
+                int originalHeight = LoginPanel.Height;
+                int originalWidth = LoginPanel.Width;
+                double finalHeight = originalHeight;
+                const double ratio = 1193 / 842d;
+                if (originalWidth > originalHeight / ratio) // too wide
+                    layout.Width = (int)(originalHeight / ratio);
+                else // too tall
+                {
+                    layout.Height = (int)(originalWidth * ratio);
+                    finalHeight = layout.Height;
+                }
+                LoginPanel.LayoutParameters = layout;
+                LoginPanel.SetPadding(LoginPanel.PaddingLeft, (int)(finalHeight * 0.22), LoginPanel.PaddingRight, LoginPanel.PaddingBottom);
+            };
         }
     }
 }

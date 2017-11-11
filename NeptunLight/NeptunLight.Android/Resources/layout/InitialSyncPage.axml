@@ -1,11 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:id="@+id/frameLayout1"
+    android:background="#ff222222">
+  <ImageView
+      android:src="@drawable/login_background"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:id="@+id/backgroundImage"
+      android:scaleType="centerCrop" />
+  <LinearLayout
+      android:orientation="vertical"
+      android:minWidth="25px"
+      android:minHeight="25px"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="50dp"
+      android:layout_marginBottom="40dp">
     <TextView
+        android:text="Neptun Lite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:textSize="24dp"
+        android:textColor="#ffffffff" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+      <LinearLayout
+          android:orientation="vertical"
+          android:id="@+id/loginPanel"
+          android:background="@drawable/login_box"
+          android:layout_gravity="center"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingTop="10dp"
+          android:paddingRight="20dp"
+          android:paddingLeft="20dp"
+          android:paddingBottom="20dp">
+        <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sikeres bejelentkezés!"
@@ -13,40 +51,35 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginTop="10dp" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="A legelső szinkronizáció általában 1-3 percig tart és ~4-8MB adatforgalmat vesz igénybe. Indításhoz kattints a START gombra."
-        android:textAlignment="textStart"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
-    <FrameLayout
-        android:id="@+id/contentPanel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
-        <Button
-            android:id="@+id/startButton"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:text="Start"
-            android:textAllCaps="true"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/start_button_shape"
-            android:shadowColor="#A8A8A8"
-            android:shadowDx="4"
-            android:shadowDy="4"
-            android:shadowRadius="5" />
-        <android.support.v7.widget.GridLayout
-            android:id="@+id/statusPanel"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            app:columnCount="2"
-            app:rowCount="7"
-            android:layout_gravity="center_horizontal">
+            android:text="A legelső szinkronizáció általában 1-3 percig tart és ~4-8MB adatforgalmat vesz igénybe. Indításhoz kattints a START gombra."
+            android:textAlignment="textStart"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+        <FrameLayout
+            android:id="@+id/contentPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+          <Button
+              android:id="@+id/startButton"
+              android:layout_width="200dp"
+              android:layout_height="40dp"
+              android:text="Start"
+              android:textAllCaps="true"
+              android:textSize="20sp"
+              android:layout_gravity="center_horizontal"
+              android:background="#ffb74d"/>
+          <android.support.v7.widget.GridLayout
+              android:id="@+id/statusPanel"
+              android:layout_height="wrap_content"
+              android:layout_width="wrap_content"
+              app:columnCount="2"
+              app:rowCount="7"
+              android:layout_gravity="center_horizontal">
             <ImageView
                 android:id="@+id/basicDataCompleted"
                 android:layout_gravity="center"
@@ -138,6 +171,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Üzenetek szinkronizálása..." />
-        </android.support.v7.widget.GridLayout>
+          </android.support.v7.widget.GridLayout>
+        </FrameLayout>
+      </LinearLayout>
     </FrameLayout>
-</LinearLayout>
+  </LinearLayout>
+</FrameLayout>
