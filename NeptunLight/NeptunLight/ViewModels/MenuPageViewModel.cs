@@ -34,7 +34,7 @@ namespace NeptunLight.ViewModels
             GoToPeriods = ReactiveCommand.Create(() => navigator.NavigateTo<PeriodsPageViewModel>(), menuAvailable);
 
             storage.WhenAnyValue(x => x.CurrentData.BasicData.Name).ToProperty(this, x => x.Name, out _name);
-            storage.WhenAnyValue(x => x.CurrentData.BasicData.NeptunCode, x => x.CurrentData.BasicData.Major).Select(t => $"{t.Item1} - {t.Item2}").ToProperty(this, x => x.InfoLine, out _infoLine);
+            storage.WhenAnyValue(x => x.CurrentData.BasicData.NeptunCode).ToProperty(this, x => x.InfoLine, out _infoLine);
         }
 
         private readonly ObservableAsPropertyHelper<string> _name;

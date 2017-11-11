@@ -8,7 +8,7 @@
     android:background="#f3f3f3">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="56dp"
         android:layout_marginBottom="25dp"
         android:paddingLeft="2dp"
         android:layout_marginTop="5dp">
@@ -24,8 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_toRightOf="@id/profilePicture"
             android:textStyle="bold"
-            android:textSize="22sp"
-            android:layout_marginBottom="5dp"
+            android:textSize="20sp"
+            android:layout_marginBottom="3dp"
             android:textColor="#223" />
         <TextView
             android:id="@+id/infoLabel"
