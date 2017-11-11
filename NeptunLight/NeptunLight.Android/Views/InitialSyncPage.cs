@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Windows.Input;
 using Android.Graphics;
 using Android.OS;
 using Android.Views;

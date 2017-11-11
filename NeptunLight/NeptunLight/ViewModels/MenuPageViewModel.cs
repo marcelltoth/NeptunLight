@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive.Linq;
-using System.Xml.Linq;
-using NeptunLight.DataAccess;
-using NeptunLight.Models;
 using NeptunLight.Services;
 using ReactiveUI;
 
@@ -11,7 +7,7 @@ namespace NeptunLight.ViewModels
 {
     public class MenuPageViewModel : PageViewModel
     {
-        public MenuPageViewModel(IDataStorage storage, INeptunInterface client, INavigator navigator)
+        public MenuPageViewModel(IDataStorage storage, INavigator navigator)
         {
             EnsureDataAccessible = ReactiveCommand.CreateFromTask(async () =>
             {

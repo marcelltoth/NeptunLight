@@ -1,6 +1,4 @@
-﻿using ReactiveUI;
-
-namespace NeptunLight.Models
+﻿namespace NeptunLight.Models
 {
     public class BasicNeptunData
     {
