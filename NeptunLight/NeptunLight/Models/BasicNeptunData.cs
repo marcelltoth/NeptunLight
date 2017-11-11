@@ -2,30 +2,19 @@
 
 namespace NeptunLight.Models
 {
-    public class BasicNeptunData : ReactiveObject
+    public class BasicNeptunData
     {
-        private string _name;
-
-        public string Name
+        public BasicNeptunData(string name, string neptunCode, string major)
         {
-            get => _name;
-            set => this.RaiseAndSetIfChanged(ref _name, value);
+            Name = name;
+            NeptunCode = neptunCode;
+            Major = major;
         }
 
-        private string _neptunCode;
+        public string Name { get; }
 
-        public string NeptunCode
-        {
-            get => _neptunCode;
-            set => this.RaiseAndSetIfChanged(ref _neptunCode, value);
-        }
+        public string NeptunCode { get; }
 
-        private string _major;
-
-        public string Major
-        {
-            get => _major;
-            set => this.RaiseAndSetIfChanged(ref _major, value);
-        }
+        public string Major { get; }
     }
 }

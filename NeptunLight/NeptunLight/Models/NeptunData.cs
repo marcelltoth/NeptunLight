@@ -21,8 +21,14 @@ namespace NeptunLight.Models
         [NotNull]
         private IReadOnlyDictionary<Semester, IReadOnlyCollection<Subject>> _subjectsPerSemester = new Dictionary<Semester, IReadOnlyCollection<Subject>>();
 
-        [NotNull]
-        public BasicNeptunData BasicData { get; set; } = new BasicNeptunData();
+        [CanBeNull]
+        private BasicNeptunData _basicData;
+
+        public BasicNeptunData BasicData
+        {
+            get => _basicData;
+            set => this.RaiseAndSetIfChanged(ref _basicData, value);
+        }
 
         [NotNull]
         public IReactiveList<Mail> Messages { get; } = new ReactiveList<Mail>();

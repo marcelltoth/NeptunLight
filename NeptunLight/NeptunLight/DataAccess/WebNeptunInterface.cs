@@ -101,12 +101,7 @@ namespace NeptunLight.DataAccess
             IDocument mainPage = await _client.GetDocumentAsnyc("main.aspx");
             string[] topNameParts = mainPage.GetElementById("upTraining_topname").TextContent.Split('-');
             string trainingName = mainPage.GetElementById("lblTrainingName").TextContent.Split('-').First().Trim();
-            return new BasicNeptunData
-            {
-                Major = trainingName,
-                Name = topNameParts.First().Trim(),
-                NeptunCode = topNameParts.Last().Trim()
-            };
+            return new BasicNeptunData(topNameParts.First().Trim(), topNameParts.Last().Trim(), trainingName);
         }
 
         public IObservable<Mail> RefreshMessages(IProgress<MessageLoadingProgress> progress = null)
