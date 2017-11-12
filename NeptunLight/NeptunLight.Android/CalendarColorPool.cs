@@ -96,7 +96,7 @@ namespace NeptunLight.Droid
                         }
 
                         _allocationTable[subject][group] = (mainIndex, accentIndex);
-                        //_dirty = true;
+                        _dirty = true;
                     }
                     
                     (int finalMainIndex, int finalAccentIndex) = _allocationTable[subject][group];
