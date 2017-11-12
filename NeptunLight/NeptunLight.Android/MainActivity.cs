@@ -19,7 +19,7 @@ using FragmentTransaction = Android.App.FragmentTransaction;
 
 namespace NeptunLight.Droid
 {
-	[Activity (Label = "NeptunLight.Android", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/Theme.AppCompat.Light", ScreenOrientation = ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden)]
+	[Activity (Label = "Neptun Lite", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/Theme.AppCompat.Light", ScreenOrientation = ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden)]
 	public class MainActivity : AppCompatActivity, INavigator
 	{
 	    private readonly Dictionary<Type, PageViewModel> _pageViewModelCache = new Dictionary<Type, PageViewModel>();
