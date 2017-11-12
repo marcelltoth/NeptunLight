@@ -62,7 +62,14 @@ namespace NeptunLight.DataAccess
 
         public Uri BaseUri
         {
-            get => _baseUri ?? new Uri(_primitiveStorage != null && _primitiveStorage.ContainsKey(BASE_URL_SETTING_KEY) ? _primitiveStorage.GetString(BASE_URL_SETTING_KEY) : String.Empty);
+            get
+            {
+                if (_baseUri != null)
+                    return _baseUri;
+                if (_primitiveStorage != null && _primitiveStorage.ContainsKey(BASE_URL_SETTING_KEY))
+                    return new Uri(_primitiveStorage.GetString(BASE_URL_SETTING_KEY));
+                return default(Uri);
+            }
             set
             {
                 _baseUri = value;
