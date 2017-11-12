@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive.Linq;
 using Android.Graphics;
 using Android.OS;
 using Android.Views;
@@ -41,7 +42,7 @@ namespace NeptunLight.Droid.Views
             BarChart.XAxis.ValueFormatter = new SemesterValueFormater();
             BarChart.Description.Enabled = false;
 
-            this.WhenAnyValue(x => x.ViewModel.BarChartData).Subscribe(bcd =>
+            this.WhenAnyValue(x => x.ViewModel.BarChartData).Where(bcd => bcd.Count >= 1).Subscribe(bcd =>
             {
                 float groupSpace = 0.06f;
                 float barSpace = 0.02f; // x2 dataset
@@ -78,7 +79,7 @@ namespace NeptunLight.Droid.Views
             LineChart.AxisLeft.ValueFormatter = new DefaultAxisValueFormatter(0);
             LineChart.SetTouchEnabled(false);
             LineChart.Description.Enabled = false;
-            this.WhenAnyValue(x => x.ViewModel.LineChartData).Subscribe(lcd =>
+            this.WhenAnyValue(x => x.ViewModel.LineChartData).Where(lcd => lcd.Count >= 1).Subscribe(lcd =>
             {
                 List<Entry> entriesActual = new List<Entry>();
                 List<Entry> entriesTrend = new List<Entry>();

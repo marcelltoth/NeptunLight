@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Reactive.Linq;
 using Android.Graphics;
 using Android.OS;
 using Android.Views;
@@ -32,10 +34,8 @@ namespace NeptunLight.Droid.Views
             LineChart.AxisLeft.ValueFormatter = new DefaultAxisValueFormatter(2);
             LineChart.SetTouchEnabled(false);
             LineChart.Description.Enabled = false;
-            this.WhenAnyValue(x => x.ViewModel.ChartData).Subscribe(cd =>
+            this.WhenAnyValue(x => x.ViewModel.ChartData).Where(cd => cd.Count(s => s != null) >= 1).Subscribe(cd =>
             {
-                if (cd.Count < 1)
-                    return;
                 List<Entry> pointEntries = new List<Entry>(cd.Count);
                 List<Entry> cumulativeEntries = new List<Entry>(cd.Count);
                 for (int i = 0; i < cd.Count; i++)
