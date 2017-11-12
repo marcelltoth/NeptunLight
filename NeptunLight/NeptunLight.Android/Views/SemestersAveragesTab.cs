@@ -34,6 +34,8 @@ namespace NeptunLight.Droid.Views
             LineChart.Description.Enabled = false;
             this.WhenAnyValue(x => x.ViewModel.ChartData).Subscribe(cd =>
             {
+                if (cd.Count < 1)
+                    return;
                 List<Entry> pointEntries = new List<Entry>(cd.Count);
                 List<Entry> cumulativeEntries = new List<Entry>(cd.Count);
                 for (int i = 0; i < cd.Count; i++)

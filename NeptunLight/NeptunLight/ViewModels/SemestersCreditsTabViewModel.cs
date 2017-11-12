@@ -15,9 +15,10 @@ namespace NeptunLight.ViewModels
         {
             DataSource = dataSource;
             this.WhenAnyValue(x => x.DataSource.CurrentData.SemesterInfo).ObserveOn(RxApp.MainThreadScheduler).Select(sInf =>
-                                                                                     sInf.OrderBy(sd => sd.Semester)
+                                                                                     sInf?.OrderBy(sd => sd.Semester)
                                                                                          .Select(sd => new BarDataPoint(sd.CreditsTaken ?? 0, sd.CreditsAccomplished ?? 0))
-                                                                                         .ToList()
+                                                                                         .ToList() 
+                                                                                         ?? new List<BarDataPoint>()
                 ).ToProperty(this, x => x.BarChartData, out _barChartData);
 
             this.WhenAnyValue(x => x.DataSource.CurrentData.SemesterInfo).ObserveOn(RxApp.MainThreadScheduler).Select(sInf =>
@@ -25,13 +26,15 @@ namespace NeptunLight.ViewModels
                 List<LineDataPoint> lineData = new List<LineDataPoint>() { new LineDataPoint(0, false) };
                 int totalAccomplished = 0;
 
-                foreach (SemesterData semesterData in sInf.OrderBy(sd => sd.Semester))
-                {
-                    if (semesterData.CreditsTaken.HasValue)
+                if (sInf != null) { 
+                    foreach (SemesterData semesterData in sInf.OrderBy(sd => sd.Semester))
                     {
-                        totalAccomplished += semesterData.CreditsAccomplished ?? semesterData.CreditsTaken.Value;
+                        if (semesterData.CreditsTaken.HasValue)
+                        {
+                            totalAccomplished += semesterData.CreditsAccomplished ?? semesterData.CreditsTaken.Value;
+                        }
+                        lineData.Add(new LineDataPoint(totalAccomplished, !semesterData.CreditsAccomplished.HasValue));
                     }
-                    lineData.Add(new LineDataPoint(totalAccomplished, !semesterData.CreditsAccomplished.HasValue));
                 }
 
                 return lineData;

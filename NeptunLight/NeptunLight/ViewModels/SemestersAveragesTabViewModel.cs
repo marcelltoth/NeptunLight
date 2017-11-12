@@ -18,15 +18,17 @@ namespace NeptunLight.ViewModels
             this.WhenAnyValue(x => x.DataSource.CurrentData.SemesterInfo).ObserveOn(RxApp.MainThreadScheduler).Select(sInf =>
             {
                 List<ChartDataPoint> ret =  new List<ChartDataPoint>();
-                foreach (SemesterData semesterData in sInf.OrderBy(sd => sd.Semester))
-                {
-                    if (semesterData.Average.HasValue && semesterData.CumulativeAverage.HasValue)
+                if(sInf != null) {
+                    foreach (SemesterData semesterData in sInf.OrderBy(sd => sd.Semester))
                     {
-                        ret.Add(new ChartDataPoint(semesterData.Average.Value, semesterData.CumulativeAverage.Value));
-                    }
-                    else
-                    {
-                        ret.Add(null);
+                        if (semesterData.Average.HasValue && semesterData.CumulativeAverage.HasValue)
+                        {
+                            ret.Add(new ChartDataPoint(semesterData.Average.Value, semesterData.CumulativeAverage.Value));
+                        }
+                        else
+                        {
+                            ret.Add(null);
+                        }
                     }
                 }
                 return ret;
