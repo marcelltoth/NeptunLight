@@ -292,7 +292,7 @@ namespace NeptunLight.DataAccess
                         DateTime startTime = DateTime.ParseExact(dataRow.Cells[6].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo);
                         string location = dataRow.Cells[7].TextContent;
                         IEnumerable<string> instructors = dataRow.Cells[8].TextContent.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim());
-                        string[] placeCountParts = dataRow.Cells[9].TextContent.Trim().Split(' ')[0].Split('/');
+                        string[] placeCountParts = dataRow.Cells[9].TextContent.Trim().Split(' ')[0].Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
                         int placesTaken = Int32.Parse(placeCountParts[0]);
                         int placesTotal = placeCountParts.Length > 1 ? Int32.Parse(placeCountParts[1]) : 0;
                         bool? shownUp = null;
