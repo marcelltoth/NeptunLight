@@ -77,7 +77,10 @@ namespace NeptunLight.ViewModels
             EnsureCredentials = ReactiveCommand.CreateFromTask(async () =>
             {
                 if (!client.HasCredentials())
+                {
                     navigator.NavigateTo<LoginPageViewModel>(false);
+                    return;
+                }
                 try
                 {
                     await client.LoginAsync();
