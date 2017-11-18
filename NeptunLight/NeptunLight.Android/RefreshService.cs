@@ -28,7 +28,20 @@ namespace NeptunLight.Droid
         [NotNull]
         private static ISharedPreferences Prefs => PreferenceManager.GetDefaultSharedPreferences(Application.Context);
 
-        private readonly Timer _timer = new Timer() {Enabled = false, Interval = 2*3600*1000};
+        private static int RefreshInterval
+        {
+            get
+            {
+                string s = Prefs.GetString(REFRESH_INTERVAL_PREF_KEY, "");
+                if (int.TryParse(s, out int i))
+                {
+                    return i;
+                }
+                return DEFAULT_REFRESH_INTERVAL_S;
+            }
+        }
+
+        private readonly Timer _timer = new Timer() {Enabled = true, Interval = 2*3600*1000};
 
         public RefreshService()
         {
@@ -37,28 +50,25 @@ namespace NeptunLight.Droid
 
         private async void TimerTick([CanBeNull] object sender, [CanBeNull] ElapsedEventArgs e)
         {
-            if (Prefs.Contains(LAST_REFRESH_TIME_PREF_KEY))
+            TimeSpan timeDiff = DateTime.Now - new DateTime(Prefs.GetLong(LAST_REFRESH_TIME_PREF_KEY, 0));
+            if (timeDiff.TotalSeconds > RefreshInterval)
             {
-                TimeSpan timeDiff = DateTime.Now - new DateTime(Prefs.GetLong(LAST_REFRESH_TIME_PREF_KEY, 0));
-                if (timeDiff.TotalSeconds > Prefs.GetInt(REFRESH_INTERVAL_PREF_KEY, DEFAULT_REFRESH_INTERVAL_S))
-                {
-                    // we should update 
+                // we should update 
 
-                    if (Prefs.GetBoolean(REFRESH_WIFI_ONLY_KEY, false))
+                if (Prefs.GetBoolean(REFRESH_WIFI_ONLY_KEY, false))
+                {
+                    // check if there is wifi connection, abort if not
+                    ConnectivityManager connnManager = (ConnectivityManager) GetSystemService(ConnectivityService);
+                    if (connnManager.GetAllNetworks().All(net =>
                     {
-                        // check if there is wifi connection, abort if not
-                        ConnectivityManager connnManager = (ConnectivityManager)GetSystemService(ConnectivityService);
-                        if (connnManager.GetAllNetworks().All(net =>
-                        {
-                            NetworkInfo info = connnManager.GetNetworkInfo(net);
-                            return info.Type != ConnectivityType.Wifi || !info.IsConnected;
-                        }))
-                        {
-                            return;
-                        }
+                        NetworkInfo info = connnManager.GetNetworkInfo(net);
+                        return info.Type != ConnectivityType.Wifi || !info.IsConnected;
+                    }))
+                    {
+                        return;
                     }
-                    await PerformUpdate();
                 }
+                await PerformUpdate();
             }
         }
 
@@ -68,6 +78,8 @@ namespace NeptunLight.Droid
 
             IDataStorage dataStorage = App.Container.Resolve<IDataStorage>();
             INeptunInterface client = App.Container.Resolve<INeptunInterface>();
+            if (!client.HasCredentials())
+                return;
 
             try
             {
