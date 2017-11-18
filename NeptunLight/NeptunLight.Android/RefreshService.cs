@@ -11,6 +11,7 @@ using Android.OS;
 using Android.Preferences;
 using Autofac;
 using JetBrains.Annotations;
+using Microsoft.AppCenter.Analytics;
 using NeptunLight.DataAccess;
 using NeptunLight.Models;
 using NeptunLight.Services;
@@ -83,6 +84,7 @@ namespace NeptunLight.Droid
 
             try
             {
+                Analytics.TrackEvent("Background sync started");
                 NeptunData loadedData = new NeptunData();
                 loadedData.BasicData = await client.RefreshBasicDataAsync();
                 loadedData.SemesterInfo = await client.RefreshSemestersAsnyc();
@@ -97,11 +99,14 @@ namespace NeptunLight.Droid
                 dataStorage.CurrentData = loadedData;
                 await dataStorage.SaveDataAsync();
                 Prefs.Edit().PutLong(LAST_REFRESH_TIME_PREF_KEY, DateTime.Now.Ticks).Commit();
-                Android.Util.Log.Info("NEPTUN", "refreshed");
+                Analytics.TrackEvent("Background sync finished");
             }
             catch (Exception ex)
             {
-                Android.Util.Log.Info("NEPTUN", "Error:" + ex);
+                Analytics.TrackEvent("Background sync error", new Dictionary<string, string>{
+                    {"Message", ex.Message},
+                    { "Trace", ex.StackTrace.Substring(0,64)}
+                });
                 // error refreshing, fail silently
             }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
 using Android.Graphics;
@@ -6,6 +7,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using JetBrains.Annotations;
+using Microsoft.AppCenter.Analytics;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 using GridLayout = Android.Support.V7.Widget.GridLayout;
@@ -70,13 +72,27 @@ namespace NeptunLight.Droid.Views
 
             this.BindCommand(ViewModel, x => x.PerformSync, x => x.StartButton);
 
+            StartButton.Click += (sender, args) =>
+            {
+                Analytics.TrackEvent("Initial sync started");
+            };
+
             this.WhenAnyObservable(x => x.ViewModel.EnsureCredentials.ThrownExceptions)
                 .Merge(this.WhenAnyObservable(x => x.ViewModel.PerformSync.ThrownExceptions))
                 .Subscribe(ex =>
                 {
                     if (Context != null)
                         Toast.MakeText(Context, "Kommunikációs hiba, ellenőrizd az internetkapcsolatodat.", ToastLength.Short).Show();
+                    Analytics.TrackEvent("Initial sync error", new Dictionary<string, string>{
+                        {"Message", ex.Message},
+                        { "Trace", ex.StackTrace.Substring(0,64)}
+                    });
                 });
+
+            this.WhenAnyObservable(x => x.ViewModel.PerformSync).Subscribe(_ =>
+            {
+                Analytics.TrackEvent("Initial sync successful", new Dictionary<string, string>{ {"Name", ViewModel.Name} });
+            });
 
             this.WhenAnyValue(x => x.ViewModel.LoadBasicDataStatus).Select(s => s == InitialSyncPageViewModel.RefreshStepState.Done ? 1 : 0)
                 .BindTo(this, x => x.BasicDataCompleted.Alpha);

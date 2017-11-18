@@ -6,6 +6,7 @@ using Android.Support.V4.View;
 using Android.Views;
 using Java.Lang;
 using JetBrains.Annotations;
+using Microsoft.AppCenter.Analytics;
 using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -17,6 +18,12 @@ namespace NeptunLight.Droid.Views
         private ViewPager Pager { get; [UsedImplicitly] set; }
 
         private TabAdapter PagerAdapter { get; set; }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            Analytics.TrackEvent("Exams page shown");
+        }
 
         public override View OnCreateView(LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {

@@ -8,6 +8,7 @@ using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
 using JetBrains.Annotations;
+using Microsoft.AppCenter.Analytics;
 using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -21,6 +22,12 @@ namespace NeptunLight.Droid.Views
         private IDisposable _messageClickSubscription;
 
         public SwipeRefreshLayout SwipeRefresh { get; set; }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            Analytics.TrackEvent("Messages page shown");
+        }
 
         public override View OnCreateView([NotNull] LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {

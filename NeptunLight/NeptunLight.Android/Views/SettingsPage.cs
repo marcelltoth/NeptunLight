@@ -3,6 +3,7 @@ using Android.App;
 using Android.OS;
 using Android.Preferences;
 using Autofac;
+using Microsoft.AppCenter.Analytics;
 using NeptunLight.Services;
 
 namespace NeptunLight.Droid.Views
@@ -16,6 +17,8 @@ namespace NeptunLight.Droid.Views
 
             Preference logout = FindPreference("logout_button");
             logout.PreferenceClick += Logout_PreferenceClick;
+
+            Analytics.TrackEvent("Settings page shown");
         }
 
         private async void Logout_PreferenceClick(object sender, Preference.PreferenceClickEventArgs e)

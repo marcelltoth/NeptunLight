@@ -6,6 +6,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using JetBrains.Annotations;
+using Microsoft.AppCenter.Analytics;
 using NeptunLight.Models;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -33,6 +34,15 @@ namespace NeptunLight.Droid.Views
             this.Bind(ViewModel, x => x.Password, x => x.PasswordField.Text);
 
             this.BindCommand(ViewModel, x => x.Login, x => x.LoginButton);
+            LoginButton.Click += (sender, args) =>
+            {
+                Analytics.TrackEvent("Login attempt", new Dictionary<string, string>{ { "Institute", ViewModel.SelectedInstitute.Name}, {"User", ViewModel.LoginCode} });
+            };
+
+            this.WhenAnyObservable(x => x.ViewModel.Login).Subscribe(_ =>
+            {
+                Analytics.TrackEvent("Login successful", new Dictionary<string, string> { { "Institute", ViewModel.SelectedInstitute.Name }, { "User", ViewModel.LoginCode }});
+            });
 
             this.WhenAnyValue(x => x.ViewModel.AvaialbleInstitutes).Subscribe(v => { InstituteSelector.Adapter = new InstituteAdapter(inflater, v.ToList()); });
 

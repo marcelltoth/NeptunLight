@@ -63,6 +63,8 @@ namespace NeptunLight.ViewModels
                     loadedData.Messages.AddRange(messages);
                     LoadMessagesStatus = RefreshStepState.Done;
 
+                    Name = loadedData.BasicData.Name;
+
                     storage.CurrentData = loadedData;
                 }
                 catch (UnauthorizedAccessException)
@@ -94,7 +96,7 @@ namespace NeptunLight.ViewModels
 
         public override string Title { get; } = "Első szinkronizáció";
 
-        public ReactiveCommand PerformSync { get; }
+        public ReactiveCommand<Unit, Unit> PerformSync { get; }
 
         public IObservable<bool> IsSyncing => PerformSync.IsExecuting.StartWith(false);
 
@@ -172,6 +174,14 @@ namespace NeptunLight.ViewModels
         {
             get => _messagesTotal;
             set => this.RaiseAndSetIfChanged(ref _messagesTotal, value);
+        }
+
+        private string _name;
+
+        public string Name
+        {
+            get => _name;
+            set => this.RaiseAndSetIfChanged(ref _name, value);
         }
 
         #endregion

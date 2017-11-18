@@ -6,6 +6,7 @@ using Android.Text.Method;
 using Android.Views;
 using Android.Widget;
 using JetBrains.Annotations;
+using Microsoft.AppCenter.Analytics;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
@@ -18,6 +19,12 @@ namespace NeptunLight.Droid.Views
         private TextView SubjectTextView { get; [UsedImplicitly] set; }
         private TextView ContentTextView { get; [UsedImplicitly] set; }
         private TextView LetterBox { get; [UsedImplicitly] set; }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            Analytics.TrackEvent("Message opened");
+        }
 
         public override View OnCreateView(LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {

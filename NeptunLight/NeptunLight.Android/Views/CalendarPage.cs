@@ -6,6 +6,7 @@ using Android.Views;
 using Android.Widget;
 using Com.Alamkanak.Weekview;
 using JetBrains.Annotations;
+using Microsoft.AppCenter.Analytics;
 using NeptunLight.Models;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -28,6 +29,12 @@ namespace NeptunLight.Droid.Views
         private View _layoutRoot;
 
         public WeekView WeekView { get; set; }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            Analytics.TrackEvent("Calendar page shown");
+        }
 
         public override View OnCreateView([NotNull] LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {

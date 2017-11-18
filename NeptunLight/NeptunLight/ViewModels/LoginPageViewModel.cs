@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using NeptunLight.DataAccess;
 using NeptunLight.Models;
 using NeptunLight.Services;
@@ -68,7 +69,7 @@ namespace NeptunLight.ViewModels
             set => this.RaiseAndSetIfChanged(ref _avaialbleInstitutes, value);
         }
 
-        public ReactiveCommand Login { get; }
+        public ReactiveCommand<Unit,Unit> Login { get; }
 
         public string LoginError
         {
