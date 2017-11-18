@@ -11,6 +11,9 @@ using Android.Preferences;
 using Android.Support.V7.App;
 using Autofac;
 using JetBrains.Annotations;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using NeptunLight.Services;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -43,6 +46,9 @@ namespace NeptunLight.Droid
 	    protected override void OnCreate ([CanBeNull] Bundle bundle)
 		{
             base.OnCreate(bundle);
+
+		    AppCenter.Start("b8c21b5f-b87f-4ac2-8645-019102f6d3d7",
+		                    typeof(Analytics), typeof(Crashes));
 
             PreferenceManager.SetDefaultValues(this, Resource.Layout.SettingsPage, false);
 
