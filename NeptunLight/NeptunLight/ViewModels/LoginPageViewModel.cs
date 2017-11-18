@@ -11,6 +11,10 @@ namespace NeptunLight.ViewModels
 {
     public class LoginPageViewModel : PageViewModel
     {
+        private IPrimitiveStorage PrimitigeStorage { get; }
+
+        private const string DISCLAIMER_SETTING_KEY = "SHOULD_SHOW_DISCLAIMER";
+
         private IReadOnlyList<Institute> _avaialbleInstitutes;
         private string _loginCode;
 
@@ -20,8 +24,10 @@ namespace NeptunLight.ViewModels
 
         private Institute _selectedInstitute;
 
-        public LoginPageViewModel(IInstituteDataProvider instituteDataProvider, INeptunInterface neptunInterface, INavigator navigator)
+        public LoginPageViewModel(IInstituteDataProvider instituteDataProvider, INeptunInterface neptunInterface, INavigator navigator, IPrimitiveStorage storage)
         {
+            PrimitigeStorage = storage;
+
             AvaialbleInstitutes = instituteDataProvider.GetAvaialbleInstitutes().ToList();
 
             Login = ReactiveCommand.CreateFromTask(async ct =>
@@ -78,5 +84,16 @@ namespace NeptunLight.ViewModels
         }
 
         public override string Title { get; } = "Bejelentkezés";
+
+        public bool ShouldShowDisclaimer
+        {
+            get => !PrimitigeStorage.ContainsKey(DISCLAIMER_SETTING_KEY) || (PrimitigeStorage.GetInt(DISCLAIMER_SETTING_KEY) == 1);
+            set
+            {
+                this.RaisePropertyChanging();
+                PrimitigeStorage.PutInt(DISCLAIMER_SETTING_KEY, value ? 1 : 0);
+                this.RaisePropertyChanged();
+            }
+        }
     }
 }

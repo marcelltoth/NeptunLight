@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
+using Android.App;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -56,6 +57,16 @@ namespace NeptunLight.Droid.Views
                 if(Context != null)
                     Toast.MakeText(Context, err, ToastLength.Short).Show();
             });
+
+            if (ViewModel.ShouldShowDisclaimer)
+            {
+                new AlertDialog.Builder(Activity).SetTitle("Üdv")
+                    .SetMessage("Örülök hogy letöltötted az appomat. Tudnod kell, hogy semmi közöm a hivatalos neptunhoz, én csak egy átlag corvinusos diák vagyok akinek szúrta a szemét, hogy nincs egy értelmes mobilos nézet. "
+                                + "Emiatt természetesen nincs lehetőségem mindent letesztelni, amit tudok megteszek, de előfordulhatnak bőven hibák, ezért persze felelősséget nem vállalhatok. "
+                                + "Légyszi segíts nekem azzal hogy ezeket jelzed hogy tudjam javítani. (Google Play-en alul tudsz email-t írni) Köszi:)")
+                                .SetPositiveButton("Értettem", (sender, args) => ViewModel.ShouldShowDisclaimer = false)
+                                .Create().Show();
+            }
 
             return layout;
         }
