@@ -57,7 +57,6 @@ namespace NeptunLight.Droid
 
 			SetContentView(Resource.Layout.Main);
 
-		    _fragmentHolder = FindViewById(Resource.Id.fragmentHolder);
 
 		    FragmentManager.Events().BackStackChanged.Subscribe(args =>
 		    {
@@ -70,11 +69,17 @@ namespace NeptunLight.Droid
                 else
 		            Finish();
 		    });
-            
-		    NavigateTo<MenuPageViewModel>(false);
 
 		    StartService(new Intent(BaseContext, typeof(RefreshService)));
 		}
+
+	    protected override void OnStart()
+	    {
+	        base.OnStart();
+
+	        _fragmentHolder = FindViewById(Resource.Id.fragmentHolder);
+            NavigateTo<MenuPageViewModel>(false);
+        }
 
 	    private void ConfigureActionBar(Fragment activeFragment)
 	    {
