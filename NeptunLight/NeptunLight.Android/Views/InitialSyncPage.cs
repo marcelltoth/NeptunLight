@@ -81,8 +81,8 @@ namespace NeptunLight.Droid.Views
                 .Merge(this.WhenAnyObservable(x => x.ViewModel.PerformSync.ThrownExceptions))
                 .Subscribe(ex =>
                 {
-                    if (Context != null)
-                        Toast.MakeText(Context, "Kommunikációs hiba, ellenőrizd az internetkapcsolatodat.", ToastLength.Short).Show();
+                    if (Activity != null)
+                        Toast.MakeText(Activity, "Kommunikációs hiba, ellenőrizd az internetkapcsolatodat.", ToastLength.Short).Show();
                     Analytics.TrackEvent("Initial sync error", new Dictionary<string, string>{
                         {"Message", ex.Message},
                         { "Trace", ex.StackTrace.Substring(0,64)}

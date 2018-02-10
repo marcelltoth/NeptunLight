@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -41,7 +42,7 @@ namespace NeptunLight.Droid.Views
 
             SettingsButton.Click += (sender, args) =>
             {
-                StartActivity(new Intent(Context, typeof(SettingsActivity)));
+                StartActivity(new Intent(Application.Context, typeof(SettingsActivity)));
             };
 
             return layout;
