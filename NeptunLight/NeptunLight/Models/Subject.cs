@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace NeptunLight.Models
 {
@@ -10,7 +11,7 @@ namespace NeptunLight.Models
             Name = name;
             CreditCount = creditCount;
             AttemptCount = attemptCount;
-            Courses = courses;
+            Courses = courses.ToList();
         }
 
         public string Code { get; }
@@ -21,6 +22,6 @@ namespace NeptunLight.Models
 
         public int AttemptCount { get; }
 
-        public IEnumerable<Course> Courses { get; }
+        public IReadOnlyCollection<Course> Courses { get; }
     }
 }

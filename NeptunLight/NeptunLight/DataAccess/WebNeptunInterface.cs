@@ -236,7 +236,7 @@ namespace NeptunLight.DataAccess
                     string subjectName = dataRow.Cells[2].TextContent;
                     int creditCount = Int32.Parse(dataRow.Cells[3].TextContent);
                     int attemptCount = Int32.Parse(dataRow.Cells[4].TextContent);
-                    IEnumerable<Course> courses = courseDataTable.Bodies[0].Rows.Where(r => r.Cells[1].TextContent == subjectCode).Select(r =>
+                    IEnumerable<Course> courses = courseDataTable.Bodies[0].Rows.Where(r => r.Cells.Length >= 8 && r.Cells[1].TextContent == subjectCode).Select(r =>
                     {
                         string courseCode = r.Cells[3].TextContent;
                         string courseType = r.Cells[4].TextContent;
