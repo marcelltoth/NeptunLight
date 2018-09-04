@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using Android.App;
@@ -12,9 +11,7 @@ using Android.Preferences;
 using Autofac;
 using JetBrains.Annotations;
 using Microsoft.AppCenter.Analytics;
-using NeptunLight.DataAccess;
-using NeptunLight.Models;
-using NeptunLight.Services;
+using NeptunLight.Droid.Services;
 
 namespace NeptunLight.Droid
 {
@@ -77,27 +74,12 @@ namespace NeptunLight.Droid
         {
             _timer.Stop();
 
-            IDataStorage dataStorage = App.Container.Resolve<IDataStorage>();
-            INeptunInterface client = App.Container.Resolve<INeptunInterface>();
-            if (!client.HasCredentials())
-                return;
+            Analytics.TrackEvent("Background sync started");
 
             try
             {
-                Analytics.TrackEvent("Background sync started");
-                NeptunData loadedData = new NeptunData();
-                loadedData.BasicData = await client.RefreshBasicDataAsync();
-                loadedData.SemesterInfo = await client.RefreshSemestersAsnyc();
-                loadedData.SubjectsPerSemester = await client.RefreshSubjectsAsnyc();
-                loadedData.ExamsPerSemester = await client.RefreshExamsAsnyc();
-                loadedData.Calendar = await client.RefreshCalendarAsnyc();
-                loadedData.Periods = await client.RefreshPeriodsAsnyc();
-                IList<Mail> messages = await client.RefreshMessages().ToList();
-                loadedData.Messages.Clear();
-                loadedData.Messages.AddRange(messages);
-
-                dataStorage.CurrentData = loadedData;
-                await dataStorage.SaveDataAsync();
+                RefreshManager rm = App.Container.Resolve<RefreshManager>();
+                await rm.RefreshAsync();
                 Prefs.Edit().PutLong(LAST_REFRESH_TIME_PREF_KEY, DateTime.Now.Ticks).Commit();
                 Analytics.TrackEvent("Background sync finished");
             }
@@ -109,6 +91,7 @@ namespace NeptunLight.Droid
                 });
                 // error refreshing, fail silently
             }
+
 
             _timer.Start();
         }

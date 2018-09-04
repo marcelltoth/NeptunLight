@@ -30,6 +30,10 @@ namespace NeptunLight.Droid
                    .As<IPrimitiveStorage>()
                    .SingleInstance();
 
+            builder.RegisterType<RefreshManager>()
+                   .AsSelf()
+                   .SingleInstance();
+
             builder.Register(context => MainActivity)
                    .As<INavigator>();
 

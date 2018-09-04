@@ -185,6 +185,7 @@
     <Compile Include="MessageColorPool.cs" />
     <Compile Include="RefreshService.cs" />
     <Compile Include="Services\PrimitiveStorage.cs" />
+    <Compile Include="Services\RefreshManager.cs" />
     <Compile Include="SettingsActivity.cs" />
     <Compile Include="Utils\TabListAdapter.cs" />
     <Compile Include="Views\CalendarPage.cs" />
