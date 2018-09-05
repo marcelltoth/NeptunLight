@@ -1,9 +1,15 @@
-﻿using Android.App;
+﻿using System;
+using System.Reactive;
+using System.Reactive.Linq;
+using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
+using Autofac;
 using JetBrains.Annotations;
+using NeptunLight.Services;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 
@@ -11,6 +17,8 @@ namespace NeptunLight.Droid.Views
 {
     public class MenuPage : ReactiveFragment<MenuPageViewModel>, IActionBarProvider
     {
+        public SwipeRefreshLayout SwipeRefresh { get; set; }
+
         public TextView NameLabel { get; set; }
         public TextView InfoLabel { get; set; }
         public TextView LastRefreshLabel { get; set; }
@@ -30,6 +38,9 @@ namespace NeptunLight.Droid.Views
 
             Activated.InvokeCommand(this, x=> x.ViewModel.EnsureDataAccessible);
             this.WireUpControls(layout);
+
+            this.OneWayBind(ViewModel, x => x.IsRefreshing, x => x.SwipeRefresh.Refreshing);
+            Observable.FromEventPattern(h => SwipeRefresh.Refresh += h, h => SwipeRefresh.Refresh -= h).Select(_ => Unit.Default).InvokeCommand(ViewModel.Refresh);
             
             this.BindCommand(ViewModel, x => x.GoToMessages, x => x.MessagesButton);
             this.BindCommand(ViewModel, x => x.GoToCalendar, x => x.CalendarButton);
