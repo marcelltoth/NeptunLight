@@ -13,6 +13,7 @@ namespace NeptunLight.Droid.Views
     {
         public TextView NameLabel { get; set; }
         public TextView InfoLabel { get; set; }
+        public TextView LastRefreshLabel { get; set; }
 
         public MenuButton MessagesButton { get; set; }
         public MenuButton CalendarButton { get; set; }

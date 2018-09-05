@@ -25,7 +25,7 @@
             android:layout_toRightOf="@id/profilePicture"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="1dp"
             android:textColor="#223" />
         <TextView
             android:id="@+id/infoLabel"
@@ -33,6 +33,16 @@
             android:layout_width="wrap_content"
             android:layout_toRightOf="@id/profilePicture"
             android:layout_below="@id/nameLabel"
+            android:textStyle="normal"
+            android:textColor="#889"
+            android:textSize="14sp"
+            android:layout_marginBottom="2dp" />
+        <TextView
+            android:id="@+id/lastRefreshLabel"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@id/profilePicture"
+            android:layout_below="@id/infoLabel"
             android:textStyle="normal"
             android:textColor="#889"
             android:textSize="14sp"
