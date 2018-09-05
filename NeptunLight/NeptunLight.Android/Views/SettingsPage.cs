@@ -34,7 +34,7 @@ namespace NeptunLight.Droid.Views
             Toast.MakeText(Activity, "Frissítés folyamatban...", ToastLength.Long).Show();
             try
             {
-                await App.Container.Resolve<RefreshManager>().RefreshAsync();
+                await App.Container.Resolve<IRefreshManager>().RefreshAsync();
                 Toast.MakeText(Activity, "Frissítés sikeres!", ToastLength.Short).Show();
             }
             catch (Exception ex)

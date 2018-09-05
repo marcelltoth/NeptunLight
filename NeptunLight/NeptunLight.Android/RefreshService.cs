@@ -10,7 +10,7 @@ using Android.OS;
 using Android.Preferences;
 using Autofac;
 using JetBrains.Annotations;
-using NeptunLight.Droid.Services;
+using NeptunLight.Services;
 
 namespace NeptunLight.Droid
 {
@@ -45,7 +45,7 @@ namespace NeptunLight.Droid
                 }
             }
 
-            RefreshManager rm = App.Container.Resolve<RefreshManager>();
+            IRefreshManager rm = App.Container.Resolve<IRefreshManager>();
             await rm.RefreshIfNeeded();
         }
 

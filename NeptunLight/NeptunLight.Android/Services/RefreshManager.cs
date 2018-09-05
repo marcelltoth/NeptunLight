@@ -17,10 +17,9 @@ using ReactiveUI;
 
 namespace NeptunLight.Droid.Services
 {
-    public class RefreshManager : ReactiveObject
+    public class RefreshManager : ReactiveObject, IRefreshManager
     {
-
-
+        
         public const string LAST_REFRESH_TIME_PREF_KEY = "LAST_REFRESH_TIME";
         public const string REFRESH_INTERVAL_PREF_KEY = "REFRESH_INTERVAL_S";
         public const int DEFAULT_REFRESH_INTERVAL_S = 3600 * 12;

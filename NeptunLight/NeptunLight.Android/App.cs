@@ -31,7 +31,7 @@ namespace NeptunLight.Droid
                    .SingleInstance();
 
             builder.RegisterType<RefreshManager>()
-                   .AsSelf()
+                   .As<IRefreshManager>()
                    .SingleInstance();
 
             builder.Register(context => MainActivity)
