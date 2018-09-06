@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using AngleSharp.Dom;
 using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
-using iCal.PCL.DataModel;
-using iCal.PCL.Serialization;
 using JetBrains.Annotations;
 using NeptunLight.Models;
 using NeptunLight.Services;
 using Newtonsoft.Json.Linq;
+
+
 
 namespace NeptunLight.DataAccess
 {
@@ -180,12 +180,8 @@ namespace NeptunLight.DataAccess
             await _client.PostJsonObjectAsnyc("main.aspx/GetICS", $"{{\"ID\":\"1_1_0_1_0_0_1\",\"fromDate\":\"{DateTime.Today.AddYears(-1):yyyy.MM.dd}\",\"toDate\":\"{DateTime.Today.AddYears(1):yyyy.MM.dd}\",\"trainingId\":\"{majorId}\"}}");
             string ics = await _client.GetRawAsnyc($"CommonControls/SaveFileDialog.aspx?id=1_1_0_1_0_0_1&Func=exportcalendar&from={DateTime.Today.AddYears(-1):yyyy.MM.dd}&to={DateTime.Today.AddYears(1):yyyy.MM.dd}&trainingid={majorId}");
             if(!ics.StartsWith("BEGIN:VCALENDAR")) // in case of an error - for example  the selected range does not contain any events - we will get a html result instead.
-                return new List<CalendarEvent>(); 
-            IEnumerable<iCalVEvent> events = await Task.Run(() =>
-            {
-                return iCalSerializer.Deserialize(ics.Split('\n').Select(line => line.TrimEnd('\r'))).Cast<iCalVEvent>();
-            });
-            return events.Select(ice =>
+                return new List<CalendarEvent>();
+            return Ical.Net.Calendar.Load(ics).Events.Select(ice =>
             {
                 string[] summaryParts = ice.Summary.Split(new[] {" - "}, StringSplitOptions.None);
                 string title = summaryParts[0];
@@ -193,8 +189,8 @@ namespace NeptunLight.DataAccess
                     title = title.Substring(0, summaryParts[0].IndexOf('(')).Trim();
                 string details = summaryParts[0].Replace(title, "").Trim();
                 // iCal export is buggy, we have to add the offset twice
-                TimeSpan timeZoneOffset = DateTime.SpecifyKind(ice.DTStart, DateTimeKind.Utc).ToLocalTime() - DateTime.SpecifyKind(ice.DTStart, DateTimeKind.Local);
-                return new CalendarEvent(ice.DTStart.Add(timeZoneOffset).Add(timeZoneOffset), ice.DTEnd.Add(timeZoneOffset).Add(timeZoneOffset), ice.Location, summaryParts.Last(), title, summaryParts[1], details, summaryParts.Length > 3 ? summaryParts[2] : null);
+                TimeSpan timeZoneOffset = DateTime.SpecifyKind(ice.DtStart.Value, DateTimeKind.Utc).ToLocalTime() - DateTime.SpecifyKind(ice.DtStart.Value, DateTimeKind.Local);
+                return new CalendarEvent(ice.DtStart.Value.Add(timeZoneOffset).Add(timeZoneOffset), ice.DtEnd.Value.Add(timeZoneOffset).Add(timeZoneOffset), ice.Location, summaryParts.Last(), title, summaryParts[1], details, summaryParts.Length > 3 ? summaryParts[2] : null);
             }).ToList();
         }
 
