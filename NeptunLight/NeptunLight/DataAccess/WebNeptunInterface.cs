@@ -11,7 +11,8 @@ using JetBrains.Annotations;
 using NeptunLight.Models;
 using NeptunLight.Services;
 using Newtonsoft.Json.Linq;
-
+using NodaTime;
+using Period = NeptunLight.Models.Period;
 
 
 namespace NeptunLight.DataAccess
@@ -188,9 +189,8 @@ namespace NeptunLight.DataAccess
                 if (title.Contains("("))
                     title = title.Substring(0, summaryParts[0].IndexOf('(')).Trim();
                 string details = summaryParts[0].Replace(title, "").Trim();
-                // iCal export is buggy, we have to add the offset twice
-                TimeSpan timeZoneOffset = DateTime.SpecifyKind(ice.DtStart.Value, DateTimeKind.Utc).ToLocalTime() - DateTime.SpecifyKind(ice.DtStart.Value, DateTimeKind.Local);
-                return new CalendarEvent(ice.DtStart.Value.Add(timeZoneOffset).Add(timeZoneOffset), ice.DtEnd.Value.Add(timeZoneOffset).Add(timeZoneOffset), ice.Location, summaryParts.Last(), title, summaryParts[1], details, summaryParts.Length > 3 ? summaryParts[2] : null);
+                var timezone = DateTimeZoneProviders.Tzdb["Europe/Budapest"];
+                return new CalendarEvent(Instant.FromDateTimeUtc(ice.DtStart.AsUtc).InZone(timezone).ToDateTimeUnspecified(), Instant.FromDateTimeUtc(ice.DtEnd.AsUtc).InZone(timezone).ToDateTimeUnspecified(), ice.Location, summaryParts.Last(), title, summaryParts[1], details, summaryParts.Length > 3 ? summaryParts[2] : null);
             }).ToList();
         }
 
