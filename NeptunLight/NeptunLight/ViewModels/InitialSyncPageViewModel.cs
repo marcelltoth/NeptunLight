@@ -18,12 +18,14 @@ namespace NeptunLight.ViewModels
             Done
         }
 
-        public InitialSyncPageViewModel(IDataStorage storage, INeptunInterface client, INavigator navigator)
+        public InitialSyncPageViewModel(IDataStorage storage, INeptunInterface client, INavigator navigator, IRefreshManager refreshManager)
         {
             PerformSync = ReactiveCommand.CreateFromTask(async () =>
             {
                 try
                 {
+                    DateTime startDate = DateTime.Now;
+                    
                     LoadBasicDataStatus = RefreshStepState.Waiting;
                     LoadSemesterDataStatus = RefreshStepState.Waiting;
                     LoadCoursesStatus = RefreshStepState.Waiting;
@@ -66,14 +68,15 @@ namespace NeptunLight.ViewModels
                     Name = loadedData.BasicData.Name;
 
                     storage.CurrentData = loadedData;
+
+                    await storage.SaveDataAsync();
+                    refreshManager.LastRefreshTime = startDate;
+                    navigator.NavigateTo<MenuPageViewModel>(false);
                 }
                 catch (UnauthorizedAccessException)
                 {
                     navigator.NavigateTo<LoginPageViewModel>(false);
-                    return;
                 }
-                await storage.SaveDataAsync();
-                navigator.NavigateTo<MenuPageViewModel>(false);
             });
 
             EnsureCredentials = ReactiveCommand.CreateFromTask(async () =>

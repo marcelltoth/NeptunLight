@@ -81,7 +81,6 @@ namespace NeptunLight.Droid.Services
                 try
                 {
                     await RefreshAsync();
-                    LastRefreshTime = checkTime;
                     Analytics.TrackEvent("Background sync finished");
                 }
                 catch (Exception ex)
@@ -98,6 +97,7 @@ namespace NeptunLight.Droid.Services
         {
             try
             {
+                DateTime startTime = DateTime.Now;
                 if (IsRefreshing)
                     return;
                 IsRefreshing = true;
@@ -118,6 +118,7 @@ namespace NeptunLight.Droid.Services
 
                 _dataStorage.CurrentData = loadedData;
                 await _dataStorage.SaveDataAsync();
+                LastRefreshTime = startTime;
             }
             finally
             {
