@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
 using Android.App;
@@ -9,6 +10,8 @@ using Android.Views;
 using Android.Widget;
 using Autofac;
 using JetBrains.Annotations;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using NeptunLight.Services;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -40,7 +43,30 @@ namespace NeptunLight.Droid.Views
             this.WireUpControls(layout);
 
             this.OneWayBind(ViewModel, x => x.IsRefreshing, x => x.SwipeRefresh.Refreshing);
-            Observable.FromEventPattern(h => SwipeRefresh.Refresh += h, h => SwipeRefresh.Refresh -= h).Select(_ => Unit.Default).InvokeCommand(ViewModel.Refresh);
+            this.WhenActivated(() =>
+            {
+                return new List<IDisposable>()
+                {
+                    ViewModel.Refresh.ThrownExceptions.Subscribe(ex =>
+                    {
+                        if (Activity != null)
+                            Toast.MakeText(Activity, "Hiba a neptun-adatok frissítése közben", ToastLength.Short);
+
+                        Crashes.TrackError(ex, new Dictionary<string, string>
+                        {
+                            {"Category", "Forced sync error"},
+                            {"Source", "Swipe"}
+                        });
+                    }),
+                    Observable.FromEventPattern(h => SwipeRefresh.Refresh += h, h => SwipeRefresh.Refresh -= h)
+                              .Select(_ => Unit.Default)
+                              .Do((_) => Analytics.TrackEvent("Forced sync started", new Dictionary<string, string>()
+                              {
+                                  {"Source", "Swipe"}
+                              }))
+                              .InvokeCommand(ViewModel.Refresh)
+                };
+            });
             
             this.BindCommand(ViewModel, x => x.GoToMessages, x => x.MessagesButton);
             this.BindCommand(ViewModel, x => x.GoToCalendar, x => x.CalendarButton);

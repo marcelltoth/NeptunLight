@@ -7,6 +7,7 @@ using Android.Preferences;
 using Android.Widget;
 using Autofac;
 using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using NeptunLight.Droid.Services;
 using NeptunLight.Services;
 
@@ -30,7 +31,10 @@ namespace NeptunLight.Droid.Views
 
         private async void Refresh_PreferenceClick(object sender, Preference.PreferenceClickEventArgs e)
         {
-            Analytics.TrackEvent("Forced sync started");
+            Analytics.TrackEvent("Forced sync started", new Dictionary<string, string>()
+            {
+                {"Source", "Menu"}
+            });
             Toast.MakeText(Activity, "Frissítés folyamatban...", ToastLength.Long).Show();
             try
             {
@@ -40,9 +44,9 @@ namespace NeptunLight.Droid.Views
             catch (Exception ex)
             {
                 Toast.MakeText(Activity, "Hiba a frissítés során", ToastLength.Short).Show();
-                Analytics.TrackEvent("Forced sync error", new Dictionary<string, string>{
-                    {"Message", ex.Message},
-                    { "Trace", ex.StackTrace.Substring(0,64)}
+                Crashes.TrackError(ex, new Dictionary<string, string>{
+                    {"Category", "Forced sync error"},
+                    {"Source", "Menu"}
                 });
             }
         }

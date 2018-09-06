@@ -10,6 +10,7 @@ using Android.Preferences;
 using Autofac;
 using JetBrains.Annotations;
 using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using NeptunLight.DataAccess;
 using NeptunLight.Models;
 using NeptunLight.Services;
@@ -85,9 +86,8 @@ namespace NeptunLight.Droid.Services
                 }
                 catch (Exception ex)
                 {
-                    Analytics.TrackEvent("Background sync error", new Dictionary<string, string>{
-                        {"Message", ex.Message},
-                        { "Trace", ex.StackTrace.Substring(0,64)}
+                    Crashes.TrackError(ex, new Dictionary<string, string>{
+                        {"Category", "Background sync error"}
                     });
                     // error refreshing, fail silently
                 }
@@ -96,28 +96,33 @@ namespace NeptunLight.Droid.Services
 
         public async Task RefreshAsync()
         {
-            if (IsRefreshing)
-                return;
-            IsRefreshing = true;
+            try
+            {
+                if (IsRefreshing)
+                    return;
+                IsRefreshing = true;
 
-            if (!_client.HasCredentials())
-                return;
+                if (!_client.HasCredentials())
+                    return;
 
-            NeptunData loadedData = new NeptunData();
-            loadedData.BasicData = await _client.RefreshBasicDataAsync();
-            loadedData.SemesterInfo = await _client.RefreshSemestersAsnyc();
-            loadedData.SubjectsPerSemester = await _client.RefreshSubjectsAsnyc();
-            loadedData.ExamsPerSemester = await _client.RefreshExamsAsnyc();
-            loadedData.Calendar = await _client.RefreshCalendarAsnyc();
-            loadedData.Periods = await _client.RefreshPeriodsAsnyc();
-            IList<Mail> messages = await _client.RefreshMessages().ToList();
-            loadedData.Messages.Clear();
-            loadedData.Messages.AddRange(messages);
+                NeptunData loadedData = new NeptunData();
+                loadedData.BasicData = await _client.RefreshBasicDataAsync();
+                loadedData.SemesterInfo = await _client.RefreshSemestersAsnyc();
+                loadedData.SubjectsPerSemester = await _client.RefreshSubjectsAsnyc();
+                loadedData.ExamsPerSemester = await _client.RefreshExamsAsnyc();
+                loadedData.Calendar = await _client.RefreshCalendarAsnyc();
+                loadedData.Periods = await _client.RefreshPeriodsAsnyc();
+                IList<Mail> messages = await _client.RefreshMessages().ToList();
+                loadedData.Messages.Clear();
+                loadedData.Messages.AddRange(messages);
 
-            _dataStorage.CurrentData = loadedData;
-            await _dataStorage.SaveDataAsync();
-
-            IsRefreshing = false;
+                _dataStorage.CurrentData = loadedData;
+                await _dataStorage.SaveDataAsync();
+            }
+            finally
+            {
+                IsRefreshing = false;
+            }
         }
     }
 }
