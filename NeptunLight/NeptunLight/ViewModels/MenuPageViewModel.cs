@@ -33,8 +33,8 @@ namespace NeptunLight.ViewModels
             storage.WhenAnyValue(x => x.CurrentData.BasicData.Name).ToProperty(this, x => x.Name, out _name);
             storage.WhenAnyValue(x => x.CurrentData.BasicData.NeptunCode).ToProperty(this, x => x.InfoLine, out _infoLine);
 
-            refreshManager.WhenAnyValue(x => x.IsRefreshing).ToProperty(this, x => x.IsRefreshing, out _isRefreshing);
-            refreshManager.WhenAnyValue(x => x.LastRefreshTime).ToProperty(this, x => x.LastRefreshTime, out _lastRefreshTime);
+            refreshManager.WhenAnyValue(x => x.IsRefreshing).ObserveOn(RxApp.MainThreadScheduler).ToProperty(this, x => x.IsRefreshing, out _isRefreshing);
+            refreshManager.WhenAnyValue(x => x.LastRefreshTime).ObserveOn(RxApp.MainThreadScheduler).ToProperty(this, x => x.LastRefreshTime, out _lastRefreshTime);
             Refresh = ReactiveCommand.CreateFromTask((_) => refreshManager.RefreshAsync(), refreshManager.WhenAnyValue(x => x.IsRefreshing).Select(b => !b));
         }
 
