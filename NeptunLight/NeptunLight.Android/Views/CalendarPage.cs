@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 using Com.Alamkanak.Weekview;
+using Java.Util;
 using JetBrains.Annotations;
 using Microsoft.AppCenter.Analytics;
+using NeptunLight.Droid.Utils;
 using NeptunLight.Models;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -47,7 +50,10 @@ namespace NeptunLight.Droid.Views
             WeekView.MonthChangeListener = this;
             WeekView.EventClick += WeekView_EventClick;
             WeekView.SetLimitTime(6,22);
-
+            DateTime now = DateTime.Now;
+            if (now.DayOfWeek == DayOfWeek.Saturday || now.DayOfWeek == DayOfWeek.Sunday)
+                now = now.AddDays(7);
+            WeekView.GoToDate(now.StartOfWeek().ToNativeCalendar());
             return _layoutRoot;
         }
 
