@@ -64,7 +64,7 @@ namespace NeptunLight.Droid.Views
                 BarChart.GroupBars(0.5f, groupSpace, barSpace);
                 BarChart.XAxis.AxisMaximum = bcd.Count + 0.5f;
 
-                BarChart.AnimateY(2000, Easing.EasingOption.EaseInOutCubic);
+                BarChart.AnimateY(1500, Easing.EasingOption.EaseInOutCubic);
             });
 
             #endregion
@@ -95,7 +95,7 @@ namespace NeptunLight.Droid.Views
                 setTrend.SetDrawValues(false);
                 LineData data = new LineData(setTrend, setActual);
                 LineChart.Data = data;
-                LineChart.AnimateY(2000, Easing.EasingOption.EaseInOutCubic);
+                LineChart.AnimateY(1500, Easing.EasingOption.EaseInOutCubic);
             });
 
             #endregion
