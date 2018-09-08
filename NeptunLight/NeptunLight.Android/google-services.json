@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "123587135452",
+    "firebase_url": "https://neptunlight-t03c.firebaseio.com",
+    "project_id": "neptunlight-t03c",
+    "storage_bucket": "neptunlight-t03c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123587135452:android:b1493c5406678531",
+        "android_client_info": {
+          "package_name": "com.infinitx.neptunlite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123587135452-ofgpgu4fceuk2j4ea17rcgs7epdesd1c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infinitx.neptunlite",
+            "certificate_hash": "42bdc744254932183dfd17a07e6d03fff2394eb0"
+          }
+        },
+        {
+          "client_id": "123587135452-ptfu1fo6egtapuc3k2hdd476492n2tb9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLhId1ABuaHkYc9_4xzWXeJtQOS4tZhLs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123587135452-ptfu1fo6egtapuc3k2hdd476492n2tb9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

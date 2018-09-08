@@ -14,6 +14,7 @@ using JetBrains.Annotations;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Push;
 using NeptunLight.Services;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -48,7 +49,7 @@ namespace NeptunLight.Droid
             base.OnCreate(bundle);
 
 		    AppCenter.Start("b8c21b5f-b87f-4ac2-8645-019102f6d3d7",
-		                    typeof(Analytics), typeof(Crashes));
+		                    typeof(Analytics), typeof(Crashes), typeof(Push));
 
             PreferenceManager.SetDefaultValues(this, Resource.Layout.SettingsPage, false);
 
