@@ -49,8 +49,8 @@ namespace NeptunLight.Droid.Views
                 {
                     ViewModel.Refresh.ThrownExceptions.Subscribe(ex =>
                     {
-                        if (Activity != null)
-                            Toast.MakeText(Activity, "Hiba a neptun-adatok frissítése közben", ToastLength.Short);
+                        if (Context != null)
+                            Toast.MakeText(Context, "Hiba a neptun-adatok frissítése közben", ToastLength.Short);
 
                         Crashes.TrackError(ex, new Dictionary<string, string>
                         {

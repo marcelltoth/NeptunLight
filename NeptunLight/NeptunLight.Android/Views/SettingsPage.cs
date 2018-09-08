@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Preferences;
 using Android.Widget;
@@ -15,6 +16,7 @@ namespace NeptunLight.Droid.Views
 {
     public class SettingsPage : PreferenceFragment
     {
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -39,15 +41,21 @@ namespace NeptunLight.Droid.Views
             try
             {
                 await App.Container.Resolve<IRefreshManager>().RefreshAsync();
-                Toast.MakeText(Activity, "Frissítés sikeres!", ToastLength.Short).Show();
+                Analytics.TrackEvent("Forced sync finished", new Dictionary<string, string>()
+                {
+                    {"Source", "Menu"}
+                });
+                if (Context != null)
+                    Toast.MakeText(Context, "Frissítés sikeres!", ToastLength.Short).Show();
             }
             catch (Exception ex)
             {
-                Toast.MakeText(Activity, "Hiba a frissítés során", ToastLength.Short).Show();
                 Crashes.TrackError(ex, new Dictionary<string, string>{
                     {"Category", "Forced sync error"},
                     {"Source", "Menu"}
                 });
+                if (Context != null)
+                    Toast.MakeText(Context, "Hiba a frissítés során", ToastLength.Short).Show();
             }
         }
 
