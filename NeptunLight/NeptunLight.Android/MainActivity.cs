@@ -57,8 +57,11 @@ namespace NeptunLight.Droid
 
 			SetContentView(Resource.Layout.Main);
 
+		    _fragmentHolder = FindViewById(Resource.Id.fragmentHolder);
+		    NavigateTo<MenuPageViewModel>(false);
 
-		    FragmentManager.Events().BackStackChanged.Subscribe(args =>
+
+            FragmentManager.Events().BackStackChanged.Subscribe(args =>
 		    {
 		        Fragment activeFragment = FragmentManager.FindFragmentByTag("ACTIVE");
 		        if (activeFragment != null)
@@ -76,9 +79,6 @@ namespace NeptunLight.Droid
 	    protected override void OnStart()
 	    {
 	        base.OnStart();
-
-	        _fragmentHolder = FindViewById(Resource.Id.fragmentHolder);
-            NavigateTo<MenuPageViewModel>(false);
         }
 
 	    private void ConfigureActionBar(Fragment activeFragment)
@@ -133,6 +133,7 @@ namespace NeptunLight.Droid
 
             Fragment fragment = (Fragment)Activator.CreateInstance(_vmToFragment[destinationVm.GetType()]);
 	        ((IViewFor) fragment).ViewModel = destinationVm;
+	        fragment.RetainInstance = true;
 
             FragmentTransaction transaction = FragmentManager.BeginTransaction();
 	        transaction.Replace(Resource.Id.fragmentHolder, fragment, "ACTIVE");
