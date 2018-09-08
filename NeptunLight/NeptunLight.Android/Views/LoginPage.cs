@@ -61,9 +61,9 @@ namespace NeptunLight.Droid.Views
             if (ViewModel.ShouldShowDisclaimer)
             {
                 new AlertDialog.Builder(Activity).SetTitle("Üdv")
-                    .SetMessage("Örülök hogy letöltötted az appomat. Tudnod kell, hogy semmi közöm a hivatalos neptunhoz, én csak egy corvinusos diák vagyok akinek szúrta a szemét, hogy nincs egy értelmes mobilos nézet. "
-                                + "Emiatt természetesen nincs lehetőségem mindent letesztelni, amit tudok megteszek, de előfordulhatnak bőven hibák, ezért persze felelősséget nem vállalhatok. "
-                                + "Légyszi segíts nekem azzal hogy ezeket jelzed hogy tudjam javítani. (Google Play-en alul tudsz email-t írni) Köszi:)")
+                    .SetMessage("Örülök hogy letöltötted az appomat. Tudnod kell, hogy én csak egy corvinusos diák vagyok akinek szúrta a szemét a használhatatlan neptun mobilapp, és elhatároztam, hogy megpróbálok valami jobbat alkotni. "
+                                + "Emiatt sajnos nincs lehetőségem mindent letesztelni, előfordulhatnak hibák, de ha szólsz megpróbálom javítani minél gyorsabban. (Google Play-en alul tudsz email-t írni.) "
+                                + "Remélem tetszeni fog, használd örömmel!:)")
                                 .SetPositiveButton("Értettem", (sender, args) => ViewModel.ShouldShowDisclaimer = false)
                                 .Create().Show();
             }
