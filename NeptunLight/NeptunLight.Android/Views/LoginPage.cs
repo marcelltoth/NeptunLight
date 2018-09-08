@@ -37,12 +37,12 @@ namespace NeptunLight.Droid.Views
             this.BindCommand(ViewModel, x => x.Login, x => x.LoginButton);
             LoginButton.Click += (sender, args) =>
             {
-                Analytics.TrackEvent("Login attempt", new Dictionary<string, string>{ { "Institute", ViewModel.SelectedInstitute.Name}, {"User", ViewModel.LoginCode} });
+                Analytics.TrackEvent("Login attempt", new Dictionary<string, string>{ { "Institute", ViewModel.SelectedInstitute.Name} });
             };
 
             this.WhenAnyObservable(x => x.ViewModel.Login).Subscribe(_ =>
             {
-                Analytics.TrackEvent("Login successful", new Dictionary<string, string> { { "Institute", ViewModel.SelectedInstitute.Name }, { "User", ViewModel.LoginCode }});
+                Analytics.TrackEvent("Login successful", new Dictionary<string, string> { { "Institute", ViewModel.SelectedInstitute.Name } });
             });
 
             this.WhenAnyValue(x => x.ViewModel.AvaialbleInstitutes).Subscribe(v => { InstituteSelector.Adapter = new InstituteAdapter(inflater, v.ToList()); });
