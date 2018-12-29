@@ -8,6 +8,7 @@ using AngleSharp.Dom;
 using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
 using JetBrains.Annotations;
+using NeptunLight.Helpers;
 using NeptunLight.Models;
 using NeptunLight.Services;
 using Newtonsoft.Json.Linq;
@@ -281,14 +282,15 @@ namespace NeptunLight.DataAccess
                     {
                         if (dataRow.ClassList.Contains("NoMatch"))
                             continue;
-                        string subject = dataRow.Cells[1].TextContent;
-                        string course = dataRow.Cells[3].TextContent;
-                        string type = dataRow.Cells[4].TextContent;
-                        string attemptType = dataRow.Cells[5].TextContent;
-                        DateTime startTime = DateTime.ParseExact(dataRow.Cells[6].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo);
-                        string location = dataRow.Cells[7].TextContent;
-                        IEnumerable<string> instructors = dataRow.Cells[8].TextContent.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim());
-                        string[] placeCountParts = dataRow.Cells[9].TextContent.Trim().Split(' ')[0].Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
+                        string subject = dataRow.Cells[1].GetFirstLineOfText();
+                        string course = dataRow.Cells[3].GetFirstLineOfText();
+                        string type = dataRow.Cells[4].GetFirstLineOfText();
+                        string attemptType = dataRow.Cells[5].GetFirstLineOfText();
+                        string startTimeText = dataRow.Cells[6].GetFirstLineOfText();
+                        DateTime startTime = DateTime.ParseExact(startTimeText, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo);
+                        string location = dataRow.Cells[7].GetFirstLineOfText();
+                        IEnumerable<string> instructors = dataRow.Cells[8].GetFirstLineOfText().Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim());
+                        string[] placeCountParts = dataRow.Cells[9].GetFirstLineOfText().Split(' ')[0].Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
                         int placesTaken = Int32.Parse(placeCountParts[0]);
                         int placesTotal = placeCountParts.Length > 1 ? Int32.Parse(placeCountParts[1]) : 0;
                         bool? shownUp = null;
@@ -302,8 +304,8 @@ namespace NeptunLight.DataAccess
                                 shownUp = false;
                         }
 
-                        string examResult = dataRow.Cells[14].TextContent;
-                        string description = dataRow.Cells[15].TextContent;
+                        string examResult = dataRow.Cells[14].GetFirstLineOfText();
+                        string description = dataRow.Cells[15].GetFirstLineOfText();
 
                         examList.Add(new Exam(subject, course, type, attemptType, startTime, location, instructors, placesTaken, placesTotal, shownUp, examResult, description));
                     }
