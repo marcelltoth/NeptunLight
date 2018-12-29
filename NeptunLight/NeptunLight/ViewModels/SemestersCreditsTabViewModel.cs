@@ -23,7 +23,7 @@ namespace NeptunLight.ViewModels
 
             this.WhenAnyValue(x => x.DataSource.CurrentData.SemesterInfo).ObserveOn(RxApp.MainThreadScheduler).Select(sInf =>
             {
-                List<LineDataPoint> lineData = new List<LineDataPoint>() { new LineDataPoint(0, false) };
+                List<LineDataPoint> lineData = new List<LineDataPoint>();
                 int totalAccomplished = 0;
 
                 if (sInf != null) { 
@@ -33,7 +33,7 @@ namespace NeptunLight.ViewModels
                         {
                             totalAccomplished += semesterData.CreditsAccomplished ?? semesterData.CreditsTaken.Value;
                         }
-                        lineData.Add(new LineDataPoint(totalAccomplished, !semesterData.CreditsAccomplished.HasValue));
+                        lineData.Add(new LineDataPoint(totalAccomplished, !semesterData.CreditsAccomplished.HasValue, (semesterData.CreditsTaken ?? 0) == 0));
                     }
                 }
 
@@ -62,15 +62,18 @@ namespace NeptunLight.ViewModels
 
         public class LineDataPoint
         {
-            public LineDataPoint(int cumulativeCredits, bool isPrediction)
+            public LineDataPoint(int cumulativeCredits, bool isPrediction, bool isPassive)
             {
                 CumulativeCredits = cumulativeCredits;
                 IsPrediction = isPrediction;
+                IsPassive = isPassive;
             }
 
             public int CumulativeCredits { get; }
 
             public bool IsPrediction { get; }
+
+            public bool IsPassive { get; }
         }
     }
 }

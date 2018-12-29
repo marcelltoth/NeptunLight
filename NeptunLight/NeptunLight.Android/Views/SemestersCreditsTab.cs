@@ -83,10 +83,15 @@ namespace NeptunLight.Droid.Views
             {
                 List<Entry> entriesActual = new List<Entry>();
                 List<Entry> entriesTrend = new List<Entry>();
+                int nonPassiveSemestersPassed = 0;
+                entriesActual.Add(new Entry(0, 0));
+                entriesTrend.Add(new Entry(0, 0));
                 for (int i = 0; i < lcd.Count; i++)
                 {
-                    entriesActual.Add(new Entry(i, lcd[i].CumulativeCredits));
-                    entriesTrend.Add(new Entry(i, 30*i));
+                    if (!lcd[i].IsPassive)
+                        nonPassiveSemestersPassed++;
+                    entriesActual.Add(new Entry(i+1, lcd[i].CumulativeCredits));
+                    entriesTrend.Add(new Entry(i+1, 30 * nonPassiveSemestersPassed));
                 }
                 LineDataSet setActual = new LineDataSet(entriesActual, "Megszerzett") {Color = Color.ParseColor("#673ab7"), LineWidth = 2f, CircleRadius = 5f, CircleHoleRadius = 3.5f, ValueTextSize = 10f, ValueFormatter = new DefaultValueFormatter(0) };
                 LineDataSet setTrend = new LineDataSet(entriesTrend, "Cél") {Color = Color.ParseColor("#66666666"), LineWidth = 1.5f };

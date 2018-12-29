@@ -42,8 +42,15 @@ namespace NeptunLight.Droid.Views
                 {
                     if(cd[i] == null)
                         continue;
-                    pointEntries.Add(new Entry(i+1, (float)cd[i].PointAverage));
-                    cumulativeEntries.Add(new Entry(i+1, (float)cd[i].CumulativeAverage));
+                    if (cd[i].PointAverage > 0)
+                    {
+                        pointEntries.Add(new Entry(i + 1, (float)cd[i].PointAverage));
+                    }
+
+                    if (cd[i].CumulativeAverage > 0)
+                    {
+                        cumulativeEntries.Add(new Entry(i + 1, (float)cd[i].CumulativeAverage));
+                    }
                 }
 
                 LineDataSet pointDataSet = new LineDataSet(pointEntries, "Félévi átlag"){ Color = Color.ParseColor("#8bc34a"), LineWidth = 3f, CircleRadius = 5f, CircleHoleRadius = 3.5f, ValueTextSize = 10f, ValueFormatter = new DefaultValueFormatter(2) };
