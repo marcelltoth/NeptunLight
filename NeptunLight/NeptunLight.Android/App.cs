@@ -2,6 +2,7 @@
 using Android.App;
 using Android.Runtime;
 using Autofac;
+using NeptunLight.DataAccess;
 using NeptunLight.Droid.Services;
 using NeptunLight.Services;
 
@@ -33,6 +34,10 @@ namespace NeptunLight.Droid
             builder.RegisterType<RefreshManager>()
                    .As<IRefreshManager>()
                    .SingleInstance();
+
+            builder.RegisterType<AndroidWebScraperClient>()
+                .As<WebScraperClient>()
+                .InstancePerDependency();
 
             builder.Register(context => MainActivity)
                    .As<INavigator>();

@@ -30,16 +30,19 @@ namespace NeptunLight.DataAccess
         [CanBeNull]
         private readonly IPrimitiveStorage _primitiveStorage;
 
+        private readonly Func<WebScraperClient> _clientFactory;
+
         private Uri _baseUri;
         private WebScraperClient _client;
         private string _password;
 
         private string _username;
 
-        public WebNeptunInterface([CanBeNull] IMailContentCache mailContentCache, [CanBeNull] IPrimitiveStorage primitiveStorage)
+        public WebNeptunInterface([CanBeNull] IMailContentCache mailContentCache, [CanBeNull] IPrimitiveStorage primitiveStorage, Func<WebScraperClient> clientFactory)
         {
             _mailContentCache = mailContentCache;
             _primitiveStorage = primitiveStorage;
+            _clientFactory = clientFactory;
         }
 
         public string Username
@@ -83,10 +86,8 @@ namespace NeptunLight.DataAccess
         {
             try
             {
-                _client = new WebScraperClient
-                {
-                    BaseUri = BaseUri
-                };
+                _client = _clientFactory();
+                _client.BaseUri = BaseUri;
                 await _client.PostJsonObjectAsnyc("Login.aspx/GetMaxTryNumber", "");
                 JObject r2 = await _client.PostJsonObjectAsnyc("Login.aspx/CheckLoginEnable", $"{{user: \"{Username}\", pwd: \"{Password}\", UserLogin: null, GUID: null, captcha: \"\"}}");
                 JObject loginResult = JObject.Parse(r2.Value<string>("d"));

@@ -34,6 +34,8 @@
     <AotAssemblies>false</AotAssemblies>
     <EnableLLVM>false</EnableLLVM>
     <BundleAssemblies>false</BundleAssemblies>
+    <AndroidTlsProvider>btls</AndroidTlsProvider>
+    <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -76,6 +78,7 @@
     <Compile Include="MenuButton.cs" />
     <Compile Include="MessageColorPool.cs" />
     <Compile Include="RefreshService.cs" />
+    <Compile Include="Services\AndroidWebScraperClient.cs" />
     <Compile Include="Services\PrimitiveStorage.cs" />
     <Compile Include="Services\RefreshManager.cs" />
     <Compile Include="SettingsActivity.cs" />
