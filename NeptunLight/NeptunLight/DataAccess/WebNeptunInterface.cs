@@ -341,8 +341,8 @@ namespace NeptunLight.DataAccess
                 int? creditsTaken = !string.IsNullOrEmpty(headerRow.Cells[5].TextContent) ? Int32.Parse(headerRow.Cells[5].TextContent) : (int?) null;
                 int? totalCreditsAccpomlished = !string.IsNullOrEmpty(headerRow.Cells[6].TextContent) ? Int32.Parse(headerRow.Cells[6].TextContent) : (int?) null;
                 int? totalCreditsTaken = !string.IsNullOrEmpty(headerRow.Cells[7].TextContent) ? Int32.Parse(headerRow.Cells[7].TextContent) : (int?) null;
-                double? average = !string.IsNullOrEmpty(headerRow.Cells[8].TextContent) ? Double.Parse(headerRow.Cells[8].TextContent, new CultureInfo("hu-HU")) : (double?) null;
-                double? cumAverage = !string.IsNullOrEmpty(headerRow.Cells[9].TextContent) ? Double.Parse(headerRow.Cells[9].TextContent, new CultureInfo("hu-HU")) : (double?) null;
+                double? average = !string.IsNullOrEmpty(headerRow.Cells[8].GetFirstLineOfText()) ? Double.Parse(headerRow.Cells[8].GetFirstLineOfText(), new CultureInfo("hu-HU")) : (double?) null;
+                double? cumAverage = !string.IsNullOrEmpty(headerRow.Cells[9].GetFirstLineOfText()) ? Double.Parse(headerRow.Cells[9].GetFirstLineOfText(), new CultureInfo("hu-HU")) : (double?) null;
                 results.Add(new SemesterData(semester, status, financialStatus, creditsAccpomlished, creditsTaken, totalCreditsAccpomlished, totalCreditsTaken, average, cumAverage));
             }
             return results;
