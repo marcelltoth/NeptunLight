@@ -292,24 +292,25 @@ namespace NeptunLight.DataAccess
                         int placesTaken = Int32.Parse(placeCountParts[0]);
                         int placesTotal = placeCountParts.Length > 1 ? Int32.Parse(placeCountParts[1]) : 0;
                         bool? shownUp = null;
-                        if (dataRow.Cells[11].Children.Any(e => string.Equals(e.TagName, "img", StringComparison.OrdinalIgnoreCase)))
+                        var shownUpImage = dataRow.Cells[12].Children.FirstOrDefault(e => String.Equals(e.TagName, "img", StringComparison.OrdinalIgnoreCase));
+                        if (shownUpImage != null)
                         {
-                            string imageName = dataRow.Cells[11].Children.First(e => string.Equals(e.TagName, "img", StringComparison.OrdinalIgnoreCase)).GetAttribute("src").Split('/').Last();
+                            string imageName = shownUpImage.GetAttribute("src").Split('/').Last();
                             if (imageName.StartsWith("ok"))
                                 shownUp = true;
                             else if (imageName.StartsWith("no"))
                                 shownUp = false;
                         }
 
-                        string examResult = dataRow.Cells[12].TextContent;
-                        string description = dataRow.Cells[13].TextContent;
+                        string examResult = dataRow.Cells[14].TextContent;
+                        string description = dataRow.Cells[15].TextContent;
 
                         examList.Add(new Exam(subject, course, type, attemptType, startTime, location, instructors, placesTaken, placesTotal, shownUp, examResult, description));
                     }
 
                     result.Add(semester, examList);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     // don't fail the whole sync if one semester load fails
                 }
