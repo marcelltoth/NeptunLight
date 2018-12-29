@@ -21,6 +21,14 @@ namespace NeptunLight.Droid.Views
         {
             base.OnCreate(savedInstanceState);
             Analytics.TrackEvent("Courses page shown");
+
+            this.WhenActivated(cd =>
+            {
+                cd.Add(this.WhenAnyValue(x => x.ViewModel.Tabs).Subscribe(tabs =>
+                {
+                    Pager.Adapter = new TabAdapter(ChildFragmentManager, tabs);
+                }));
+            });
         }
 
         public override View OnCreateView(LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
@@ -28,11 +36,6 @@ namespace NeptunLight.Droid.Views
             View layout = inflater.Inflate(Resource.Layout.CoursesPage, container, false);
 
             this.WireUpControls(layout);
-
-            this.WhenAnyValue(x => x.ViewModel.Tabs).Subscribe(tabs =>
-            {
-                Pager.Adapter = new TabAdapter(ChildFragmentManager, tabs);
-            });
 
             return layout;
         }

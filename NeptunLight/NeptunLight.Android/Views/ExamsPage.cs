@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive.Disposables;
 using Android.App;
 using Android.OS;
 using Android.Support.V4.View;
@@ -15,6 +16,18 @@ namespace NeptunLight.Droid.Views
 {
     public class ExamsPage : ReactiveFragment<ExamsPageViewModel>, IActionBarProvider
     {
+        public ExamsPage()
+        {
+            this.WhenActivated(cd =>
+            {
+                this.WhenAnyValue(x => x.ViewModel.Tabs).Subscribe(tabs =>
+                {
+                    PagerAdapter = new TabAdapter(ChildFragmentManager, tabs);
+                    Pager.Adapter = PagerAdapter;
+                }).DisposeWith(cd);
+            });
+        }
+
         private ViewPager Pager { get; [UsedImplicitly] set; }
 
         private TabAdapter PagerAdapter { get; set; }
@@ -30,12 +43,6 @@ namespace NeptunLight.Droid.Views
             View layout = inflater.Inflate(Resource.Layout.ExamsPage, container, false);
 
             this.WireUpControls(layout);
-
-            this.WhenAnyValue(x => x.ViewModel.Tabs).Subscribe(tabs =>
-            {
-                PagerAdapter = new TabAdapter(ChildFragmentManager, tabs);
-                Pager.Adapter = PagerAdapter;
-            });
 
             return layout;
         }
