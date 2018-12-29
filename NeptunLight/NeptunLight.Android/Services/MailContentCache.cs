@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
+using Microsoft.AppCenter.Crashes;
 using NeptunLight.Models;
 using NeptunLight.Services;
 using Newtonsoft.Json;
@@ -20,8 +22,16 @@ namespace NeptunLight.Droid.Services
             {
                 if (File.Exists(FileLocation))
                 {
-                    string text = File.ReadAllText(FileLocation);
-                    _cacheObj = JsonConvert.DeserializeObject<List<Mail>>(text).ToDictionary(m => (MailHeader)m, m => m);
+                    try
+                    {
+                        string text = File.ReadAllText(FileLocation);
+                        _cacheObj = JsonConvert.DeserializeObject<List<Mail>>(text).ToDictionary(m => (MailHeader)m, m => m);
+                    }
+                    catch (Exception e)
+                    {
+                        Crashes.TrackError(e);
+                        _cacheObj = new Dictionary<MailHeader, Mail>();
+                    }
                 }
                 else
                 {
