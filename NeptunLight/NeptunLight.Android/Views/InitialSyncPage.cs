@@ -8,6 +8,7 @@ using Android.Views;
 using Android.Widget;
 using JetBrains.Annotations;
 using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 using GridLayout = Android.Support.V7.Widget.GridLayout;
@@ -83,9 +84,8 @@ namespace NeptunLight.Droid.Views
                 {
                     if (Context != null)
                         Toast.MakeText(Context, "Kommunikációs hiba, ellenőrizd az internetkapcsolatodat.", ToastLength.Short).Show();
-                    Analytics.TrackEvent("Initial sync error", new Dictionary<string, string>{
-                        {"Message", ex.Message},
-                        { "Trace", ex.StackTrace.Substring(0,64)}
+                    Crashes.TrackError(ex, new Dictionary<string, string>{
+                        {"Category", "Initial sync error"}
                     });
                 });
 
