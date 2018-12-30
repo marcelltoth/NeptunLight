@@ -140,38 +140,48 @@ namespace NeptunLight.DataAccess
 
                     await Task.Run(async () =>
                     {
-                        if (_mailContentCache != null)
+                        try
                         {
-                            // try to load the message body from the cache
-                            Mail ret = await _mailContentCache.TryRetrieveAsync(mailHeader);
-                            if (ret != null)
+                            if (_mailContentCache != null)
                             {
-                                observer.OnNext(ret);
-                                return;
+                                // try to load the message body from the cache
+                                Mail ret = await _mailContentCache.TryRetrieveAsync(mailHeader);
+                                if (ret != null)
+                                {
+                                    observer.OnNext(ret);
+                                    return;
+                                }
                             }
+
+                            // load the mail itself
+                            await Task.Delay(50, ct);
+                            IDocument popupDocument = await _client.PostFormAsnyc(
+                                "main.aspx?ismenuclick=true&ctrl=inbox",
+                                inboxPage,
+                                new[]
+                                {
+                                    new KeyValuePair<string, string>("__EVENTTARGET", "upFunction$c_messages$upMain$upGrid$gridMessages"),
+                                    new KeyValuePair<string, string>("__EVENTARGUMENT", $"commandname=Subject;commandsource=select;id={mailHeader.TrId};level=1")
+                                },
+                                false, ct);
+
+                            string content = popupDocument.GetElementById("Readmessage1_lblMessage").InnerHtml;
+                            Mail ret2 = new Mail(mailHeader, content);
+
+                            if (_mailContentCache != null)
+                                await _mailContentCache.StoreAsync(mailHeader, ret2);
+
+                            observer.OnNext(ret2);
                         }
-
-                        // load the mail itself
-                        await Task.Delay(50, ct);
-                        IDocument popupDocument = await _client.PostFormAsnyc(
-                            "main.aspx?ismenuclick=true&ctrl=inbox",
-                            inboxPage,
-                            new[]
-                            {
-                                new KeyValuePair<string, string>("__EVENTTARGET", "upFunction$c_messages$upMain$upGrid$gridMessages"),
-                                new KeyValuePair<string, string>("__EVENTARGUMENT", $"commandname=Subject;commandsource=select;id={mailHeader.TrId};level=1")
-                            },
-                            false, ct);
-
-                        string content = popupDocument.GetElementById("Readmessage1_lblMessage").InnerHtml;
-                        Mail ret2 = new Mail(mailHeader, content);
-
-                        if (_mailContentCache != null)
-                            await _mailContentCache.StoreAsync(mailHeader, ret2);
-
-                        observer.OnNext(ret2);
+                        catch (Exception e)
+                        {
+                            // Do not crash if a single mail throws
+                            // TODO: implement logging
+                        }
                     }, ct);
                 }
+
+                observer.OnCompleted();
             });
         }
 
