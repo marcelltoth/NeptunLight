@@ -15,6 +15,7 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Push;
+using NeptunLight.Droid.Services;
 using NeptunLight.Services;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -56,7 +57,11 @@ namespace NeptunLight.Droid
 
 		    App.MainActivity = this;
 
-			SetContentView(Resource.Layout.Main);
+
+		    App.Container.Resolve<NotificationService>().Bootstrap(this);
+
+
+            SetContentView(Resource.Layout.Main);
 
 		    _fragmentHolder = FindViewById(Resource.Id.fragmentHolder);
 		    NavigateTo<MenuPageViewModel>(false);

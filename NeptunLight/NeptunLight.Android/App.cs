@@ -35,9 +35,15 @@ namespace NeptunLight.Droid
                    .As<IRefreshManager>()
                    .SingleInstance();
 
+            builder.RegisterType<NotificationService>()
+                .AsImplementedInterfaces()
+                .AsSelf()
+                .SingleInstance();
+
             builder.RegisterType<AndroidWebScraperClient>()
                 .As<WebScraperClient>()
                 .InstancePerDependency();
+
 
             builder.Register(context => MainActivity)
                    .As<INavigator>();

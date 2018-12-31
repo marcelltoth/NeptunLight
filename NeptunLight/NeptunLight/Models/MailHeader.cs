@@ -47,6 +47,9 @@ namespace NeptunLight.Models
         public string Sender { get; }
         public string Subject { get; }
 
+        /// <summary>
+        ///     An ID of this Mail. Guaranteed to be unique within a dataset, but may change or collide after a refresh.
+        /// </summary>
         internal long TrId { set; get; }
 
         /// <summary>

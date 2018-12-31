@@ -43,11 +43,13 @@ namespace NeptunLight.Droid.Services
 
         private readonly IDataStorage _dataStorage;
         private readonly INeptunInterface _client;
+        private readonly IMailNotificationDispatcher _mailNotificationService;
 
-        public RefreshManager(IDataStorage dataStorage, INeptunInterface client)
+        public RefreshManager(IDataStorage dataStorage, INeptunInterface client, IMailNotificationDispatcher mailNotificationService)
         {
             _dataStorage = dataStorage;
             _client = client;
+            _mailNotificationService = mailNotificationService;
         }
 
         public DateTime LastRefreshTime
@@ -113,6 +115,18 @@ namespace NeptunLight.Droid.Services
                 loadedData.Calendar = await _client.RefreshCalendarAsnyc();
                 loadedData.Periods = await _client.RefreshPeriodsAsnyc();
                 IList<Mail> messages = await _client.RefreshMessages().ToList();
+
+                // If there are new mails, notify the user
+                var newMails = messages.Where(m => m.IsNew).ToList();
+                if (newMails.Count == 1)
+                {
+                    _mailNotificationService.NotifyNewMail(newMails.First());
+                }
+                else
+                {
+                    _mailNotificationService.NotifyMultipleNewMails(newMails);
+                }
+
                 loadedData.Messages.Clear();
                 loadedData.Messages.AddRange(messages);
 

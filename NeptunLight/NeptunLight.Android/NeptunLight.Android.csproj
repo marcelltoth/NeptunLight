@@ -79,6 +79,7 @@
     <Compile Include="MessageColorPool.cs" />
     <Compile Include="RefreshService.cs" />
     <Compile Include="Services\AndroidWebScraperClient.cs" />
+    <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\PrimitiveStorage.cs" />
     <Compile Include="Services\RefreshManager.cs" />
     <Compile Include="SettingsActivity.cs" />
@@ -344,6 +345,31 @@
     <PackageReference Include="Xamarin.Android.Support.Vector.Drawable">
       <Version>26.0.2</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_stat_mail_outline.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_stat_mail_outline.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_stat_mail_outline.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_stat_mail_outline.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_stat_mail_outline.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
