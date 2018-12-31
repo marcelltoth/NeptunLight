@@ -48,5 +48,10 @@ namespace NeptunLight.Models
         public string Subject { get; }
 
         internal long TrId { set; get; }
+
+        /// <summary>
+        ///     True if this mail is newly fetched from the server. (Has not been fetched before)
+        /// </summary>
+        public bool IsNew { get; set; }
     }
 }

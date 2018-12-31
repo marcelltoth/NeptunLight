@@ -413,7 +413,8 @@ namespace NeptunLight.DataAccess
                     string sender = row.Cells[4].TextContent;
                     string title = row.Cells[6].TextContent;
                     long trid = Int64.Parse(row.Id.Substring(4));
-                    result.Add(new MailHeader(receiveTime, sender, title) {TrId = trid});
+                    bool isNew = row.ClassName == "Row1_Bold";
+                    result.Add(new MailHeader(receiveTime, sender, title) {TrId = trid, IsNew = isNew});
                 }
                 catch (Exception)
                 {
