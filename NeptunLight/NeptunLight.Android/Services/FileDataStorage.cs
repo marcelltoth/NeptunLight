@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Android.App;
 using JetBrains.Annotations;
@@ -13,6 +14,8 @@ namespace NeptunLight.Droid.Services
 {
     public class FileDataStorage : ReactiveObject, IDataStorage
     {
+        private static readonly SemaphoreSlim FileLock = new SemaphoreSlim(1, 1);
+
         private static string FileLocation => Path.Combine(Application.Context.FilesDir.Path, "neptunData.json");
 
         private NeptunData _currentData;
@@ -24,39 +27,65 @@ namespace NeptunLight.Droid.Services
         }
         public async Task LoadDataAsync(bool forceReload = false)
         {
-            if (File.Exists(FileLocation))
+            try
             {
-                NeptunData deserializedData = null;
-                await Task.Run(() =>
+                await FileLock.WaitAsync();
+                if (File.Exists(FileLocation))
                 {
-                    string text = File.ReadAllText(FileLocation);
-                    deserializedData = JsonConvert.DeserializeObject<NeptunDataProxy>(text).ToNeptunData();
-                });
-                CurrentData = deserializedData;
+                    NeptunData deserializedData = null;
+                    await Task.Run(() =>
+                    {
+                        string text = File.ReadAllText(FileLocation);
+                        deserializedData = JsonConvert.DeserializeObject<NeptunDataProxy>(text).ToNeptunData();
+                    });
+                    CurrentData = deserializedData;
+                }
             }
+            finally
+            {
+                FileLock.Release();
+            }
+            
         }
 
         public async Task SaveDataAsync()
         {
-            await Task.Run(() =>
+            try
             {
-                if (CurrentData != null)
-                    File.WriteAllText(FileLocation, JsonConvert.SerializeObject(NeptunDataProxy.FromNeptunData(CurrentData)));
-                else
-                    File.Delete(FileLocation);
-            });
+                await FileLock.WaitAsync();
+                await Task.Run(() =>
+                {
+                    if (CurrentData != null)
+                        File.WriteAllText(FileLocation, JsonConvert.SerializeObject(NeptunDataProxy.FromNeptunData(CurrentData)));
+                    else
+                        File.Delete(FileLocation);
+                });
+            }
+            finally
+            {
+                FileLock.Release();
+            }
+            
         }
 
         public async Task ClearDataAsync()
         {
-            await Task.Run(() =>
+            try
             {
-                if (File.Exists(FileLocation))
+                await FileLock.WaitAsync();
+                await Task.Run(() =>
                 {
-                    File.Delete(FileLocation);
-                }
-                CurrentData = null;
-            });
+                    if (File.Exists(FileLocation))
+                    {
+                        File.Delete(FileLocation);
+                    }
+                    CurrentData = null;
+                });
+            }
+            finally
+            {
+                FileLock.Release();
+            }
         }
 
         [UsedImplicitly(ImplicitUseTargetFlags.Members)]
