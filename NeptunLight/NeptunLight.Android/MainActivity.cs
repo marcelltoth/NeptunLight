@@ -15,6 +15,7 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Push;
+using NeptunLight.DataAccess;
 using NeptunLight.Services;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -75,6 +76,15 @@ namespace NeptunLight.Droid
 		    });
 
 		    StartService(new Intent(BaseContext, typeof(RefreshService)));
+
+            // Log institute statistics
+		    var neptunInterface = App.Container.Resolve<INeptunInterface>();
+		    var instituteProvider = App.Container.Resolve<IInstituteDataProvider>();
+            var institute = instituteProvider.GetAvaialbleInstitutes().FirstOrDefault(inst => inst.RootUrl == neptunInterface.BaseUri)?.Name ?? neptunInterface.BaseUri.ToString();
+            Analytics.TrackEvent("Application started", new Dictionary<string, string>()
+            {
+                { "Institute", institute }
+            });
 		}
 
 	    protected override void OnStart()
