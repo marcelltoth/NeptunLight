@@ -553,6 +553,9 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f0100d9
 			public const int dropDownListViewStyle = 2130772185;
 			
+			// aapt resource value: 0x7f0101e1
+			public const int dropListenerEnabled = 2130772449;
+			
 			// aapt resource value: 0x7f0100bd
 			public const int dropdownListPreferredItemHeight = 2130772157;
 			
@@ -1066,6 +1069,9 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f0101c5
 			public const int minHourHeight = 2130772421;
 			
+			// aapt resource value: 0x7f0101c7
+			public const int minOverlappingMinutes = 2130772423;
+			
 			// aapt resource value: 0x7f0101c6
 			public const int minTime = 2130772422;
 			
@@ -1081,29 +1087,32 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f010060
 			public const int navigationMode = 2130772064;
 			
-			// aapt resource value: 0x7f0101c7
-			public const int newEventColor = 2130772423;
-			
-			// aapt resource value: 0x7f0101c9
-			public const int newEventIconResource = 2130772425;
-			
 			// aapt resource value: 0x7f0101c8
-			public const int newEventId = 2130772424;
-			
-			// aapt resource value: 0x7f0101ca
-			public const int newEventLengthInMinutes = 2130772426;
+			public const int newEventColor = 2130772424;
 			
 			// aapt resource value: 0x7f0101cb
-			public const int newEventTimeResolutionInMinutes = 2130772427;
+			public const int newEventIconResource = 2130772427;
+			
+			// aapt resource value: 0x7f0101c9
+			public const int newEventId = 2130772425;
+			
+			// aapt resource value: 0x7f0101ca
+			public const int newEventIdentifier = 2130772426;
 			
 			// aapt resource value: 0x7f0101cc
-			public const int noOfVisibleDays = 2130772428;
+			public const int newEventLengthInMinutes = 2130772428;
 			
 			// aapt resource value: 0x7f0101cd
-			public const int nowLineColor = 2130772429;
+			public const int newEventTimeResolutionInMinutes = 2130772429;
 			
 			// aapt resource value: 0x7f0101ce
-			public const int nowLineThickness = 2130772430;
+			public const int noOfVisibleDays = 2130772430;
+			
+			// aapt resource value: 0x7f0101cf
+			public const int nowLineColor = 2130772431;
+			
+			// aapt resource value: 0x7f0101d0
+			public const int nowLineThickness = 2130772432;
 			
 			// aapt resource value: 0x7f010115
 			public const int numericModifiers = 2130772245;
@@ -1114,8 +1123,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f010120
 			public const int overlapAnchor = 2130772256;
 			
-			// aapt resource value: 0x7f0101cf
-			public const int overlappingEventGap = 2130772431;
+			// aapt resource value: 0x7f0101d1
+			public const int overlappingEventGap = 2130772433;
 			
 			// aapt resource value: 0x7f010122
 			public const int paddingBottomNoButtons = 2130772258;
@@ -1153,11 +1162,11 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f0101a3
 			public const int passwordToggleTintMode = 2130772387;
 			
-			// aapt resource value: 0x7f0101d0
-			public const int pastBackgroundColor = 2130772432;
+			// aapt resource value: 0x7f0101d2
+			public const int pastBackgroundColor = 2130772434;
 			
-			// aapt resource value: 0x7f0101d1
-			public const int pastWeekendBackgroundColor = 2130772433;
+			// aapt resource value: 0x7f0101d3
+			public const int pastWeekendBackgroundColor = 2130772435;
 			
 			// aapt resource value: 0x7f0100cb
 			public const int popupMenuStyle = 2130772171;
@@ -1216,8 +1225,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f010164
 			public const int scrimVisibleHeightTrigger = 2130772324;
 			
-			// aapt resource value: 0x7f0101d2
-			public const int scrollDuration = 2130772434;
+			// aapt resource value: 0x7f0101d4
+			public const int scrollDuration = 2130772436;
 			
 			// aapt resource value: 0x7f01012b
 			public const int searchHintIcon = 2130772267;
@@ -1240,20 +1249,20 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f010116
 			public const int showAsAction = 2130772246;
 			
-			// aapt resource value: 0x7f0101d3
-			public const int showDistinctPastFutureColor = 2130772435;
+			// aapt resource value: 0x7f0101d5
+			public const int showDistinctPastFutureColor = 2130772437;
 			
-			// aapt resource value: 0x7f0101d4
-			public const int showDistinctWeekendColor = 2130772436;
+			// aapt resource value: 0x7f0101d6
+			public const int showDistinctWeekendColor = 2130772438;
 			
 			// aapt resource value: 0x7f010112
 			public const int showDividers = 2130772242;
 			
-			// aapt resource value: 0x7f0101d5
-			public const int showFirstDayOfWeekFirst = 2130772437;
+			// aapt resource value: 0x7f0101d7
+			public const int showFirstDayOfWeekFirst = 2130772439;
 			
-			// aapt resource value: 0x7f0101d6
-			public const int showNowLine = 2130772438;
+			// aapt resource value: 0x7f0101d8
+			public const int showNowLine = 2130772440;
 			
 			// aapt resource value: 0x7f01013b
 			public const int showText = 2130772283;
@@ -1417,8 +1426,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f0100d2
 			public const int textColorSearchUrl = 2130772178;
 			
-			// aapt resource value: 0x7f0101d7
-			public const int textSize = 2130772439;
+			// aapt resource value: 0x7f0101d9
+			public const int textSize = 2130772441;
 			
 			// aapt resource value: 0x7f01014f
 			public const int theme = 2130772303;
@@ -1444,8 +1453,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f010088
 			public const int tickMarkTintMode = 2130772104;
 			
-			// aapt resource value: 0x7f0101d8
-			public const int timeColumnResolution = 2130772440;
+			// aapt resource value: 0x7f0101da
+			public const int timeColumnResolution = 2130772442;
 			
 			// aapt resource value: 0x7f010084
 			public const int tint = 2130772100;
@@ -1486,11 +1495,11 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f010063
 			public const int titleTextStyle = 2130772067;
 			
-			// aapt resource value: 0x7f0101d9
-			public const int todayBackgroundColor = 2130772441;
+			// aapt resource value: 0x7f0101db
+			public const int todayBackgroundColor = 2130772443;
 			
-			// aapt resource value: 0x7f0101da
-			public const int todayHeaderTextColor = 2130772442;
+			// aapt resource value: 0x7f0101dc
+			public const int todayHeaderTextColor = 2130772444;
 			
 			// aapt resource value: 0x7f010163
 			public const int toolbarId = 2130772323;
@@ -1525,8 +1534,8 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f010046
 			public const int useDefaultMargins = 2130772038;
 			
-			// aapt resource value: 0x7f0101db
-			public const int verticalFlingEnabled = 2130772443;
+			// aapt resource value: 0x7f0101dd
+			public const int verticalFlingEnabled = 2130772445;
 			
 			// aapt resource value: 0x7f01012c
 			public const int voiceIcon = 2130772268;
@@ -1561,14 +1570,14 @@ namespace NeptunLight.Droid
 			// aapt resource value: 0x7f010091
 			public const int windowNoTitle = 2130772113;
 			
-			// aapt resource value: 0x7f0101dc
-			public const int xScrollingSpeed = 2130772444;
-			
-			// aapt resource value: 0x7f0101dd
-			public const int zoomFocusPoint = 2130772445;
-			
 			// aapt resource value: 0x7f0101de
-			public const int zoomFocusPointEnabled = 2130772446;
+			public const int xScrollingSpeed = 2130772446;
+			
+			// aapt resource value: 0x7f0101df
+			public const int zoomFocusPoint = 2130772447;
+			
+			// aapt resource value: 0x7f0101e0
+			public const int zoomFocusPointEnabled = 2130772448;
 			
 			static Attribute()
 			{
@@ -8860,7 +8869,10 @@ namespace NeptunLight.Droid
 					2130772443,
 					2130772444,
 					2130772445,
-					2130772446};
+					2130772446,
+					2130772447,
+					2130772448,
+					2130772449};
 			
 			// aapt resource value: 0
 			public const int WeekView_allDayEventHeight = 0;
@@ -8876,6 +8888,9 @@ namespace NeptunLight.Droid
 			
 			// aapt resource value: 4
 			public const int WeekView_dayNameLength = 4;
+			
+			// aapt resource value: 52
+			public const int WeekView_dropListenerEnabled = 52;
 			
 			// aapt resource value: 5
 			public const int WeekView_eventCornerRadius = 5;
@@ -8937,80 +8952,86 @@ namespace NeptunLight.Droid
 			// aapt resource value: 24
 			public const int WeekView_minHourHeight = 24;
 			
+			// aapt resource value: 26
+			public const int WeekView_minOverlappingMinutes = 26;
+			
 			// aapt resource value: 25
 			public const int WeekView_minTime = 25;
 			
-			// aapt resource value: 26
-			public const int WeekView_newEventColor = 26;
-			
-			// aapt resource value: 28
-			public const int WeekView_newEventIconResource = 28;
-			
 			// aapt resource value: 27
-			public const int WeekView_newEventId = 27;
-			
-			// aapt resource value: 29
-			public const int WeekView_newEventLengthInMinutes = 29;
+			public const int WeekView_newEventColor = 27;
 			
 			// aapt resource value: 30
-			public const int WeekView_newEventTimeResolutionInMinutes = 30;
+			public const int WeekView_newEventIconResource = 30;
+			
+			// aapt resource value: 28
+			public const int WeekView_newEventId = 28;
+			
+			// aapt resource value: 29
+			public const int WeekView_newEventIdentifier = 29;
 			
 			// aapt resource value: 31
-			public const int WeekView_noOfVisibleDays = 31;
+			public const int WeekView_newEventLengthInMinutes = 31;
 			
 			// aapt resource value: 32
-			public const int WeekView_nowLineColor = 32;
+			public const int WeekView_newEventTimeResolutionInMinutes = 32;
 			
 			// aapt resource value: 33
-			public const int WeekView_nowLineThickness = 33;
+			public const int WeekView_noOfVisibleDays = 33;
 			
 			// aapt resource value: 34
-			public const int WeekView_overlappingEventGap = 34;
+			public const int WeekView_nowLineColor = 34;
 			
 			// aapt resource value: 35
-			public const int WeekView_pastBackgroundColor = 35;
+			public const int WeekView_nowLineThickness = 35;
 			
 			// aapt resource value: 36
-			public const int WeekView_pastWeekendBackgroundColor = 36;
+			public const int WeekView_overlappingEventGap = 36;
 			
 			// aapt resource value: 37
-			public const int WeekView_scrollDuration = 37;
+			public const int WeekView_pastBackgroundColor = 37;
 			
 			// aapt resource value: 38
-			public const int WeekView_showDistinctPastFutureColor = 38;
+			public const int WeekView_pastWeekendBackgroundColor = 38;
 			
 			// aapt resource value: 39
-			public const int WeekView_showDistinctWeekendColor = 39;
+			public const int WeekView_scrollDuration = 39;
 			
 			// aapt resource value: 40
-			public const int WeekView_showFirstDayOfWeekFirst = 40;
+			public const int WeekView_showDistinctPastFutureColor = 40;
 			
 			// aapt resource value: 41
-			public const int WeekView_showNowLine = 41;
+			public const int WeekView_showDistinctWeekendColor = 41;
 			
 			// aapt resource value: 42
-			public const int WeekView_textSize = 42;
+			public const int WeekView_showFirstDayOfWeekFirst = 42;
 			
 			// aapt resource value: 43
-			public const int WeekView_timeColumnResolution = 43;
+			public const int WeekView_showNowLine = 43;
 			
 			// aapt resource value: 44
-			public const int WeekView_todayBackgroundColor = 44;
+			public const int WeekView_textSize = 44;
 			
 			// aapt resource value: 45
-			public const int WeekView_todayHeaderTextColor = 45;
+			public const int WeekView_timeColumnResolution = 45;
 			
 			// aapt resource value: 46
-			public const int WeekView_verticalFlingEnabled = 46;
+			public const int WeekView_todayBackgroundColor = 46;
 			
 			// aapt resource value: 47
-			public const int WeekView_xScrollingSpeed = 47;
+			public const int WeekView_todayHeaderTextColor = 47;
 			
 			// aapt resource value: 48
-			public const int WeekView_zoomFocusPoint = 48;
+			public const int WeekView_verticalFlingEnabled = 48;
 			
 			// aapt resource value: 49
-			public const int WeekView_zoomFocusPointEnabled = 49;
+			public const int WeekView_xScrollingSpeed = 49;
+			
+			// aapt resource value: 50
+			public const int WeekView_zoomFocusPoint = 50;
+			
+			// aapt resource value: 51
+			public const int WeekView_zoomFocusPointEnabled = 51;
 			
 			static Styleable()
 			{

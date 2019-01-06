@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Additions\AboutAdditions.txt" />
-    <LibraryProjectZip Include="Jars\android-week-view-2.1.1.aar" />
+    <LibraryProjectZip Include="Jars\Android-Week-View-2.3.1.aar" />
   </ItemGroup>
   <ItemGroup>
     <TransformFile Include="Transforms\Metadata.xml" />
