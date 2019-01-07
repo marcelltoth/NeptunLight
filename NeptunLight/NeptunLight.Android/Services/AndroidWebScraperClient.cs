@@ -10,7 +10,7 @@ namespace NeptunLight.Droid.Services
     {
         public AndroidWebScraperClient()
         {
-            var httpClient = new HttpClient(new AndroidClientHandler()
+            var httpClient = new HttpClient(new HttpClientHandler()
             {
                 AllowAutoRedirect = true,
                 UseCookies = true,
