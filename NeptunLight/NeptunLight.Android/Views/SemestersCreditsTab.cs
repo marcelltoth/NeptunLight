@@ -12,10 +12,11 @@ using MikePhil.Charting.Data;
 using MikePhil.Charting.Formatter;
 using NeptunLight.ViewModels;
 using ReactiveUI;
+using ReactiveUI.AndroidSupport;
 
 namespace NeptunLight.Droid.Views
 {
-    public class SemestersCreditsTab : ReactiveFragment<SemestersCreditsTabViewModel>
+    public class SemestersCreditsTab : ReactiveUI.AndroidSupport.ReactiveFragment<SemestersCreditsTabViewModel>
     {
         public BarChart BarChart { get; set; }
 

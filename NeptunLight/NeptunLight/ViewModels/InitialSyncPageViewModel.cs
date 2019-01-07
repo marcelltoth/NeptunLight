@@ -61,8 +61,11 @@ namespace NeptunLight.ViewModels
                         MessageSyncProgress = progress.Current;
                         MessagesTotal = progress.Total;
                     })).ToList();
-                    loadedData.Messages.Clear();
-                    loadedData.Messages.AddRange(messages);
+                    loadedData.Messages.Edit(m =>
+                    {
+                        m.Clear();
+                        m.AddRange(messages);
+                    });
                     LoadMessagesStatus = RefreshStepState.Done;
 
                     Name = loadedData.BasicData.Name;

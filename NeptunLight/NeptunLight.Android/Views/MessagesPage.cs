@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Android.App;
@@ -12,10 +13,11 @@ using Microsoft.AppCenter.Analytics;
 using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
+using ReactiveUI.AndroidSupport;
 
 namespace NeptunLight.Droid.Views
 {
-    public class MessagesPage : ReactiveFragment<MessagesPageViewModel>, IActionBarProvider, SwipeRefreshLayout.IOnRefreshListener
+    public class MessagesPage : ReactiveUI.AndroidSupport.ReactiveFragment<MessagesPageViewModel>, IActionBarProvider, SwipeRefreshLayout.IOnRefreshListener
     {
         private LayoutInflater _layoutInflater;
         public ListView MessageList { get; set; }
@@ -46,7 +48,7 @@ namespace NeptunLight.Droid.Views
             base.OnStart();
 
 
-            ViewModel.Messages.Changed
+            ViewModel.Messages.Connect()
                 .ObserveOn(Application.SynchronizationContext)
                 .Subscribe(items => { RefreshAdapter(); });
             RefreshAdapter();
@@ -69,7 +71,7 @@ namespace NeptunLight.Droid.Views
 
         private void RefreshAdapter()
         {
-            var messageListAdapter = new ListAdapter<MessageViewModel>(_layoutInflater, ViewModel.Messages, Resource.Layout.MessageListItem, (itemView, model) =>
+            var messageListAdapter = new ListAdapter<MessageViewModel>(_layoutInflater, ViewModel.Messages.Items.ToList(), Resource.Layout.MessageListItem, (itemView, model) =>
             {
                 itemView.FindViewById<TextView>(Resource.Id.titleTextView).Text = model.Subject;
                 itemView.FindViewById<TextView>(Resource.Id.senderTextView).Text = model.Sender;
@@ -92,7 +94,6 @@ namespace NeptunLight.Droid.Views
         {
             base.OnPause();
             
-            SwipeRefresh.DestroyDrawingCache();
             SwipeRefresh.ClearAnimation();
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Reflection;
 using Android.App;
 using Android.Content;
@@ -19,12 +20,14 @@ using NeptunLight.DataAccess;
 using NeptunLight.Services;
 using NeptunLight.ViewModels;
 using ReactiveUI;
-using Fragment = Android.App.Fragment;
-using FragmentTransaction = Android.App.FragmentTransaction;
+
+using Fragment = Android.Support.V4.App.Fragment;
+using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
+using ReactiveFragment = ReactiveUI.AndroidSupport.ReactiveFragment;
 
 namespace NeptunLight.Droid
 {
-	[Activity (Label = "Neptun Lite", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/Theme.AppCompat.Light", ScreenOrientation = ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden)]
+	[Activity (Label = "Neptun Lite", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/AppTheme", ScreenOrientation = ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden)]
 	public class MainActivity : AppCompatActivity, INavigator
 	{
 	    private readonly Dictionary<Type, PageViewModel> _pageViewModelCache = new Dictionary<Type, PageViewModel>();
@@ -63,9 +66,10 @@ namespace NeptunLight.Droid
 		    NavigateTo<MenuPageViewModel>(false);
 
 
-            FragmentManager.Events().BackStackChanged.Subscribe(args =>
+            Observable.FromEventPattern(del => SupportFragmentManager.BackStackChanged += del, del => SupportFragmentManager.BackStackChanged -= del, RxApp.MainThreadScheduler)
+	            .Subscribe(args =>
 		    {
-		        Fragment activeFragment = FragmentManager.FindFragmentByTag("ACTIVE");
+		        Fragment activeFragment = SupportFragmentManager.FindFragmentByTag("ACTIVE");
 		        if (activeFragment != null)
 		        {
 		            Title = ((PageViewModel) ((IViewFor) activeFragment).ViewModel).Title;
@@ -80,17 +84,13 @@ namespace NeptunLight.Droid
             // Log institute statistics
 		    var neptunInterface = App.Container.Resolve<INeptunInterface>();
 		    var instituteProvider = App.Container.Resolve<IInstituteDataProvider>();
-            var institute = instituteProvider.GetAvaialbleInstitutes().FirstOrDefault(inst => inst.RootUrl == neptunInterface.BaseUri)?.Name ?? neptunInterface.BaseUri.ToString();
+            var institute = instituteProvider.GetAvaialbleInstitutes().FirstOrDefault(inst => inst.RootUrl == neptunInterface.BaseUri)?.Name ?? neptunInterface.BaseUri?.ToString() ?? String.Empty;
             Analytics.TrackEvent("Application started", new Dictionary<string, string>()
             {
                 { "Institute", institute }
             });
 		}
 
-	    protected override void OnStart()
-	    {
-	        base.OnStart();
-        }
 
 	    private void ConfigureActionBar(Fragment activeFragment)
 	    {
@@ -99,7 +99,7 @@ namespace NeptunLight.Droid
 	        else
 	            SupportActionBar.Hide();
 
-            SupportActionBar.SetDisplayHomeAsUpEnabled(FragmentManager.BackStackEntryCount > 0);
+            SupportActionBar.SetDisplayHomeAsUpEnabled(SupportFragmentManager.BackStackEntryCount > 0);
 
             // clean up after previous fragment
             SupportActionBar.RemoveAllTabs();
@@ -107,9 +107,9 @@ namespace NeptunLight.Droid
 
 	    public override bool OnSupportNavigateUp()
 	    {
-	        if (FragmentManager.BackStackEntryCount > 0)
+	        if (SupportFragmentManager.BackStackEntryCount > 0)
 	        {
-	            FragmentManager.PopBackStack();
+		        SupportFragmentManager.PopBackStack();
 	            return false;
 	        }
 	        else
@@ -126,10 +126,8 @@ namespace NeptunLight.Droid
 
 	    public void NavigateTo(Type destinationVm, bool addToStack = true)
 	    {
-
-	        PageViewModel vm;
-            // Only instanciate one root view model once.
-            if(!_pageViewModelCache.TryGetValue(destinationVm, out vm))
+		    // Only instanciate one root view model once.
+            if(!_pageViewModelCache.TryGetValue(destinationVm, out PageViewModel vm))
             {
                 vm = (PageViewModel)App.Container.Resolve(destinationVm);
                 _pageViewModelCache[destinationVm] = vm;
@@ -146,7 +144,7 @@ namespace NeptunLight.Droid
 	        ((IViewFor) fragment).ViewModel = destinationVm;
 	        fragment.RetainInstance = true;
 
-            FragmentTransaction transaction = FragmentManager.BeginTransaction();
+            FragmentTransaction transaction = SupportFragmentManager.BeginTransaction();
 	        transaction.Replace(Resource.Id.fragmentHolder, fragment, "ACTIVE");
 	        if (addToStack)
 	        {
@@ -159,8 +157,8 @@ namespace NeptunLight.Droid
 
 	    public void NavigateUp()
 	    {
-            if(FragmentManager.BackStackEntryCount > 0)
-	            FragmentManager.PopBackStack();
+            if(SupportFragmentManager.BackStackEntryCount > 0)
+	            SupportFragmentManager.PopBackStack();
         }
     }
 }

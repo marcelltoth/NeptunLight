@@ -113,8 +113,11 @@ namespace NeptunLight.Droid.Services
                 loadedData.Calendar = await _client.RefreshCalendarAsnyc();
                 loadedData.Periods = await _client.RefreshPeriodsAsnyc();
                 IList<Mail> messages = await _client.RefreshMessages().ToList();
-                loadedData.Messages.Clear();
-                loadedData.Messages.AddRange(messages);
+                loadedData.Messages.Edit(msg =>
+                {
+                    msg.Clear();
+                    msg.AddRange(messages);
+                });
 
                 _dataStorage.CurrentData = loadedData;
                 await _dataStorage.SaveDataAsync();

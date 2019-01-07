@@ -1,7 +1,5 @@
 ﻿using System;
-using Android.App;
 using Android.OS;
-using Android.Support.V13.App;
 using Android.Support.V4.View;
 using Android.Views;
 using Java.Lang;
@@ -9,10 +7,14 @@ using JetBrains.Annotations;
 using Microsoft.AppCenter.Analytics;
 using NeptunLight.ViewModels;
 using ReactiveUI;
+using ReactiveUI.AndroidSupport;
+using Fragment = Android.Support.V4.App.Fragment;
+using FragmentManager = Android.Support.V4.App.FragmentManager;
+using FragmentPagerAdapter = Android.Support.V4.App.FragmentPagerAdapter;
 
 namespace NeptunLight.Droid.Views
 {
-    public class SemestersPage : ReactiveFragment<SemestersPageViewModel>, IActionBarProvider
+    public class SemestersPage : ReactiveUI.AndroidSupport.ReactiveFragment<SemestersPageViewModel>, IActionBarProvider
     {
         public ViewPager ViewPager { get; set; }
 

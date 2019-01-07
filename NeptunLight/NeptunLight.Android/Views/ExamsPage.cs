@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
-using Android.App;
 using Android.OS;
 using Android.Support.V4.View;
 using Android.Views;
@@ -11,10 +10,12 @@ using Microsoft.AppCenter.Analytics;
 using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
+using ReactiveUI.AndroidSupport;
+using FragmentManager = Android.Support.V4.App.FragmentManager;
 
 namespace NeptunLight.Droid.Views
 {
-    public class ExamsPage : ReactiveFragment<ExamsPageViewModel>, IActionBarProvider
+    public class ExamsPage : ReactiveUI.AndroidSupport.ReactiveFragment<ExamsPageViewModel>, IActionBarProvider
     {
         public ExamsPage()
         {

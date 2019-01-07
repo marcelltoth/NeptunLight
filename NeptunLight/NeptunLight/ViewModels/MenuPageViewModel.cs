@@ -44,7 +44,7 @@ namespace NeptunLight.ViewModels
         private readonly ObservableAsPropertyHelper<DateTime> _lastRefreshTime;
         public DateTime LastRefreshTime => _lastRefreshTime.Value;
 
-        public ReactiveCommand Refresh { get; }
+        public ReactiveCommand<Unit, Unit> Refresh { get; }
 
         private readonly ObservableAsPropertyHelper<string> _name;
         public string Name => _name.Value;
@@ -52,14 +52,14 @@ namespace NeptunLight.ViewModels
         private readonly ObservableAsPropertyHelper<string> _infoLine;
         public string InfoLine => _infoLine.Value;
 
-        public ReactiveCommand EnsureDataAccessible { get; }
+        public ReactiveCommand<Unit, Unit> EnsureDataAccessible { get; }
 
-        public ReactiveCommand GoToMessages { get; }
-        public ReactiveCommand GoToCalendar { get; }
-        public ReactiveCommand GoToCourses { get; }
-        public ReactiveCommand GoToExams { get; }
-        public ReactiveCommand GoToSemesters { get; }
-        public ReactiveCommand GoToPeriods { get; }
+        public ReactiveCommand<Unit, Unit> GoToMessages { get; }
+        public ReactiveCommand<Unit, Unit> GoToCalendar { get; }
+        public ReactiveCommand<Unit, Unit> GoToCourses { get; }
+        public ReactiveCommand<Unit, Unit> GoToExams { get; }
+        public ReactiveCommand<Unit, Unit> GoToSemesters { get; }
+        public ReactiveCommand<Unit, Unit> GoToPeriods { get; }
 
         public override string Title { get; } = "Neptun Lite";
     }

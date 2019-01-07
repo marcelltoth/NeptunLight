@@ -11,11 +11,12 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using NeptunLight.ViewModels;
 using ReactiveUI;
+using ReactiveUI.AndroidSupport;
 using GridLayout = Android.Support.V7.Widget.GridLayout;
 
 namespace NeptunLight.Droid.Views
 {
-    public class InitialSyncPage : ReactiveFragment<InitialSyncPageViewModel>
+    public class InitialSyncPage : ReactiveUI.AndroidSupport.ReactiveFragment<InitialSyncPageViewModel>
     {
         public ViewGroup LoginPanel { get; set; }
 

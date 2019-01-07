@@ -11,10 +11,11 @@ using Microsoft.AppCenter.Analytics;
 using NeptunLight.Models;
 using NeptunLight.ViewModels;
 using ReactiveUI;
+using ReactiveUI.AndroidSupport;
 
 namespace NeptunLight.Droid.Views
 {
-    public class LoginPage : ReactiveFragment<LoginPageViewModel>
+    public class LoginPage : ReactiveUI.AndroidSupport.ReactiveFragment<LoginPageViewModel>
     {
         public ViewGroup LoginPanel { get; set; }
         public EditText LoginField { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reactive.Disposables;
 using Android.Graphics;
@@ -10,10 +11,11 @@ using JetBrains.Annotations;
 using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
+using ReactiveUI.AndroidSupport;
 
 namespace NeptunLight.Droid.Views
 {
-    public class ExamsTab : ReactiveFragment<ExamsTabViewModel>
+    public class ExamsTab : ReactiveUI.AndroidSupport.ReactiveFragment<ExamsTabViewModel>
     {
         private LayoutInflater Inflater { get; set; }
 

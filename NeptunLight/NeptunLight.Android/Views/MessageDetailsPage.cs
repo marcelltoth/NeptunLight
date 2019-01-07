@@ -9,10 +9,11 @@ using JetBrains.Annotations;
 using Microsoft.AppCenter.Analytics;
 using NeptunLight.ViewModels;
 using ReactiveUI;
+using ReactiveUI.AndroidSupport;
 
 namespace NeptunLight.Droid.Views
 {
-    public class MessageDetailsPage : ReactiveFragment<MessageViewModel>, IActionBarProvider
+    public class MessageDetailsPage : ReactiveUI.AndroidSupport.ReactiveFragment<MessageViewModel>, IActionBarProvider
     {
         private TextView TimeTextView { get; [UsedImplicitly] set; }
         private TextView SenderTextView { get; [UsedImplicitly] set; }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Android.App;
 using Android.Content;
-using Android.Preferences;
+using Android.Support.V7.Preferences;
 using NeptunLight.Services;
 
 namespace NeptunLight.Droid.Services

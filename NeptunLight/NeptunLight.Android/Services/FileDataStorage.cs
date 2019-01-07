@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Android.App;
+using DynamicData;
 using JetBrains.Annotations;
 using NeptunLight.Models;
 using NeptunLight.Services;
@@ -97,7 +98,7 @@ namespace NeptunLight.Droid.Services
                 {
                     BasicData = d.BasicData,
                     Calendar = d.Calendar.ToList(),
-                    Messages = d.Messages.ToList(),
+                    Messages = d.Messages.Items.ToList(),
                     SubjectsPerSemester = d.SubjectsPerSemester.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value.ToList()),
                     ExamsPerSemester = d.ExamsPerSemester.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value.ToList()),
                     SemesterInfo = d.SemesterInfo.ToList(),

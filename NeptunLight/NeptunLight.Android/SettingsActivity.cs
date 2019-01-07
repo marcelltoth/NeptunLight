@@ -6,7 +6,7 @@ using NeptunLight.Droid.Views;
 
 namespace NeptunLight.Droid
 {
-    [Activity(Label = "Beállítások", Theme = "@style/Theme.AppCompat.Light", ScreenOrientation = ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden)]
+    [Activity(Label = "Beállítások", Theme = "@style/AppTheme", ScreenOrientation = ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden)]
     public class SettingsActivity : AppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -16,7 +16,7 @@ namespace NeptunLight.Droid
             SupportActionBar.Show();
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
-            FragmentManager.BeginTransaction().Replace(Android.Resource.Id.Content, new SettingsPage()).Commit();
+            SupportFragmentManager.BeginTransaction().Replace(Android.Resource.Id.Content, new SettingsPage()).Commit();
         }
 
         public override bool OnSupportNavigateUp()

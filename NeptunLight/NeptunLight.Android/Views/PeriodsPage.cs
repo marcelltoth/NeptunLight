@@ -8,10 +8,11 @@ using Microsoft.AppCenter.Analytics;
 using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
+using ReactiveUI.AndroidSupport;
 
 namespace NeptunLight.Droid.Views
 {
-    public class PeriodsPage : ReactiveFragment<PeriodsPageViewModel>, IActionBarProvider
+    public class PeriodsPage : ReactiveUI.AndroidSupport.ReactiveFragment<PeriodsPageViewModel>, IActionBarProvider
     {
         public ListView PeriodList { get; set; }
 

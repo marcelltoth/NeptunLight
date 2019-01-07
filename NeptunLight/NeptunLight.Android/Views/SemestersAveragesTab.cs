@@ -13,10 +13,11 @@ using MikePhil.Charting.Data;
 using MikePhil.Charting.Formatter;
 using NeptunLight.ViewModels;
 using ReactiveUI;
+using ReactiveUI.AndroidSupport;
 
 namespace NeptunLight.Droid.Views
 {
-    public class SemestersAveragesTab : ReactiveFragment<SemestersAveragesTabViewModel>
+    public class SemestersAveragesTab : ReactiveUI.AndroidSupport.ReactiveFragment<SemestersAveragesTabViewModel>
     {
         public LineChart LineChart { get; set; }
 

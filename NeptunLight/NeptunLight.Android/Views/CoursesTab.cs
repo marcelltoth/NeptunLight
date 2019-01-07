@@ -6,7 +6,7 @@ using Android.Widget;
 using Java.Lang;
 using JetBrains.Annotations;
 using NeptunLight.ViewModels;
-using ReactiveUI;
+using ReactiveUI.AndroidSupport;
 
 namespace NeptunLight.Droid.Views
 {

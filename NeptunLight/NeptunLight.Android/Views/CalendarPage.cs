@@ -6,17 +6,16 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using Com.Alamkanak.Weekview;
-using Java.Util;
 using JetBrains.Annotations;
 using Microsoft.AppCenter.Analytics;
 using NeptunLight.Droid.Utils;
 using NeptunLight.Models;
 using NeptunLight.ViewModels;
-using ReactiveUI;
+using ReactiveUI.AndroidSupport;
 
 namespace NeptunLight.Droid.Views
 {
-    public class CalendarPage : ReactiveFragment<CalendarPageViewModel>, MonthLoader.IMonthChangeListener, IActionBarProvider
+    public class CalendarPage : ReactiveUI.AndroidSupport.ReactiveFragment<CalendarPageViewModel>, MonthLoader.IMonthChangeListener, IActionBarProvider
     {
         public CalendarPage()
         {
@@ -27,7 +26,7 @@ namespace NeptunLight.Droid.Views
         private CalendarColorPool _colorPool;
 
         private readonly Dictionary<long, CalendarEvent> _eventIdMap = new Dictionary<long, CalendarEvent>();
-        private long _eventIdMapPointer = 0;
+        private long _eventIdMapPointer;
         private LayoutInflater _layoutInflater;
         private View _layoutRoot;
 

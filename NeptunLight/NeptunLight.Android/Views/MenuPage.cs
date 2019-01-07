@@ -8,17 +8,16 @@ using Android.OS;
 using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
-using Autofac;
 using JetBrains.Annotations;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-using NeptunLight.Services;
 using NeptunLight.ViewModels;
 using ReactiveUI;
+using ReactiveUI.AndroidSupport;
 
 namespace NeptunLight.Droid.Views
 {
-    public class MenuPage : ReactiveFragment<MenuPageViewModel>, IActionBarProvider
+    public class MenuPage : ReactiveUI.AndroidSupport.ReactiveFragment<MenuPageViewModel>, IActionBarProvider
     {
         public SwipeRefreshLayout SwipeRefresh { get; set; }
 

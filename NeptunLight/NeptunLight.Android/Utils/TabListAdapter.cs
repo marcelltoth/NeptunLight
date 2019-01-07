@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Android.App;
-using Android.Support.V13.App;
+using Android.Support.V4.App;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 

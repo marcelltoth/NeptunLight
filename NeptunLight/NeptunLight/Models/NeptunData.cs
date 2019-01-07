@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DynamicData;
 using JetBrains.Annotations;
 using ReactiveUI;
 
@@ -31,7 +32,7 @@ namespace NeptunLight.Models
         }
 
         [NotNull]
-        public IReactiveList<Mail> Messages { get; } = new ReactiveList<Mail>();
+        public ISourceList<Mail> Messages { get; } = new SourceList<Mail>();
 
         [NotNull]
         public IReadOnlyCollection<CalendarEvent> Calendar

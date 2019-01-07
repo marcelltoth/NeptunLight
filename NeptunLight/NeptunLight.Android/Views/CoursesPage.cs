@@ -10,10 +10,13 @@ using Microsoft.AppCenter.Analytics;
 using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
+using ReactiveUI.AndroidSupport;
+
+using FragmentManager = Android.Support.V4.App.FragmentManager;
 
 namespace NeptunLight.Droid.Views
 {
-    public class CoursesPage : ReactiveFragment<CoursesPageViewModel>, IActionBarProvider
+    public class CoursesPage : ReactiveUI.AndroidSupport.ReactiveFragment<CoursesPageViewModel>, IActionBarProvider
     {
         private ViewPager Pager { get; [UsedImplicitly] set; }
 
