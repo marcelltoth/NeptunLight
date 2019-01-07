@@ -8,7 +8,7 @@
       android:entries="@array/updateIntervalNames"
       android:entryValues="@array/updateIntervalValues"
       android:key="REFRESH_INTERVAL_S"
-      android:defaultValue="86400" />
+      android:defaultValue="43200" />
     <CheckBoxPreference
       android:title="Frissítés csak Wifi kapcsolattal"
       android:summary="Egy frissítés körülbelül 1-2MB adatforgalmat igényel"
