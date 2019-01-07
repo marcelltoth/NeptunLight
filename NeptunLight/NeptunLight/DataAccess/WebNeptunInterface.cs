@@ -215,51 +215,59 @@ namespace NeptunLight.DataAccess
             IEnumerable<IElement> semesterOptions = subjectsPage.GetElementById("cmb_cmb").Children.Where(opt => opt.GetAttribute("value") != "-1");
             foreach (IElement option in semesterOptions)
             {
-                await Task.Delay(200);
-                Semester semester = Semester.Parse(option.TextContent);
-                List<Subject> subjectList = new List<Subject>();
-
-                // load subcject data in semester
-                subjectsPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=0304");
-                await Task.Delay(100);
-                IDocument semesterSubjectData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0304", subjectsPage, new[] {new KeyValuePair<string, string>("upFilter$cmb$m_cmb", option.GetAttribute("value"))});
-                IHtmlTableElement subjectDataTable = (IHtmlTableElement) semesterSubjectData.GetElementById("h_addedsubjects_gridAddedSubjects_bodytable");
-
-                // load course data
-
-                await Task.Delay(200);
-                IDocument coursesPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=0302");
-                await Task.Delay(100);
-                IElement optionToSelect = coursesPage.GetElementById("cmb_cmb").Children.FirstOrDefault(e => e.TextContent.StartsWith(semester.Name));
-                if (optionToSelect == null)
-                    continue;
-                IDocument semesterCourseData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0302", coursesPage, new[] {new KeyValuePair<string, string>("upFilter$cmb$m_cmb", optionToSelect.GetAttribute("value"))});
-                IHtmlTableElement courseDataTable = (IHtmlTableElement) semesterCourseData.GetElementById("h_actual_courses_gridCourses_bodytable");
-
-                foreach (IHtmlTableRowElement dataRow in subjectDataTable.Bodies[0].Rows)
+                try
                 {
-                    if (dataRow.ClassList.Contains("NoMatch"))
+                    await Task.Delay(200);
+                    Semester semester = Semester.Parse(option.TextContent);
+                    List<Subject> subjectList = new List<Subject>();
+
+                    // load subcject data in semester
+                    subjectsPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=0304");
+                    await Task.Delay(100);
+                    IDocument semesterSubjectData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0304", subjectsPage, new[] {new KeyValuePair<string, string>("upFilter$cmb$m_cmb", option.GetAttribute("value"))});
+                    IHtmlTableElement subjectDataTable = (IHtmlTableElement) semesterSubjectData.GetElementById("h_addedsubjects_gridAddedSubjects_bodytable");
+
+                    // load course data
+
+                    await Task.Delay(200);
+                    IDocument coursesPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=0302");
+                    await Task.Delay(100);
+                    IElement optionToSelect = coursesPage.GetElementById("cmb_cmb").Children.FirstOrDefault(e => e.TextContent.StartsWith(semester.Name));
+                    if (optionToSelect == null)
                         continue;
-                    string subjectCode = dataRow.Cells[1].TextContent;
-                    string subjectName = dataRow.Cells[2].TextContent;
-                    int creditCount = Int32.Parse(dataRow.Cells[3].TextContent);
-                    int attemptCount = Int32.Parse(dataRow.Cells[4].TextContent);
-                    IEnumerable<Course> courses = courseDataTable.Bodies[0].Rows.Where(r => r.Cells.Length >= 8 && r.Cells[1].TextContent == subjectCode).Select(r =>
+                    IDocument semesterCourseData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0302", coursesPage, new[] {new KeyValuePair<string, string>("upFilter$cmb$m_cmb", optionToSelect.GetAttribute("value"))});
+                    IHtmlTableElement courseDataTable = (IHtmlTableElement) semesterCourseData.GetElementById("h_actual_courses_gridCourses_bodytable");
+
+                    foreach (IHtmlTableRowElement dataRow in subjectDataTable.Bodies[0].Rows)
                     {
-                        string courseCode = r.Cells[3].TextContent;
-                        string courseType = r.Cells[4].TextContent;
-                        int periodCount;
-                        if (!Int32.TryParse(r.Cells[5].TextContent, out periodCount))
-                            periodCount = 1;
-                        string scheduleInfo = r.Cells[6].TextContent;
-                        IEnumerable<string> instructors = r.Cells[7].TextContent.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim());
-                        return new Course(courseCode, courseType, periodCount, scheduleInfo, instructors);
-                    });
+                        if (dataRow.ClassList.Contains("NoMatch"))
+                            continue;
+                        string subjectCode = dataRow.Cells[1].GetFirstLineOfText();
+                        string subjectName = dataRow.Cells[2].GetFirstLineOfText();
+                        int creditCount = Int32.Parse(dataRow.Cells[3].GetFirstLineOfText());
+                        int attemptCount = Int32.Parse(dataRow.Cells[4].GetFirstLineOfText());
+                        IEnumerable<Course> courses = courseDataTable.Bodies[0].Rows.Where(r => r.Cells.Length >= 8 && r.Cells[1].GetFirstLineOfText() == subjectCode).Select(r =>
+                        {
+                            string courseCode = r.Cells[3].GetFirstLineOfText();
+                            string courseType = r.Cells[4].GetFirstLineOfText();
+                            int periodCount;
+                            if (!Int32.TryParse(r.Cells[5].GetFirstLineOfText(), out periodCount))
+                                periodCount = 1;
+                            string scheduleInfo = r.Cells[6].GetFirstLineOfText();
+                            IEnumerable<string> instructors = r.Cells[7].GetFirstLineOfText().Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim());
+                            return new Course(courseCode, courseType, periodCount, scheduleInfo, instructors);
+                        });
 
-                    subjectList.Add(new Subject(subjectCode, subjectName, creditCount, attemptCount, courses));
+                        subjectList.Add(new Subject(subjectCode, subjectName, creditCount, attemptCount, courses));
+                    }
+
+                    result.Add(semester, subjectList);
                 }
-
-                result.Add(semester, subjectList);
+                catch (Exception e)
+                {
+                    // do not fail because of a single semester failing
+                    // TODO: log
+                }
             }
 
             return result;
