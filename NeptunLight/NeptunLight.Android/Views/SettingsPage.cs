@@ -48,7 +48,7 @@ namespace NeptunLight.Droid.Views
                     {"Source", "Menu"}
                 });
                 if (Context != null)
-                    Toast.MakeText(Context, "Frissítés sikeres!", ToastLength.Short).Show();
+                    Toast.MakeText(Activity, "Frissítés sikeres!", ToastLength.Short).Show();
             }
             catch (Exception ex)
             {
@@ -57,7 +57,7 @@ namespace NeptunLight.Droid.Views
                     {"Source", "Menu"}
                 });
                 if (Context != null)
-                    Toast.MakeText(Context, "Hiba a frissítés során", ToastLength.Short).Show();
+                    Toast.MakeText(Activity, "Hiba a frissítés során", ToastLength.Short).Show();
             }
         }
 

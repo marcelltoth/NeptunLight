@@ -56,7 +56,7 @@ namespace NeptunLight.Droid.Views
             this.WhenAnyValue(x => x.ViewModel.LoginError).Skip(1).Where(err => !String.IsNullOrEmpty(err)).Subscribe(err =>
             {
                 if(Context != null)
-                    Toast.MakeText(Context, err, ToastLength.Short).Show();
+                    Toast.MakeText(Activity, err, ToastLength.Short).Show();
             });
 
             if (ViewModel.ShouldShowDisclaimer)

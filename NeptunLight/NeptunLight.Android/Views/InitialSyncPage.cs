@@ -84,7 +84,7 @@ namespace NeptunLight.Droid.Views
                 .Subscribe(ex =>
                 {
                     if (Context != null)
-                        Toast.MakeText(Context, "Kommunikációs hiba, ellenőrizd az internetkapcsolatodat.", ToastLength.Short).Show();
+                        Toast.MakeText(Activity, "Kommunikációs hiba, ellenőrizd az internetkapcsolatodat.", ToastLength.Short).Show();
                     Crashes.TrackError(ex, new Dictionary<string, string>{
                         {"Category", "Initial sync error"}
                     });
