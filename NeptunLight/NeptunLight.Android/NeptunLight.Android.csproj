@@ -78,6 +78,7 @@
     <Compile Include="MenuButton.cs" />
     <Compile Include="MessageColorPool.cs" />
     <Compile Include="RefreshService.cs" />
+    <Compile Include="Secrets.cs" />
     <Compile Include="Services\AndroidWebScraperClient.cs" />
     <Compile Include="Services\PrimitiveStorage.cs" />
     <Compile Include="Services\RefreshManager.cs" />
@@ -303,7 +304,7 @@
       <Version>4.3.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v13">
-        <Version>26.1.0.1</Version>
+      <Version>26.1.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v14.Preference">
       <Version>26.1.0.1</Version>
@@ -323,20 +324,20 @@
     <PackageReference Include="Xamarin.Android.Support.v7.RecyclerView">
       <Version>26.1.0.1</Version>
     </PackageReference>
-      <!-- To resolve conflicts -->
-      <PackageReference Include="Xamarin.Android.Support.Core.UI">
-          <Version>26.1.0.1</Version>
-      </PackageReference>
-      <PackageReference Include="Xamarin.Android.Support.Annotations">
-          <Version>26.1.0.1</Version>
-      </PackageReference>
-      <PackageReference Include="Xamarin.Android.Support.Design">
-          <Version>26.1.0.1</Version>
-      </PackageReference>
-      <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter">
-          <Version>26.1.0.1</Version>
-      </PackageReference>
-      <!-- END To resolve conflicts -->
+    <!-- To resolve conflicts -->
+    <PackageReference Include="Xamarin.Android.Support.Core.UI">
+      <Version>26.1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.Annotations">
+      <Version>26.1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.Design">
+      <Version>26.1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter">
+      <Version>26.1.0.1</Version>
+    </PackageReference>
+    <!-- END To resolve conflicts -->
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\styles.xml" />

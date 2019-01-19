@@ -52,7 +52,7 @@ namespace NeptunLight.Droid
 		{
             base.OnCreate(bundle);
 
-		    AppCenter.Start("b8c21b5f-b87f-4ac2-8645-019102f6d3d7",
+		    AppCenter.Start(Secrets.AppCenterApiKey,
 		                    typeof(Analytics), typeof(Crashes), typeof(Push));
 
             PreferenceManager.SetDefaultValues(this, Resource.Layout.SettingsPage, false);
