@@ -45,7 +45,8 @@ namespace NeptunLight.Droid.Views
 
             this.WireUpControls(_layoutRoot);
 
-
+            // Apply a dummy event listener because of a bug in the library. It will try to call the listener even if it is not set, resulting in a NullPointerException -> crash
+            WeekView.SetZoomEndListener(new DummyZoomEndListener());
             WeekView.MonthChangeListener = this;
             WeekView.EventClick += WeekView_EventClick;
             WeekView.SetLimitTime(6,22);
@@ -97,6 +98,13 @@ namespace NeptunLight.Droid.Views
                 _eventIdMapPointer++;
             }
             return nativeList;
+        }
+
+        private class DummyZoomEndListener : Java.Lang.Object, WeekView.IZoomEndListener
+        {
+            public void OnZoomEnd(int p0)
+            {
+            }
         }
     }
 }
