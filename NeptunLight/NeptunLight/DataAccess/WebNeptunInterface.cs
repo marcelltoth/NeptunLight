@@ -349,19 +349,27 @@ namespace NeptunLight.DataAccess
             List<SemesterData> results = new List<SemesterData>();
             for (int i = 0; i < dataTable.Bodies[0].Rows.Length - 1; i += 2)
             {
-                IHtmlTableRowElement headerRow = dataTable.Bodies[0].Rows[i];
-                //IHtmlTableRowElement dataRow = dataTable.Bodies[0].Rows[i+1];
+                try
+                {
+                    IHtmlTableRowElement headerRow = dataTable.Bodies[0].Rows[i];
+                    //IHtmlTableRowElement dataRow = dataTable.Bodies[0].Rows[i+1];
 
-                Semester semester = Semester.Parse(headerRow.Cells[1].TextContent);
-                string status = headerRow.Cells[2].TextContent;
-                string financialStatus = headerRow.Cells[3].TextContent;
-                int? creditsAccpomlished = !string.IsNullOrEmpty(headerRow.Cells[4].TextContent) ? Int32.Parse(headerRow.Cells[4].TextContent) : (int?) null;
-                int? creditsTaken = !string.IsNullOrEmpty(headerRow.Cells[5].TextContent) ? Int32.Parse(headerRow.Cells[5].TextContent) : (int?) null;
-                int? totalCreditsAccpomlished = !string.IsNullOrEmpty(headerRow.Cells[6].TextContent) ? Int32.Parse(headerRow.Cells[6].TextContent) : (int?) null;
-                int? totalCreditsTaken = !string.IsNullOrEmpty(headerRow.Cells[7].TextContent) ? Int32.Parse(headerRow.Cells[7].TextContent) : (int?) null;
-                double? average = !string.IsNullOrEmpty(headerRow.Cells[8].GetFirstLineOfText()) ? Double.Parse(headerRow.Cells[8].GetFirstLineOfText(), new CultureInfo("hu-HU")) : (double?) null;
-                double? cumAverage = !string.IsNullOrEmpty(headerRow.Cells[9].GetFirstLineOfText()) ? Double.Parse(headerRow.Cells[9].GetFirstLineOfText(), new CultureInfo("hu-HU")) : (double?) null;
-                results.Add(new SemesterData(semester, status, financialStatus, creditsAccpomlished, creditsTaken, totalCreditsAccpomlished, totalCreditsTaken, average, cumAverage));
+                    Semester semester = Semester.Parse(headerRow.Cells[1].GetFirstLineOfText());
+                    string status = headerRow.Cells[2].TextContent;
+                    string financialStatus = headerRow.Cells[3].TextContent;
+                    int? creditsAccpomlished = !string.IsNullOrEmpty(headerRow.Cells[4].TextContent) ? Int32.Parse(headerRow.Cells[4].TextContent) : (int?) null;
+                    int? creditsTaken = !string.IsNullOrEmpty(headerRow.Cells[5].TextContent) ? Int32.Parse(headerRow.Cells[5].TextContent) : (int?) null;
+                    int? totalCreditsAccpomlished = !string.IsNullOrEmpty(headerRow.Cells[6].TextContent) ? Int32.Parse(headerRow.Cells[6].TextContent) : (int?) null;
+                    int? totalCreditsTaken = !string.IsNullOrEmpty(headerRow.Cells[7].TextContent) ? Int32.Parse(headerRow.Cells[7].TextContent) : (int?) null;
+                    double? average = !string.IsNullOrEmpty(headerRow.Cells[8].GetFirstLineOfText()) ? Double.Parse(headerRow.Cells[8].GetFirstLineOfText(), new CultureInfo("hu-HU")) : (double?) null;
+                    double? cumAverage = !string.IsNullOrEmpty(headerRow.Cells[9].GetFirstLineOfText()) ? Double.Parse(headerRow.Cells[9].GetFirstLineOfText(), new CultureInfo("hu-HU")) : (double?) null;
+                    results.Add(new SemesterData(semester, status, financialStatus, creditsAccpomlished, creditsTaken, totalCreditsAccpomlished, totalCreditsTaken, average, cumAverage));
+
+                }
+                catch (Exception e)
+                {
+                    // TODO: report this
+                }
             }
             return results;
         }
