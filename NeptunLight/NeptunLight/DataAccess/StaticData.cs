@@ -17,6 +17,7 @@ namespace NeptunLight.DataAccess
             yield return new Institute("SOE - Soproni Egyetem", new Uri("https://neptun3r.nyme.hu/hallgato/"));
             yield return new Institute("SZE - Széchenyi István Egyetem", new Uri("https://netw8.nnet.sze.hu/hallgato/"));
             yield return new Institute("SZIE - Szent István Egyetem", new Uri("https://web4.neptun.szie.hu/hallgato/"));
+            yield return new Institute("SZTE - Szegedi Tudományegyetem", new Uri("https://web4.neptun.u-szeged.hu/hallgato/"));
         }
     }
 }
