@@ -78,6 +78,7 @@
     <Compile Include="MenuButton.cs" />
     <Compile Include="MessageColorPool.cs" />
     <Compile Include="RefreshService.cs" />
+    <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Secrets.cs" />
     <Compile Include="Services\AndroidWebScraperClient.cs" />
     <Compile Include="Services\PrimitiveStorage.cs" />
@@ -96,7 +97,6 @@
     <Compile Include="Views\MessageDetailsPage.cs" />
     <Compile Include="Views\MessagesPage.cs" />
     <Compile Include="Views\PeriodsPage.cs" />
-    <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FileDataStorage.cs" />
     <Compile Include="Services\MailContentCache.cs" />
@@ -304,38 +304,38 @@
       <Version>4.3.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v13">
-      <Version>26.1.0.1</Version>
+      <Version>28.0.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v14.Preference">
-      <Version>26.1.0.1</Version>
+      <Version>28.0.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v4">
-      <Version>26.1.0.1</Version>
+      <Version>28.0.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat">
-      <Version>26.1.0.1</Version>
+      <Version>28.0.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v7.GridLayout">
-      <Version>26.1.0.1</Version>
+      <Version>28.0.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v7.Preference">
-      <Version>26.1.0.1</Version>
+      <Version>28.0.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v7.RecyclerView">
-      <Version>26.1.0.1</Version>
+      <Version>28.0.0.1</Version>
     </PackageReference>
     <!-- To resolve conflicts -->
     <PackageReference Include="Xamarin.Android.Support.Core.UI">
-      <Version>26.1.0.1</Version>
+      <Version>28.0.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Annotations">
-      <Version>26.1.0.1</Version>
+      <Version>28.0.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Design">
-      <Version>26.1.0.1</Version>
+      <Version>28.0.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter">
-      <Version>26.1.0.1</Version>
+      <Version>28.0.0.1</Version>
     </PackageReference>
     <!-- END To resolve conflicts -->
   </ItemGroup>
