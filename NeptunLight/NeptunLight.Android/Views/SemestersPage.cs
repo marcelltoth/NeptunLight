@@ -5,6 +5,7 @@ using Android.Views;
 using Java.Lang;
 using JetBrains.Annotations;
 using Microsoft.AppCenter.Analytics;
+using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 using ReactiveUI.AndroidSupport;
@@ -28,7 +29,7 @@ namespace NeptunLight.Droid.Views
         {
             View layout = inflater.Inflate(Resource.Layout.SemestersPage, container, false);
 
-            this.WireUpControls(layout);
+            this.MyWireUpControls(layout);
 
             this.WhenAny(x => x.ViewModel.CreditData, x => x.ViewModel.AveragesData, (cVm, aVm) => new TabsPagerAdapter(ChildFragmentManager, cVm.Value, aVm.Value)).Subscribe(adapter =>
             {

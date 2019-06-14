@@ -10,6 +10,7 @@ using MikePhil.Charting.Charts;
 using MikePhil.Charting.Components;
 using MikePhil.Charting.Data;
 using MikePhil.Charting.Formatter;
+using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 using ReactiveUI.AndroidSupport;
@@ -26,7 +27,7 @@ namespace NeptunLight.Droid.Views
         {
             View layout = inflater.Inflate(Resource.Layout.SemestersCreditsTab, container, false);
 
-            this.WireUpControls(layout);
+            this.MyWireUpControls(layout);
 
             #region BarChart
 

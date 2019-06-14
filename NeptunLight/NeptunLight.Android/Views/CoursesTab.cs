@@ -5,6 +5,7 @@ using Android.Views;
 using Android.Widget;
 using Java.Lang;
 using JetBrains.Annotations;
+using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI.AndroidSupport;
 
@@ -18,7 +19,7 @@ namespace NeptunLight.Droid.Views
         {
             View layout = inflater.Inflate(Resource.Layout.CoursesTab, container, false);
 
-            this.WireUpControls(layout);
+            this.MyWireUpControls(layout);
 
             ExpandableList.SetAdapter(new ExpandableAdapter(inflater, ViewModel.Subjects));
 

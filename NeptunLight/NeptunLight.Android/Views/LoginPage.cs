@@ -8,6 +8,7 @@ using Android.Views;
 using Android.Widget;
 using JetBrains.Annotations;
 using Microsoft.AppCenter.Analytics;
+using NeptunLight.Droid.Utils;
 using NeptunLight.Models;
 using NeptunLight.ViewModels;
 using ReactiveUI;
@@ -29,7 +30,7 @@ namespace NeptunLight.Droid.Views
             View layout = inflater.Inflate(Resource.Layout.LoginPage, container, false);
 
 
-            this.WireUpControls(layout);
+            this.MyWireUpControls(layout);
 
             this.Bind(ViewModel, x => x.LoginCode, x => x.LoginField.Text);
 

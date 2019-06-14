@@ -26,7 +26,7 @@ namespace NeptunLight.Droid.Views
         {
             View layout = inflater.Inflate(Resource.Layout.PeriodsPage, container, false);
 
-            this.WireUpControls(layout);
+            this.MyWireUpControls(layout);
 
             this.WhenAnyValue(x => x.ViewModel.Periods).Subscribe(periods =>
             {

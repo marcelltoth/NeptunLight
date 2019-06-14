@@ -43,7 +43,7 @@ namespace NeptunLight.Droid.Views
         {
             View layout = inflater.Inflate(Resource.Layout.ExamsPage, container, false);
 
-            this.WireUpControls(layout);
+            this.MyWireUpControls(layout);
 
             return layout;
         }

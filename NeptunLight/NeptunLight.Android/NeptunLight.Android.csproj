@@ -28,7 +28,8 @@
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <ConsolePause>false</ConsolePause>
-    <AndroidSupportedAbis>armeabi-v7a</AndroidSupportedAbis>
+    <AndroidSupportedAbis>
+    </AndroidSupportedAbis>
     <AndroidCreatePackagePerAbi>true</AndroidCreatePackagePerAbi>
     <AotAssemblies>false</AotAssemblies>
     <EnableLLVM>false</EnableLLVM>
@@ -39,6 +40,11 @@
     <AndroidDexTool>dx</AndroidDexTool>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AndroidStoreUncompressedFileExtensions>
+    </AndroidStoreUncompressedFileExtensions>
+    <AndroidLinkSkip>
+    </AndroidLinkSkip>
+    <AndroidUseAapt2>true</AndroidUseAapt2>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -89,6 +95,7 @@
     <Compile Include="Services\PrimitiveStorage.cs" />
     <Compile Include="Services\RefreshManager.cs" />
     <Compile Include="SettingsActivity.cs" />
+    <Compile Include="Utils\FragmentHelpers.cs" />
     <Compile Include="Utils\TabListAdapter.cs" />
     <Compile Include="Views\CalendarPage.cs" />
     <Compile Include="Views\CoursesPage.cs" />
@@ -265,7 +272,7 @@
       <Version>4.8.1</Version>
     </PackageReference>
     <PackageReference Include="DynamicData">
-      <Version>6.7.1.2534</Version>
+      <Version>6.10.0.2604</Version>
     </PackageReference>
     <PackageReference Include="JetBrains.Annotations">
       <Version>2018.2.1</Version>
@@ -298,13 +305,13 @@
       <Version>11.0.2</Version>
     </PackageReference>
     <PackageReference Include="reactiveui">
-      <Version>8.7.2</Version>
+      <Version>9.17.1</Version>
     </PackageReference>
     <PackageReference Include="ReactiveUI.Events">
-      <Version>8.7.2</Version>
+      <Version>9.17.1</Version>
     </PackageReference>
     <PackageReference Include="ReactiveUI.AndroidSupport">
-      <Version>8.7.2</Version>
+      <Version>9.17.1</Version>
     </PackageReference>
     <PackageReference Include="System.Net.Http">
       <Version>4.3.2</Version>
