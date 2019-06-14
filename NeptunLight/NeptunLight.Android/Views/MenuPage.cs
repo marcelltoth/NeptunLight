@@ -14,14 +14,15 @@ using Microsoft.AppCenter.Crashes;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 using ReactiveUI.AndroidSupport;
+using ControlFetcherMixin = ReactiveUI.ControlFetcherMixin;
 
 namespace NeptunLight.Droid.Views
 {
     public class MenuPage : ReactiveUI.AndroidSupport.ReactiveFragment<MenuPageViewModel>, IActionBarProvider
     {
-        public SwipeRefreshLayout SwipeRefresh { get; set; }
+        //public SwipeRefreshLayout SwipeRefresh { get; set; }
 
-        public TextView NameLabel { get; set; }
+        /*public TextView NameLabel { get; set; }
         public TextView InfoLabel { get; set; }
         public TextView LastRefreshLabel { get; set; }
 
@@ -30,18 +31,18 @@ namespace NeptunLight.Droid.Views
         public MenuButton CoursesButton { get; set; }
         public MenuButton ExamsButton { get; set; }
         public MenuButton SemestersButton { get; set; }
-        public MenuButton PeriodsButton { get; set; }
+        public MenuButton PeriodsButton { get; set; }*/
 
-        public ImageButton SettingsButton { get; set; }
+        //public ImageButton SettingsButton { get; set; }
 
         public override View OnCreateView(LayoutInflater inflater, [CanBeNull] ViewGroup container, [CanBeNull] Bundle savedInstanceState)
         {
             View layout = inflater.Inflate(Resource.Layout.MenuPage, container, false);
 
             Activated.InvokeCommand(this, x=> x.ViewModel.EnsureDataAccessible);
-            this.WireUpControls(layout);
+            this.WireUpControls(layout, ControlFetcherMixin.ResolveStrategy.ExplicitOptIn);
 
-            this.OneWayBind(ViewModel, x => x.IsRefreshing, x => x.SwipeRefresh.Refreshing);
+            /*this.OneWayBind(ViewModel, x => x.IsRefreshing, x => x.SwipeRefresh.Refreshing);
             this.WhenActivated(() =>
             {
                 return new List<IDisposable>()
@@ -65,9 +66,9 @@ namespace NeptunLight.Droid.Views
                               }))
                               .InvokeCommand(ViewModel.Refresh)
                 };
-            });
+            });*/
             
-            this.BindCommand(ViewModel, x => x.GoToMessages, x => x.MessagesButton);
+            /*this.BindCommand(ViewModel, x => x.GoToMessages, x => x.MessagesButton);
             this.BindCommand(ViewModel, x => x.GoToCalendar, x => x.CalendarButton);
             this.BindCommand(ViewModel, x => x.GoToCourses, x => x.CoursesButton);
             this.BindCommand(ViewModel, x => x.GoToExams, x => x.ExamsButton);
@@ -75,12 +76,12 @@ namespace NeptunLight.Droid.Views
             this.BindCommand(ViewModel, x => x.GoToPeriods, x => x.PeriodsButton);
 
             this.OneWayBind(ViewModel, x => x.Name, x => x.NameLabel.Text);
-            this.OneWayBind(ViewModel, x => x.InfoLine, x => x.InfoLabel.Text);
+            this.OneWayBind(ViewModel, x => x.InfoLine, x => x.InfoLabel.Text);*/
 
-            SettingsButton.Click += (sender, args) =>
+            /*SettingsButton.Click += (sender, args) =>
             {
                 StartActivity(new Intent(Application.Context, typeof(SettingsActivity)));
-            };
+            };*/
 
             return layout;
         }
