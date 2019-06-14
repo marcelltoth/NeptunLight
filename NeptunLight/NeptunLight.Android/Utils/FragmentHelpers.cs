@@ -10,7 +10,7 @@ namespace NeptunLight.Droid.Utils
         public static void MyWireUpControls(this Fragment target, View layout)
         {
             foreach (PropertyInfo viewProperty in target.GetType()
-                    .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
+                    .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly)
                     .Where(p => typeof(View).IsAssignableFrom(p.PropertyType) && p.PropertyType != typeof(View)))
             {
                 string resourceName = viewProperty.Name;
