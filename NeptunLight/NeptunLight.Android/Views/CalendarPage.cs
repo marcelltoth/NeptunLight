@@ -43,7 +43,7 @@ namespace NeptunLight.Droid.Views
             _layoutInflater = inflater;
             _layoutRoot = inflater.Inflate(Resource.Layout.CalendarPage, container, false);
 
-            this.WireUpControls(_layoutRoot);
+            this.MyWireUpControls(_layoutRoot);
 
             // Apply a dummy event listener because of a bug in the library. It will try to call the listener even if it is not set, resulting in a NullPointerException -> crash
             WeekView.SetZoomEndListener(new DummyZoomEndListener());
