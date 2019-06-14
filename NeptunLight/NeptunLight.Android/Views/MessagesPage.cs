@@ -36,7 +36,7 @@ namespace NeptunLight.Droid.Views
             _layoutInflater = inflater;
             View layout = inflater.Inflate(Resource.Layout.MessagesPage, container, false);
 
-            this.WireUpControls(layout);
+            this.MyWireUpControls(layout);
 
             SwipeRefresh.SetOnRefreshListener(this);
 

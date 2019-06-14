@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using JetBrains.Annotations;
 using Microsoft.AppCenter.Analytics;
+using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 using ReactiveUI.AndroidSupport;
@@ -31,7 +32,7 @@ namespace NeptunLight.Droid.Views
         {
             View layout = inflater.Inflate(Resource.Layout.MessageDetailsPage, container, false);
 
-            this.WireUpControls(layout);
+            this.MyWireUpControls(layout);
 
             this.OneWayBind(ViewModel, x => x.Date, x => x.TimeTextView.Text, dt => dt.ToString("g"));
             this.OneWayBind(ViewModel, x => x.Sender, x => x.SenderTextView.Text);

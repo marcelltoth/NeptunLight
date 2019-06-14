@@ -9,6 +9,7 @@ using Android.Widget;
 using JetBrains.Annotations;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using NeptunLight.Droid.Utils;
 using NeptunLight.ViewModels;
 using ReactiveUI;
 using ReactiveUI.AndroidSupport;
@@ -64,7 +65,7 @@ namespace NeptunLight.Droid.Views
         {
             View layout = inflater.Inflate(Resource.Layout.InitialSyncPage, container, false);
 
-            this.WireUpControls(layout);
+            this.MyWireUpControls(layout);
 
             this.WhenAnyObservable(x => x.ViewModel.IsSyncing).Subscribe(syncing =>
             {

@@ -83,6 +83,7 @@
     <Compile Include="Services\PrimitiveStorage.cs" />
     <Compile Include="Services\RefreshManager.cs" />
     <Compile Include="SettingsActivity.cs" />
+    <Compile Include="Utils\ReactiveUiWorkaround.cs" />
     <Compile Include="Utils\TabListAdapter.cs" />
     <Compile Include="Views\CalendarPage.cs" />
     <Compile Include="Views\CoursesPage.cs" />
