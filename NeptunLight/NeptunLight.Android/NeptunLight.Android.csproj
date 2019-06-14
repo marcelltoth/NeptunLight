@@ -45,6 +45,7 @@
     <AndroidLinkSkip>
     </AndroidLinkSkip>
     <AndroidUseAapt2>true</AndroidUseAapt2>
+    <MandroidI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -315,6 +316,9 @@
     </PackageReference>
     <PackageReference Include="System.Net.Http">
       <Version>4.3.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.Core.Utils">
+      <Version>28.0.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v13">
       <Version>28.0.0.1</Version>
