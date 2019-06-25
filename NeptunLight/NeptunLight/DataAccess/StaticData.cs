@@ -9,6 +9,7 @@ namespace NeptunLight.DataAccess
         public IEnumerable<Institute> GetAvaialbleInstitutes()
         {
             yield return new Institute("BCE - Budapesti Corvinus Egyetem", new Uri("https://neptun3r.web.uni-corvinus.hu/hallgatoi_2/"));
+            yield return new Institute("BGE - Budapesti Gazdasági Egyetem", new Uri("https://neptun6.uni-bge.hu/hallgato/"));
             yield return new Institute("BME - Budapesti Műszaki és Gazdaságtudományi Egyetem", new Uri("https://frame.neptun.bme.hu/hallgatoi/"));
             yield return new Institute("DE - Debreceni Egyetem", new Uri("https://www-3.neptun.unideb.hu/hallgato/"));
             yield return new Institute("ELTE - Eötvös Loránd Tudományegyetem", new Uri("https://hallgato.neptun.elte.hu/"));
