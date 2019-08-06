@@ -14,6 +14,7 @@ namespace NeptunLight.DataAccess
             yield return new Institute("DE - Debreceni Egyetem", new Uri("https://www-3.neptun.unideb.hu/hallgato/"));
             yield return new Institute("ELTE - Eötvös Loránd Tudományegyetem", new Uri("https://hallgato.neptun.elte.hu/"));
             yield return new Institute("KRE - Károli Gáspár Református Egyetem", new Uri("https://neptun.kre.hu/hallgato/"));
+            yield return new Institute("NKE -  Nemzeti Közszolgálati Egyetem", new Uri("https://neptunweb.uni-nke.hu/hallgato/"));
             yield return new Institute("OE - Óbudai Egyetem", new Uri("https://neptun.uni-obuda.hu/hallgato/"));
             yield return new Institute("PE - Pannon Egyetem", new Uri("https://neptun11.uni-pannon.hu/hallgato/"));
             yield return new Institute("PPKE - Pázmány Péter Katolikus Egyetem", new Uri("https://neptun2.ppke.hu/hallgato/"));
