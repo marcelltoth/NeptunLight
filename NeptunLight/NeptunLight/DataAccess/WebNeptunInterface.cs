@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AngleSharp.Dom;
 using AngleSharp.Dom.Html;
+using AngleSharp.Extensions;
 using AngleSharp.Parser.Html;
 using JetBrains.Annotations;
 using NeptunLight.Helpers;
@@ -31,6 +32,7 @@ namespace NeptunLight.DataAccess
         private readonly IPrimitiveStorage _primitiveStorage;
 
         private readonly Func<WebScraperClient> _clientFactory;
+        private readonly ILogger _logger;
 
         private Uri _baseUri;
         private WebScraperClient _client;
@@ -38,11 +40,12 @@ namespace NeptunLight.DataAccess
 
         private string _username;
 
-        public WebNeptunInterface([CanBeNull] IMailContentCache mailContentCache, [CanBeNull] IPrimitiveStorage primitiveStorage, Func<WebScraperClient> clientFactory)
+        public WebNeptunInterface([CanBeNull] IMailContentCache mailContentCache, [CanBeNull] IPrimitiveStorage primitiveStorage, Func<WebScraperClient> clientFactory, ILogger logger)
         {
             _mailContentCache = mailContentCache;
             _primitiveStorage = primitiveStorage;
             _clientFactory = clientFactory;
+            _logger = logger;
         }
 
         public string Username
@@ -125,7 +128,7 @@ namespace NeptunLight.DataAccess
                 IDocument rawMessagesDocument = await parser.ParseAsync(rawMessages, ct);
                 IHtmlTableElement messageHeaderTable = (IHtmlTableElement) rawMessagesDocument.GetElementById("c_messages_gridMessages_bodytable");
 
-                IList<MailHeader> mailHeaders = ParseMailHeaderTable(messageHeaderTable);
+                IList<MailHeader> mailHeaders = ParseMailHeaderTable(messageHeaderTable, _logger);
                 int messagesToLoad = Math.Min(mailHeaders.Count, 100);
                 for (int i = 0; i < messagesToLoad; i++)
                 {
@@ -176,7 +179,7 @@ namespace NeptunLight.DataAccess
                         catch (Exception e)
                         {
                             // Do not crash if a single mail throws
-                            // TODO: implement logging
+                            _logger.LogError(new MailParsingException(mailHeader, e));
                         }
                     }, ct);
                 }
@@ -215,6 +218,7 @@ namespace NeptunLight.DataAccess
             IEnumerable<IElement> semesterOptions = subjectsPage.GetElementById("cmb_cmb").Children.Where(opt => opt.GetAttribute("value") != "-1");
             foreach (IElement option in semesterOptions)
             {
+                IDocument semesterSubjectData = null;
                 try
                 {
                     await Task.Delay(200);
@@ -224,7 +228,7 @@ namespace NeptunLight.DataAccess
                     // load subcject data in semester
                     subjectsPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=0304");
                     await Task.Delay(100);
-                    IDocument semesterSubjectData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0304", subjectsPage, new[] {new KeyValuePair<string, string>("upFilter$cmb$m_cmb", option.GetAttribute("value"))});
+                    semesterSubjectData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0304", subjectsPage, new[] {new KeyValuePair<string, string>("upFilter$cmb$m_cmb", option.GetAttribute("value"))});
                     IHtmlTableElement subjectDataTable = (IHtmlTableElement) semesterSubjectData.GetElementById("h_addedsubjects_gridAddedSubjects_bodytable");
 
                     // load course data
@@ -266,7 +270,7 @@ namespace NeptunLight.DataAccess
                 catch (Exception e)
                 {
                     // do not fail because of a single semester failing
-                    // TODO: log
+                    _logger.LogError(new SubjectListParsingException(semesterSubjectData?.DocumentElement.OuterHtml ?? "NOT LOADED", e));
                 }
             }
 
@@ -282,6 +286,7 @@ namespace NeptunLight.DataAccess
             IEnumerable<IElement> semesterOptions = examsPage.GetElementById("upFilter_cmbTerms").Children.Where(opt => opt.GetAttribute("value") != "-1");
             foreach (IElement option in semesterOptions.Take(8))
             {
+                IDocument semesterExamData = null;
                 try
                 {
                     Semester semester = Semester.Parse(option.TextContent);
@@ -294,7 +299,7 @@ namespace NeptunLight.DataAccess
                     await Task.Delay(200);
                     examsPage = await _client.GetDocumentAsnyc("main.aspx?ismenuclick=true&ctrl=0402");
                     await Task.Delay(100);
-                    IDocument semesterExamData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0402", examsPage, new[] {new KeyValuePair<string, string>("upFilter$cmbTerms", option.GetAttribute("value"))});
+                    semesterExamData = await _client.PostFormAsnyc("main.aspx?ismenuclick=true&ctrl=0402", examsPage, new[] {new KeyValuePair<string, string>("upFilter$cmbTerms", option.GetAttribute("value"))});
                     IHtmlTableElement subjectDataTable = (IHtmlTableElement) semesterExamData.GetElementById("h_signedexams_gridExamList_bodytable");
 
                     foreach (IHtmlTableRowElement dataRow in subjectDataTable.Bodies[0].Rows)
@@ -334,6 +339,7 @@ namespace NeptunLight.DataAccess
                 catch (Exception ex)
                 {
                     // don't fail the whole sync if one semester load fails
+                    _logger.LogError(new ExamListParsingException(semesterExamData?.DocumentElement.OuterHtml ?? "NOT LOADED", ex));
                 }
             }
 
@@ -419,7 +425,7 @@ namespace NeptunLight.DataAccess
             return result;
         }
 
-        private static IList<MailHeader> ParseMailHeaderTable(IHtmlTableElement table)
+        private static IList<MailHeader> ParseMailHeaderTable(IHtmlTableElement table, ILogger logger)
         {
             List<MailHeader> result = new List<MailHeader>();
             foreach (IHtmlTableRowElement row in table.Bodies[0].Rows)
@@ -432,11 +438,53 @@ namespace NeptunLight.DataAccess
                     bool isNew = row.ClassName == "Row1_Bold";
                     result.Add(new MailHeader(receiveTime, sender, title) {TrId = trid, IsNew = isNew});
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     // skip unparsable stuff
+                    logger.LogError(new MailHeaderParsingException(row.OuterHtml, e));
                 }
             return result;
+        }
+
+        private class MailParsingException : Exception
+        {
+            public MailHeader Header { get; }
+            public override string Message => $"Unable to load mail for header: ID={Header.TrId}, ReceivedTime={Header.ReceivedTime}, IsNew={Header.IsNew}";
+
+            public MailParsingException(MailHeader header, Exception innerException) : base(String.Empty, innerException)
+            {
+                Header = header;
+            }
+        }
+
+        private class MailHeaderParsingException : Exception
+        {
+            public string InputHtml { get; }
+
+            public MailHeaderParsingException(string inputHtml, Exception innerException) : base($"Unable to parse mail header, HTML: '{inputHtml}'", innerException)
+            {
+                InputHtml = inputHtml;
+            }
+        }
+
+        private class SubjectListParsingException : Exception
+        {
+            public string InputHtml { get; }
+
+            public SubjectListParsingException(string inputHtml, Exception innerException) : base($"Unable to parse semester subject list, HTML: '{inputHtml}'", innerException)
+            {
+                InputHtml = inputHtml;
+            }
+        }
+
+        private class ExamListParsingException : Exception
+        {
+            public string InputHtml { get; }
+
+            public ExamListParsingException(string inputHtml, Exception innerException) : base($"Unable to parse semester exam list, HTML: '{inputHtml}'", innerException)
+            {
+                InputHtml = inputHtml;
+            }
         }
     }
 }

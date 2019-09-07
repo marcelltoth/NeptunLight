@@ -81,6 +81,7 @@
     <Compile Include="RefreshService.cs" />
     <Compile Include="Secrets.cs" />
     <Compile Include="Services\AndroidWebScraperClient.cs" />
+    <Compile Include="Services\AppCenterLogger.cs" />
     <Compile Include="Services\PrimitiveStorage.cs" />
     <Compile Include="Services\RefreshManager.cs" />
     <Compile Include="SettingsActivity.cs" />
