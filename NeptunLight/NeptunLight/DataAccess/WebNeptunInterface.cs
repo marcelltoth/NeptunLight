@@ -311,7 +311,7 @@ namespace NeptunLight.DataAccess
                         string type = dataRow.Cells[4].GetFirstLineOfText();
                         string attemptType = dataRow.Cells[5].GetFirstLineOfText();
                         string startTimeText = dataRow.Cells[6].GetFirstLineOfText();
-                        DateTime startTime = DateTime.ParseExact(startTimeText, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo);
+                        DateTime startTime = DateTime.ParseExact(startTimeText, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo, DateTimeStyles.AllowWhiteSpaces);
                         string location = dataRow.Cells[7].GetFirstLineOfText();
                         IEnumerable<string> instructors = dataRow.Cells[8].GetFirstLineOfText().Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Select(i => i.Trim());
                         string[] placeCountParts = dataRow.Cells[9].GetFirstLineOfText().Split(' ')[0].Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
@@ -405,8 +405,8 @@ namespace NeptunLight.DataAccess
                     {
                         if (dataRow.ClassList.Contains("NoMatch"))
                             continue;
-                        DateTime startTime = DateTime.ParseExact(dataRow.Cells[1].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo);
-                        DateTime endTime = DateTime.ParseExact(dataRow.Cells[2].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo);
+                        DateTime startTime = DateTime.ParseExact(dataRow.Cells[1].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo, DateTimeStyles.AllowWhiteSpaces);
+                        DateTime endTime = DateTime.ParseExact(dataRow.Cells[2].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo, DateTimeStyles.AllowWhiteSpaces);
                         string type = dataRow.Cells[3].TextContent;
                         string name = dataRow.Cells[4].TextContent;
 
@@ -431,7 +431,7 @@ namespace NeptunLight.DataAccess
             foreach (IHtmlTableRowElement row in table.Bodies[0].Rows)
                 try
                 {
-                    DateTime receiveTime = DateTime.ParseExact(row.Cells[7].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo);
+                    DateTime receiveTime = DateTime.ParseExact(row.Cells[7].TextContent, "yyyy.MM.dd. H:mm:ss", DateTimeFormatInfo.InvariantInfo, DateTimeStyles.AllowWhiteSpaces);
                     string sender = row.Cells[4].TextContent;
                     string title = row.Cells[6].TextContent;
                     long trid = Int64.Parse(row.Id.Substring(4));
