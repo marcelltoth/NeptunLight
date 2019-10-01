@@ -81,7 +81,12 @@ namespace NeptunLight.Droid.Views
         public IList<WeekViewEvent> OnMonthChange(int p0, int p1)
         {
             _colorPoolInitTask.Wait(300);
-            IEnumerable<CalendarEvent> eventList = ViewModel.Events.Where(ce => ce.StartDate.Year == p0 && ce.StartDate.Month == p1);
+            IEnumerable<CalendarEvent> eventList = ViewModel.Events.Where(ce =>
+            {
+                DateTime earliest = new DateTime(p0, p1, 1).Subtract(TimeSpan.FromDays(7)); // add 1 week of overlap
+                DateTime latest = new DateTime(p0, p1, 1).AddMonths(1).Add(TimeSpan.FromDays(7)); // add 1 week of overlap
+                return ce.StartDate >= earliest && ce.StartDate <= latest;
+            });
             List<WeekViewEvent> nativeList = new List<WeekViewEvent>();
             foreach (CalendarEvent calendarEvent in eventList)
             {
