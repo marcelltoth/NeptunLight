@@ -91,7 +91,6 @@ namespace NeptunLight.DataAccess
             {
                 _client = _clientFactory();
                 _client.BaseUri = BaseUri;
-                await _client.PostJsonObjectAsnyc("Login.aspx/GetMaxTryNumber", "");
                 JObject r2 = await _client.PostJsonObjectAsnyc("Login.aspx/CheckLoginEnable", $"{{user: \"{Username}\", pwd: \"{Password}\", UserLogin: null, GUID: null, captcha: \"\"}}");
                 JObject loginResult = JObject.Parse(r2.Value<string>("d"));
                 if (!string.Equals(loginResult.Value<string>("success"), "True", StringComparison.OrdinalIgnoreCase))
