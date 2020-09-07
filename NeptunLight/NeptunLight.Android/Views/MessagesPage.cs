@@ -57,12 +57,16 @@ namespace NeptunLight.Droid.Views
             {
                 vm.RefreshMessages.ThrownExceptions.Subscribe(ex =>
                 {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(Activity);
-                    dialog.SetMessage("Hiba történt a frissítés során. Ellenőrizd az internetkapcsolatodat és próbáld újra.");
-                    dialog.SetTitle("Hiba");
-                    dialog.SetPositiveButton("Ok", (s, e) => {});
-                    dialog.SetCancelable(true);
-                    dialog.Create().Show();
+                    // Activity may be null at this point if the user navigated away in the meanwhile
+                    if (Activity != null)
+                    {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(Activity);
+                        dialog.SetMessage("Hiba történt a frissítés során. Ellenőrizd az internetkapcsolatodat és próbáld újra.");
+                        dialog.SetTitle("Hiba");
+                        dialog.SetPositiveButton("Ok", (s, e) => { });
+                        dialog.SetCancelable(true);
+                        dialog.Create().Show();
+                    }
                 });
             });
             
