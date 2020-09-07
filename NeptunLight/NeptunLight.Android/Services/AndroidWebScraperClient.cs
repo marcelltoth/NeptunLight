@@ -15,6 +15,7 @@ namespace NeptunLight.Droid.Services
                 AllowAutoRedirect = true,
                 UseCookies = true,
                 CookieContainer = new CookieContainer(),
+                ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true
             });
 
             httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0");
