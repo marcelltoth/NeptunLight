@@ -9,13 +9,13 @@ namespace NeptunLight.Models
 {
     public class NetworkException : Exception
     {
-        public HttpStatusCode ResponseCode { get; }
+        public HttpStatusCode StatusCode { get; }
 
         public string Content { get; }
 
-        public NetworkException(HttpStatusCode responseCode, [CanBeNull] string content)
+        public NetworkException(HttpStatusCode statusCode, [CanBeNull] string content)
         {
-            ResponseCode = responseCode;
+            StatusCode = statusCode;
             Content = content;
         }
 
@@ -37,6 +37,6 @@ namespace NeptunLight.Models
         {
         }
 
-
+        public override string Message => $"Failure network result ({StatusCode}). Response: \'{Content}'";
     }
 }
