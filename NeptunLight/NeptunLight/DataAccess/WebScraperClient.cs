@@ -36,8 +36,7 @@ namespace NeptunLight.DataAccess
             using (HttpResponseMessage response = await HttpClient.GetAsync(url, ct))
             {
                 if (!response.IsSuccessStatusCode)
-                    throw new NetworkException();
-
+                    throw await NetworkException.FromResponseAsync(response);
                 return await ReadResponseAsync(response);
             }
         }
@@ -46,7 +45,7 @@ namespace NeptunLight.DataAccess
         {
             HttpResponseMessage response = await HttpClient.GetAsync(url, ct);
             if (!response.IsSuccessStatusCode)
-                throw new NetworkException();
+                throw await NetworkException.FromResponseAsync(response);
 
             return await response.Content.ReadAsStreamAsync();
         }
@@ -56,7 +55,7 @@ namespace NeptunLight.DataAccess
             using (HttpResponseMessage response = await HttpClient.GetAsync(url, ct))
             {
                 if (!response.IsSuccessStatusCode)
-                    throw new NetworkException();
+                    throw await NetworkException.FromResponseAsync(response);
 
                 HtmlParser parser = new HtmlParser();
                 return await parser.ParseAsync(await ReadResponseAsync(response), ct);
@@ -78,7 +77,7 @@ namespace NeptunLight.DataAccess
                 using (HttpResponseMessage response = await HttpClient.PostAsync(url, postContent, ct))
                 {
                     if (!response.IsSuccessStatusCode)
-                        throw new NetworkException();
+                        throw await NetworkException.FromResponseAsync(response);
 
                     HtmlParser parser = new HtmlParser();
                     return await parser.ParseAsync(await ReadResponseAsync(response), ct);
@@ -96,7 +95,7 @@ namespace NeptunLight.DataAccess
                 using (HttpResponseMessage response = await HttpClient.PostAsync(url, postContent, ct))
                 {
                     if (!response.IsSuccessStatusCode)
-                        throw new NetworkException();
+                        throw await NetworkException.FromResponseAsync(response);
 
                     return await ReadResponseAsync(response);
                 }
@@ -131,7 +130,7 @@ namespace NeptunLight.DataAccess
             using (HttpResponseMessage response = await HttpClient.GetAsync(url, ct))
             {
                 if (!response.IsSuccessStatusCode)
-                    throw new NetworkException();
+                    throw await NetworkException.FromResponseAsync(response);
 
                 return JObject.Parse(await ReadResponseAsync(response));
             }
@@ -142,7 +141,7 @@ namespace NeptunLight.DataAccess
             using (HttpResponseMessage response = await HttpClient.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json"), ct))
             {
                 if (!response.IsSuccessStatusCode)
-                    throw new NetworkException();
+                    throw await NetworkException.FromResponseAsync(response);
 
                 return JObject.Parse(await ReadResponseAsync(response));
             }

@@ -103,7 +103,7 @@ namespace NeptunLight.DataAccess
             }
             catch (Exception exc) when (!(exc is UnauthorizedAccessException))
             {
-                throw new NetworkException("Error loading neptun", exc);
+                throw new SyncException("Error loading neptun", exc);
             }
         }
 
@@ -418,7 +418,7 @@ namespace NeptunLight.DataAccess
                 }
                 catch (Exception ex)
                 {
-                    throw new NetworkException("Error loading periods", ex);
+                    throw new SyncException("Error loading periods", ex);
                 }
 
             return result;
