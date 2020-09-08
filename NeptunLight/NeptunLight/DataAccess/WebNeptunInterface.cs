@@ -247,7 +247,8 @@ namespace NeptunLight.DataAccess
                             continue;
                         string subjectCode = dataRow.Cells[1].GetFirstLineOfText();
                         string subjectName = dataRow.Cells[2].GetFirstLineOfText();
-                        int creditCount = Int32.Parse(dataRow.Cells[3].GetFirstLineOfText());
+                        if (!Int32.TryParse(dataRow.Cells[3].GetFirstLineOfText(), out var creditCount)) 
+                            creditCount = 0;
                         int attemptCount = Int32.Parse(dataRow.Cells[4].GetFirstLineOfText());
                         IEnumerable<Course> courses = courseDataTable.Bodies[0].Rows.Where(r => r.Cells.Length >= 8 && r.Cells[1].GetFirstLineOfText() == subjectCode).Select(r =>
                         {
