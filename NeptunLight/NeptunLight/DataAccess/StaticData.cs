@@ -20,6 +20,7 @@ namespace NeptunLight.DataAccess
             yield return new Institute("GFF - Gál Ferenc Főiskola", new Uri("https://host.sdakft.hu/gffhw/"));
             yield return new Institute("KE - Kaposvári Egyetem", new Uri("https://neptun.ke.hu/hallgato/"));
             yield return new Institute("KRE - Károli Gáspár Református Egyetem", new Uri("https://neptun.kre.hu/hallgato/"));
+            yield return new Institute("MATE - Magyar Agrár- és Élettudományi Egyetem", new Uri("https://neptunhallgato.uni-mate.hu/hallgato/"));
             yield return new Institute("ME - Miskolci Egyetem", new Uri("https://neptun32.uni-miskolc.hu/hallgato/"));
             yield return new Institute("METU - Budapesti Metropolitan Egyetem", new Uri("https://neptunweb1.metropolitan.hu/hallgato/"));
             yield return new Institute("MILTON - Milton Friedman Egyetem", new Uri("https://neptun.uni-milton.hu/hallgato/"));
@@ -33,7 +34,6 @@ namespace NeptunLight.DataAccess
             yield return new Institute("SE - Semmelweis Egyetem", new Uri("https://neptunweb.semmelweis.hu/hallgato/"));
             yield return new Institute("SOE - Soproni Egyetem", new Uri("https://neptun3r.nyme.hu/hallgato/"));
             yield return new Institute("SZE - Széchenyi István Egyetem", new Uri("https://netw8.nnet.sze.hu/hallgato/"));
-            yield return new Institute("SZIE - Szent István Egyetem", new Uri("https://web4.neptun.szie.hu/hallgato/"));
             yield return new Institute("SZTE - Szegedi Tudományegyetem", new Uri("https://web4.neptun.u-szeged.hu/hallgato/"));
             yield return new Institute("TE - Testnevelési Egyetem", new Uri("https://neptun.tf.hu/hallgato/"));
         }
