@@ -11,5 +11,6 @@
       <PackageReference Include="NodaTime" Version="2.0.2" />
       <PackageReference Include="ReactiveUI" Version="8.7.2" />
       <PackageReference Include="DynamicData" Version="6.17.14" />
+      <PackageReference Include="System.Reactive" Version="4.4.1" />
     </ItemGroup>
 </Project>
