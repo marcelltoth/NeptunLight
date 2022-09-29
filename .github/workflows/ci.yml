@@ -1,0 +1,28 @@
+name: Test Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup NuGet.exe
+        uses: nuget/setup-nuget@v1
+        with:
+          nuget-version: latest
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: packages
+          key: nuget-${{ runner.os }}-test-android
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+      - name: Install dependencies
+        run: nuget restore NeptunLight.sln
+      - name: Build
+        run: msbuild NeptunLight/NeptunLight.Android/NeptunLight.Android.csproj /verbosity:normal /t:PackageForAndroid /p:Configuration=Release
