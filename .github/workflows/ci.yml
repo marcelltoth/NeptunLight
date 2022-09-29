@@ -25,4 +25,4 @@ jobs:
       - name: Install dependencies
         run: nuget restore NeptunLight.sln
       - name: Build
-        run: msbuild src/NeptunLight/NeptunLight.Android.csproj /verbosity:normal /t:PackageForAndroid /p:Configuration=Release
+        run: msbuild NeptunLight/NeptunLight.Android/NeptunLight.Android.csproj /verbosity:normal /t:PackageForAndroid /p:Configuration=Release
